@@ -2,10 +2,19 @@
 buildscript {
     repositories {
         jcenter()
+//        google()
+        maven { url "https://jitpack.io" }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+
         google()
+        mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.novoda:gradle-build-properties-plugin:0.3'
     }
 }
@@ -13,6 +22,16 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+//        google()
+        maven { url "https://jitpack.io" }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+
+        google()
+        mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 
