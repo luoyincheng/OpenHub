@@ -3,6 +3,7 @@ package com.thirtydegreesray.openhub.mvp.presenter;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.thirtydegreesray.openhub.AppConfig;
 import com.thirtydegreesray.openhub.AppData;
@@ -87,6 +88,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 	public void basicLogin(String userName, String password) {
 		AuthRequestModel authRequestModel = AuthRequestModel.generate();
 		String token = Credentials.basic(userName, password);
+		Log.i("loginway", "token:" + token);
 		Observable<Response<BasicToken>> observable =
 				getLoginService(token).authorizations(authRequestModel);
 		HttpSubscriber<BasicToken> subscriber =
@@ -102,6 +104,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 							public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
 								BasicToken token = response.body();
 								if (token != null) {
+									Log.i("loginway", token.toString());
 									mView.onGetTokenSuccess(token);
 								} else {
 									mView.onGetTokenError(response.getOriResponse().message());

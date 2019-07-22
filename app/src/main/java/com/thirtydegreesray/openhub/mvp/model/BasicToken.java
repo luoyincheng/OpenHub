@@ -27,6 +27,18 @@ public class BasicToken {
 
 	}
 
+	@Override
+	public String toString() {
+		return "BasicToken{" +
+				"id=" + id +
+				", url='" + url + '\'' +
+				", token='" + token + '\'' +
+				", createdAt=" + createdAt +
+				", updatedAt=" + updatedAt +
+				", scopes=" + scopes +
+				'}';
+	}
+
 	public static BasicToken generateFromOauthToken(OauthToken oauthToken) {
 		BasicToken basicToken = new BasicToken();
 		basicToken.setToken(oauthToken.getAccessToken());

@@ -23,9 +23,7 @@ public interface LoginService {
 
 	@POST("authorizations")
 	@Headers("Accept: application/json")
-	Observable<Response<BasicToken>> authorizations(
-			@NonNull @Body AuthRequestModel authRequestModel
-	);
+	Observable<Response<BasicToken>> authorizations(@NonNull @Body AuthRequestModel authRequestModel);
 
 	@POST("login/oauth/access_token")
 	@Headers("Accept: application/json")
