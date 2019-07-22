@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.http.error;
 
 /**
@@ -8,8 +6,8 @@ package com.thirtydegreesray.openhub.http.error;
 
 public class UnauthorizedError extends HttpError {
 
-    public UnauthorizedError() {
-        super(HttpErrorCode.UNAUTHORIZED);
-    }
+	public UnauthorizedError() {
+		super(HttpErrorCode.UNAUTHORIZED);
+	}
 
 }

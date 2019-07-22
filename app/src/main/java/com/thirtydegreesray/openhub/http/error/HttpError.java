@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.http.error;
 
 /**
@@ -11,14 +9,14 @@ package com.thirtydegreesray.openhub.http.error;
 
 public class HttpError extends Error {
 
-    private int errorCode = -1;
+	private int errorCode = -1;
 
-    public HttpError(int errorCode) {
-        super(HttpErrorCode.getErrorMsg(errorCode));
-        this.errorCode = errorCode;
-    }
+	public HttpError(int errorCode) {
+		super(HttpErrorCode.getErrorMsg(errorCode));
+		this.errorCode = errorCode;
+	}
 
-    public int getErrorCode() {
-        return errorCode;
-    }
+	public int getErrorCode() {
+		return errorCode;
+	}
 }

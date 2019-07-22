@@ -9,67 +9,66 @@ import android.os.Parcelable;
 
 public class Collection implements Parcelable {
 
-    private String id;
-    private String name;
-    private String desc;
+	public static final Parcelable.Creator<Collection> CREATOR = new Parcelable.Creator<Collection>() {
+		@Override
+		public Collection createFromParcel(Parcel source) {
+			return new Collection(source);
+		}
 
-    public Collection(String id, String name, String desc) {
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
-    }
+		@Override
+		public Collection[] newArray(int size) {
+			return new Collection[size];
+		}
+	};
+	private String id;
+	private String name;
+	private String desc;
 
-    public String getId() {
-        return id;
-    }
+	public Collection(String id, String name, String desc) {
+		this.id = id;
+		this.name = name;
+		this.desc = desc;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	protected Collection(Parcel in) {
+		this.id = in.readString();
+		this.name = in.readString();
+		this.desc = in.readString();
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public String getDesc() {
+		return desc;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.desc);
-    }
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
-    protected Collection(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.desc = in.readString();
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<Collection> CREATOR = new Parcelable.Creator<Collection>() {
-        @Override
-        public Collection createFromParcel(Parcel source) {
-            return new Collection(source);
-        }
-
-        @Override
-        public Collection[] newArray(int size) {
-            return new Collection[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.id);
+		dest.writeString(this.name);
+		dest.writeString(this.desc);
+	}
 }

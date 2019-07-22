@@ -20,64 +20,65 @@ import java.util.ArrayList;
 
 public class ChooseLabelsDialog implements BaseViewHolder.OnItemClickListener {
 
-    private Activity mActivity;
-    private ArrayList<Label> mLabels;
-    private ChooseLabelsListener mListener;
+	private Activity mActivity;
+	private ArrayList<Label> mLabels;
+	private ChooseLabelsListener mListener;
 
-    private RecyclerView recyclerView;
-    private LabelManageAdapter adapter;
-    private AlertDialog dialog;
+	private RecyclerView recyclerView;
+	private LabelManageAdapter adapter;
+	private AlertDialog dialog;
 
-    public ChooseLabelsDialog(@NonNull Activity activity, @NonNull ArrayList<Label> labels,
-                              @NonNull ChooseLabelsListener listener){
-        mActivity = activity;
-        mLabels = labels;
-        mListener = listener;
+	public ChooseLabelsDialog(@NonNull Activity activity, @NonNull ArrayList<Label> labels,
+	                          @NonNull ChooseLabelsListener listener) {
+		mActivity = activity;
+		mLabels = labels;
+		mListener = listener;
 
-        recyclerView = new RecyclerView(activity);
-        adapter = new LabelManageAdapter(activity, null);
-        recyclerView.setLayoutManager(new CatchableLinearLayoutManager(activity));
-        adapter.setOnItemClickListener(this);
-        adapter.setData(labels);
-        recyclerView.setAdapter(adapter);
+		recyclerView = new RecyclerView(activity);
+		adapter = new LabelManageAdapter(activity, null);
+		recyclerView.setLayoutManager(new CatchableLinearLayoutManager(activity));
+		adapter.setOnItemClickListener(this);
+		adapter.setData(labels);
+		recyclerView.setAdapter(adapter);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                .setTitle(R.string.choose_labels)
-                .setView(recyclerView)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.save, (dialog, which) ->
-                    mListener.onChooseLabelsComplete(getChosenLabels())
-                )
-                .setNeutralButton(R.string.manage_labels, (dialog, which) ->
-                    mListener.onShowManageLabels()
-                );
-        dialog = builder.create();
-    }
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+				.setTitle(R.string.choose_labels)
+				.setView(recyclerView)
+				.setNegativeButton(R.string.cancel, null)
+				.setPositiveButton(R.string.save, (dialog, which) ->
+						mListener.onChooseLabelsComplete(getChosenLabels())
+				)
+				.setNeutralButton(R.string.manage_labels, (dialog, which) ->
+						mListener.onShowManageLabels()
+				);
+		dialog = builder.create();
+	}
 
-    public void show() {
-        dialog.show();
-    }
+	public void show() {
+		dialog.show();
+	}
 
 
-    @Override
-    public void onItemClick(int position, @NonNull View view) {
-        adapter.getData().get(position).setSelect(!adapter.getData().get(position).isSelect());
-        adapter.notifyItemChanged(position);
-    }
-    
-    public interface ChooseLabelsListener{
-        void onChooseLabelsComplete(@NonNull ArrayList<Label> labels);
-        void onShowManageLabels();
-    }
+	@Override
+	public void onItemClick(int position, @NonNull View view) {
+		adapter.getData().get(position).setSelect(!adapter.getData().get(position).isSelect());
+		adapter.notifyItemChanged(position);
+	}
 
-    private ArrayList<Label> getChosenLabels(){
-        ArrayList<Label> chosenLabels = new ArrayList<>();
-        for(Label label : mLabels){
-            if(label.isSelect()){
-                chosenLabels.add(label);
-            }
-        }
-        return chosenLabels;
-    }
-    
+	private ArrayList<Label> getChosenLabels() {
+		ArrayList<Label> chosenLabels = new ArrayList<>();
+		for (Label label : mLabels) {
+			if (label.isSelect()) {
+				chosenLabels.add(label);
+			}
+		}
+		return chosenLabels;
+	}
+
+	public interface ChooseLabelsListener {
+		void onChooseLabelsComplete(@NonNull ArrayList<Label> labels);
+
+		void onShowManageLabels();
+	}
+
 }

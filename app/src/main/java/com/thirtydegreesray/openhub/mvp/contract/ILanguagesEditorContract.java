@@ -12,18 +12,24 @@ import java.util.ArrayList;
 
 public interface ILanguagesEditorContract {
 
-    interface View extends IBaseContract.View, IBaseListContract.View{
-        void showLanguages(ArrayList<TrendingLanguage> languages);
-        void notifyItemInserted(int position);
-    }
+	interface View extends IBaseContract.View, IBaseListContract.View {
+		void showLanguages(ArrayList<TrendingLanguage> languages);
 
-    interface Presenter extends IBaseContract.Presenter<ILanguagesEditorContract.View>{
-        void loadLanguages();
-        void searchLanguages(String key);
-        void saveSelectedLanguages();
-        TrendingLanguage removeLanguage(int position);
-        void undoRemoveLanguage();
-        int getListSelectedLanguageCount();
-    }
+		void notifyItemInserted(int position);
+	}
+
+	interface Presenter extends IBaseContract.Presenter<ILanguagesEditorContract.View> {
+		void loadLanguages();
+
+		void searchLanguages(String key);
+
+		void saveSelectedLanguages();
+
+		TrendingLanguage removeLanguage(int position);
+
+		void undoRemoveLanguage();
+
+		int getListSelectedLanguageCount();
+	}
 
 }

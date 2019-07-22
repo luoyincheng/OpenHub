@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import android.support.annotation.NonNull;
@@ -13,16 +11,20 @@ import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
 
 public interface IViewerContract {
 
-    interface View extends IBaseContract.View{
-        void loadImageUrl(@NonNull String url);
-        void loadMdText(@NonNull String text, @Nullable String baseUrl);
-        void loadCode(@NonNull String text, @Nullable String extension);
-        void loadDiffFile(@NonNull String text);
-        void loadHtmlSource(@NonNull String htmlSource);
-    }
+	interface View extends IBaseContract.View {
+		void loadImageUrl(@NonNull String url);
 
-    interface Presenter extends IBaseContract.Presenter<IViewerContract.View>{
-        void load(boolean isReload);
-    }
+		void loadMdText(@NonNull String text, @Nullable String baseUrl);
+
+		void loadCode(@NonNull String text, @Nullable String extension);
+
+		void loadDiffFile(@NonNull String text);
+
+		void loadHtmlSource(@NonNull String htmlSource);
+	}
+
+	interface Presenter extends IBaseContract.Presenter<IViewerContract.View> {
+		void load(boolean isReload);
+	}
 
 }

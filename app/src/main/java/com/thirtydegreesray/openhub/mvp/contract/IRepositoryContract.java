@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
@@ -14,21 +12,30 @@ import java.util.ArrayList;
 
 public interface IRepositoryContract {
 
-    interface View extends IBaseContract.View{
-        void showRepo(Repository repo);
-        void showBranchesAndTags(ArrayList<Branch> list, Branch curBranch);
-        void invalidateOptionsMenu();
-        void showStarWishes();
-    }
+	interface View extends IBaseContract.View {
+		void showRepo(Repository repo);
 
-    interface Presenter extends IBaseContract.Presenter<IRepositoryContract.View>{
-        void loadBranchesAndTags();
-        void starRepo(boolean star);
-        void watchRepo(boolean watch);
-        void createFork();
-        boolean isForkEnable();
-        boolean isBookmarked();
-        void bookmark(boolean bookmark);
-    }
+		void showBranchesAndTags(ArrayList<Branch> list, Branch curBranch);
+
+		void invalidateOptionsMenu();
+
+		void showStarWishes();
+	}
+
+	interface Presenter extends IBaseContract.Presenter<IRepositoryContract.View> {
+		void loadBranchesAndTags();
+
+		void starRepo(boolean star);
+
+		void watchRepo(boolean watch);
+
+		void createFork();
+
+		boolean isForkEnable();
+
+		boolean isBookmarked();
+
+		void bookmark(boolean bookmark);
+	}
 
 }

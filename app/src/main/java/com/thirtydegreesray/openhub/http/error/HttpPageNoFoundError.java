@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.http.error;
 
 /**
@@ -7,7 +5,7 @@ package com.thirtydegreesray.openhub.http.error;
  */
 
 public class HttpPageNoFoundError extends HttpError {
-    public HttpPageNoFoundError() {
-        super(HttpErrorCode.PAGE_NOT_FOUND);
-    }
+	public HttpPageNoFoundError() {
+		super(HttpErrorCode.PAGE_NOT_FOUND);
+	}
 }

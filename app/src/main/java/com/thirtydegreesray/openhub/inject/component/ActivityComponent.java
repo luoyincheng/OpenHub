@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.inject.component;
 
 import com.thirtydegreesray.openhub.inject.ActivityScope;
@@ -27,17 +25,29 @@ import dagger.Component;
 @ActivityScope
 @Component(modules = ActivityModule.class, dependencies = AppComponent.class)
 public interface ActivityComponent {
-    void inject(SplashActivity activity);
-    void inject(LoginActivity activity);
-    void inject(MainActivity activity);
-    void inject(SettingsActivity activity);
-    void inject(RepositoryActivity activity);
-    void inject(ProfileActivity activity);
-    void inject(SearchActivity activity);
-    void inject(ReleaseInfoActivity activity);
-    void inject(IssuesActivity activity);
-    void inject(IssueDetailActivity activity);
-    void inject(EditIssueActivity activity);
-    void inject(CommitDetailActivity activity);
-    void inject(TrendingActivity activity);
+	void inject(SplashActivity activity);
+
+	void inject(LoginActivity activity);
+
+	void inject(MainActivity activity);
+
+	void inject(SettingsActivity activity);
+
+	void inject(RepositoryActivity activity);
+
+	void inject(ProfileActivity activity);
+
+	void inject(SearchActivity activity);
+
+	void inject(ReleaseInfoActivity activity);
+
+	void inject(IssuesActivity activity);
+
+	void inject(IssueDetailActivity activity);
+
+	void inject(EditIssueActivity activity);
+
+	void inject(CommitDetailActivity activity);
+
+	void inject(TrendingActivity activity);
 }

@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
@@ -12,14 +10,14 @@ import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
 
 public interface ISettingsContract {
 
-    interface View extends IBaseContract.View{
+	interface View extends IBaseContract.View {
 
-    }
+	}
 
-    interface Presenter extends IBaseContract.Presenter<ISettingsContract.View>{
+	interface Presenter extends IBaseContract.Presenter<ISettingsContract.View> {
 
-        void logout();
+		void logout();
 
-    }
+	}
 
 }

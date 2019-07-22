@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/card_view_vertical_margin"
@@ -21,52 +19,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_avatar"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="?android:selectableItemBackgroundBorderless"/>
+                android:background="?android:selectableItemBackgroundBorderless" />
+
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OpenHub"
-                android:textSize="@dimen/text_normal"
-                android:textColor="?colorAccent"
                 android:layout_marginStart="@dimen/spacing_normal"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:text="OpenHub"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/text_normal" />
+
             <TextView
                 android:id="@+id/time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginStart="@dimen/spacing_mini"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:textSize="@dimen/text_mini"
                 android:textColor="?android:textColorSecondary"
-                android:layout_marginStart="@dimen/spacing_mini"
-                android:layout_gravity="top"/>
+                android:textSize="@dimen/text_mini" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/comment_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="@dimen/text_small"
-            android:paddingTop="@dimen/spacing_small"
-            android:textColor="?android:textColorPrimary"
+            android:ellipsize="end"
             android:maxLines="20"
-            android:ellipsize="end"/>
+            android:paddingTop="@dimen/spacing_small"
+            android:text=""
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_small" />
 
         <TextView
             android:id="@+id/issue_labels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="@dimen/text_small"
+            android:gravity="center"
             android:paddingTop="@dimen/spacing_small"
+            android:text=""
             android:textColor="?android:textColorPrimary"
-            android:gravity="center"/>
+            android:textSize="@dimen/text_small" />
 
     </LinearLayout>
 

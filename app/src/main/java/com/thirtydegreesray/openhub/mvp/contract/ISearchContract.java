@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import android.support.annotation.NonNull;
@@ -15,15 +13,19 @@ import java.util.ArrayList;
 
 public interface ISearchContract {
 
-    interface View extends IBaseContract.View{
-        void showSearches(ArrayList<SearchModel> searchModels);
-    }
+	interface View extends IBaseContract.View {
+		void showSearches(ArrayList<SearchModel> searchModels);
+	}
 
-    interface Presenter extends IBaseContract.Presenter<ISearchContract.View>{
-        ArrayList<SearchModel> getQueryModels(@NonNull String query);
-        SearchModel getSortModel(int page, int sortId);
-        @NonNull ArrayList<String> getSearchRecordList();
-        void addSearchRecord(@NonNull String record);
-    }
+	interface Presenter extends IBaseContract.Presenter<ISearchContract.View> {
+		ArrayList<SearchModel> getQueryModels(@NonNull String query);
+
+		SearchModel getSortModel(int page, int sortId);
+
+		@NonNull
+		ArrayList<String> getSearchRecordList();
+
+		void addSearchRecord(@NonNull String record);
+	}
 
 }

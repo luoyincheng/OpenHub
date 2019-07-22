@@ -18,25 +18,27 @@ import com.thirtydegreesray.openhub.util.BundleHelper;
 
 public class WikiActivity extends SingleFragmentActivity<IBaseContract.Presenter, WikiFragment> {
 
-    public static void show(@NonNull Activity activity, @NonNull String owner,
-                            @NonNull String repo){
-        Intent intent = new Intent(activity, WikiActivity.class);
-        intent.putExtras(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
-        activity.startActivity(intent);
-    }
+	@AutoAccess
+	String owner;
+	@AutoAccess
+	String repo;
 
-    @AutoAccess String owner;
-    @AutoAccess String repo;
+	public static void show(@NonNull Activity activity, @NonNull String owner,
+	                        @NonNull String repo) {
+		Intent intent = new Intent(activity, WikiActivity.class);
+		intent.putExtras(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
+		activity.startActivity(intent);
+	}
 
-    @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-        setToolbarTitle(getString(R.string.recent_wiki_updates), owner.concat("/").concat(repo));
-        setToolbarScrollAble(true);
-    }
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
+		setToolbarTitle(getString(R.string.recent_wiki_updates), owner.concat("/").concat(repo));
+		setToolbarScrollAble(true);
+	}
 
-    @Override
-    protected WikiFragment createFragment() {
-        return WikiFragment.create(owner, repo);
-    }
+	@Override
+	protected WikiFragment createFragment() {
+		return WikiFragment.create(owner, repo);
+	}
 }

@@ -8,37 +8,37 @@ import com.thirtydegreesray.openhub.mvp.contract.base.IBasePagerContract;
  */
 
 public abstract class BasePagerPresenter<V extends IBasePagerContract.View> extends BasePresenter<V>
-        implements IBasePagerContract.Presenter<V>{
+		implements IBasePagerContract.Presenter<V> {
 
-    private boolean isLoaded = false;
+	private boolean isLoaded = false;
 
-    public BasePagerPresenter(DaoSession daoSession) {
-        super(daoSession);
-    }
+	public BasePagerPresenter(DaoSession daoSession) {
+		super(daoSession);
+	}
 
-    @Override
-    public void onViewInitialized() {
-        super.onViewInitialized();
-        prepareLoadData();
-    }
+	@Override
+	public void onViewInitialized() {
+		super.onViewInitialized();
+		prepareLoadData();
+	}
 
-    @Override
-    public void prepareLoadData() {
-        if(mView == null) {
-            return;
-        }
-        if(mView.isPagerFragment() && (!isViewInitialized() || !mView.isFragmentShowed())){
-            return;
-        }
-        if(isLoaded) return;
-        isLoaded = true;
-        loadData();
-    }
+	@Override
+	public void prepareLoadData() {
+		if (mView == null) {
+			return;
+		}
+		if (mView.isPagerFragment() && (!isViewInitialized() || !mView.isFragmentShowed())) {
+			return;
+		}
+		if (isLoaded) return;
+		isLoaded = true;
+		loadData();
+	}
 
-    public void setLoaded(boolean loaded) {
-        isLoaded = loaded;
-    }
+	public void setLoaded(boolean loaded) {
+		isLoaded = loaded;
+	}
 
-    protected abstract void loadData();
+	protected abstract void loadData();
 
 }

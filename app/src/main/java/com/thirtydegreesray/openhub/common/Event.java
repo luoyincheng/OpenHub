@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.common;
 
 import com.thirtydegreesray.openhub.mvp.model.Repository;
@@ -12,46 +10,47 @@ import com.thirtydegreesray.openhub.mvp.model.SearchModel;
 
 public class Event {
 
-    /**
-     * 网络状态改变事件
-     */
-    public static class NetChangedEvent{
-        public int preNetStatus;
-        public int curNetStatus;
-        public NetChangedEvent(int preNetStatus, int curNetStatus){
-            this.preNetStatus = preNetStatus;
-            this.curNetStatus = curNetStatus;
-        }
-    }
+	/**
+	 * 网络状态改变事件
+	 */
+	public static class NetChangedEvent {
+		public int preNetStatus;
+		public int curNetStatus;
 
-    public static class ServerStatusChangedEvent{
-        public final static int SERVER_START = 0;
+		public NetChangedEvent(int preNetStatus, int curNetStatus) {
+			this.preNetStatus = preNetStatus;
+			this.curNetStatus = curNetStatus;
+		}
+	}
 
-        public final static int SERVER_STOP = 1;
+	public static class ServerStatusChangedEvent {
+		public final static int SERVER_START = 0;
 
-        public final static int SERVER_STARTED = 2;
+		public final static int SERVER_STOP = 1;
 
-        public int serverStatus;
+		public final static int SERVER_STARTED = 2;
 
-        public ServerStatusChangedEvent(int serverStatus) {
-            this.serverStatus = serverStatus;
-        }
-    }
+		public int serverStatus;
 
-    public static class RepoInfoUpdatedEvent{
-        public Repository repository;
+		public ServerStatusChangedEvent(int serverStatus) {
+			this.serverStatus = serverStatus;
+		}
+	}
 
-        public RepoInfoUpdatedEvent(Repository repository) {
-            this.repository = repository;
-        }
-    }
+	public static class RepoInfoUpdatedEvent {
+		public Repository repository;
 
-    public static class SearchEvent{
-        public SearchModel searchModel;
+		public RepoInfoUpdatedEvent(Repository repository) {
+			this.repository = repository;
+		}
+	}
 
-        public SearchEvent(SearchModel searchModel) {
-            this.searchModel = searchModel;
-        }
-    }
+	public static class SearchEvent {
+		public SearchModel searchModel;
+
+		public SearchEvent(SearchModel searchModel) {
+			this.searchModel = searchModel;
+		}
+	}
 
 }

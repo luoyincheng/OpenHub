@@ -11,11 +11,11 @@ import javax.inject.Inject;
  */
 
 public class IssuesActPresenter extends BasePresenter<IIssuesActContract.View>
-        implements IIssuesActContract.Presenter{
+		implements IIssuesActContract.Presenter {
 
-    @Inject
-    public IssuesActPresenter(DaoSession daoSession) {
-        super(daoSession);
-    }
+	@Inject
+	public IssuesActPresenter(DaoSession daoSession) {
+		super(daoSession);
+	}
 
 }

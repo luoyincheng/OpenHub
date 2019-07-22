@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.inject.module;
 
 import android.content.Context;
@@ -18,21 +16,21 @@ import dagger.Provides;
 @Module
 public class FragmentModule {
 
-    private BaseFragment mFragment;
+	private BaseFragment mFragment;
 
-    public FragmentModule(BaseFragment fragment) {
-        mFragment = fragment;
-    }
+	public FragmentModule(BaseFragment fragment) {
+		mFragment = fragment;
+	}
 
-    @Provides
-    @FragmentScope
-    public BaseFragment provideFragment(){
-        return mFragment;
-    }
+	@Provides
+	@FragmentScope
+	public BaseFragment provideFragment() {
+		return mFragment;
+	}
 
-    @Provides
-    @FragmentScope
-    public Context provideContext(){
-        return mFragment.getActivity();
-    }
+	@Provides
+	@FragmentScope
+	public Context provideContext() {
+		return mFragment.getActivity();
+	}
 }

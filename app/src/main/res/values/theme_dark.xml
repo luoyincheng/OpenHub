@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  ~ Copied from Copyright (C) 2017 Kosh.
  ~ Modified by Copyright (C) 2017 ThirtyDegreesRay.
 -->
@@ -35,7 +34,9 @@
         <item name="color_primary_blur">@color/dark_color_primary_blur</item>
         <item name="popup_theme">@style/PopupThemeDark</item>
         <item name="appbar_theme">@style/AppbarThemeDark</item>
-        <item name="android:contextPopupMenuStyle" tools:targetApi="n">@style/ContextPopupThemeDark</item>
+        <item name="android:contextPopupMenuStyle" tools:targetApi="n">
+            @style/ContextPopupThemeDark
+        </item>
         <item name="popup_menu_theme">@style/PopupMenuDark</item>
     </style>
 
@@ -49,8 +50,7 @@
         <item name="android:windowBackground">@color/dark_color_window_background</item>
     </style>
 
-    <style name="AppbarThemeDark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="AppbarThemeDark" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
 
 
     <style name="PopupMenuDark" parent="Widget.AppCompat.PopupMenu">

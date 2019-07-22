@@ -5,5 +5,5 @@ package com.thirtydegreesray.openhub.mvp.model.filter;
  */
 
 public enum TrendingSince {
-    Daily, Weekly, Monthly
+	Daily, Weekly, Monthly
 }

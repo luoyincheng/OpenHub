@@ -9,58 +9,57 @@ import android.os.Parcelable;
 
 public class IssueCrossReferencedSource implements Parcelable {
 
-    enum Type{
-        issue, commit
-    }
+	public static final Parcelable.Creator<IssueCrossReferencedSource> CREATOR = new Parcelable.Creator<IssueCrossReferencedSource>() {
+		@Override
+		public IssueCrossReferencedSource createFromParcel(Parcel source) {
+			return new IssueCrossReferencedSource(source);
+		}
 
-    private Type type;
-    private Issue issue;
+		@Override
+		public IssueCrossReferencedSource[] newArray(int size) {
+			return new IssueCrossReferencedSource[size];
+		}
+	};
+	private Type type;
+	private Issue issue;
 
-    public Type getType() {
-        return type;
-    }
+	public IssueCrossReferencedSource() {
+	}
 
-    public Issue getIssue() {
-        return issue;
-    }
+	protected IssueCrossReferencedSource(Parcel in) {
+		int tmpType = in.readInt();
+		this.type = tmpType == -1 ? null : Type.values()[tmpType];
+		this.issue = in.readParcelable(Issue.class.getClassLoader());
+	}
 
-    public void setType(Type type) {
-        this.type = type;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    public void setIssue(Issue issue) {
-        this.issue = issue;
-    }
+	public void setType(Type type) {
+		this.type = type;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public Issue getIssue() {
+		return issue;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeParcelable(this.issue, flags);
-    }
+	public void setIssue(Issue issue) {
+		this.issue = issue;
+	}
 
-    public IssueCrossReferencedSource() {
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    protected IssueCrossReferencedSource(Parcel in) {
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : Type.values()[tmpType];
-        this.issue = in.readParcelable(Issue.class.getClassLoader());
-    }
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+		dest.writeParcelable(this.issue, flags);
+	}
 
-    public static final Parcelable.Creator<IssueCrossReferencedSource> CREATOR = new Parcelable.Creator<IssueCrossReferencedSource>() {
-        @Override
-        public IssueCrossReferencedSource createFromParcel(Parcel source) {
-            return new IssueCrossReferencedSource(source);
-        }
-
-        @Override
-        public IssueCrossReferencedSource[] newArray(int size) {
-            return new IssueCrossReferencedSource[size];
-        }
-    };
+	enum Type {
+		issue, commit
+	}
 }

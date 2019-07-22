@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -11,64 +9,63 @@ import android.os.Parcelable;
 
 public class CommitStats implements Parcelable {
 
-    private int total;
-    private int additions;
-    private int deletions;
+	public static final Parcelable.Creator<CommitStats> CREATOR = new Parcelable.Creator<CommitStats>() {
+		@Override
+		public CommitStats createFromParcel(Parcel source) {
+			return new CommitStats(source);
+		}
 
-    public int getTotal() {
-        return total;
-    }
+		@Override
+		public CommitStats[] newArray(int size) {
+			return new CommitStats[size];
+		}
+	};
+	private int total;
+	private int additions;
+	private int deletions;
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
+	public CommitStats() {
+	}
 
-    public int getAdditions() {
-        return additions;
-    }
+	protected CommitStats(Parcel in) {
+		this.total = in.readInt();
+		this.additions = in.readInt();
+		this.deletions = in.readInt();
+	}
 
-    public void setAdditions(int additions) {
-        this.additions = additions;
-    }
+	public int getTotal() {
+		return total;
+	}
 
-    public int getDeletions() {
-        return deletions;
-    }
+	public void setTotal(int total) {
+		this.total = total;
+	}
 
-    public void setDeletions(int deletions) {
-        this.deletions = deletions;
-    }
+	public int getAdditions() {
+		return additions;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setAdditions(int additions) {
+		this.additions = additions;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.total);
-        dest.writeInt(this.additions);
-        dest.writeInt(this.deletions);
-    }
+	public int getDeletions() {
+		return deletions;
+	}
 
-    public CommitStats() {
-    }
+	public void setDeletions(int deletions) {
+		this.deletions = deletions;
+	}
 
-    protected CommitStats(Parcel in) {
-        this.total = in.readInt();
-        this.additions = in.readInt();
-        this.deletions = in.readInt();
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<CommitStats> CREATOR = new Parcelable.Creator<CommitStats>() {
-        @Override
-        public CommitStats createFromParcel(Parcel source) {
-            return new CommitStats(source);
-        }
-
-        @Override
-        public CommitStats[] newArray(int size) {
-            return new CommitStats[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(this.total);
+		dest.writeInt(this.additions);
+		dest.writeInt(this.deletions);
+	}
 }

@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub;
 
 import android.support.annotation.Nullable;
@@ -16,38 +14,42 @@ import java.util.Locale;
  * @author ThirtyDegreesRay
  */
 
-public enum  AppData {
-    INSTANCE;
+public enum AppData {
+	INSTANCE;
 
-    @AutoAccess(dataName = "appData_loggedUser") User loggedUser;
-    @AutoAccess(dataName = "appData_authUser") AuthUser authUser;
-    @AutoAccess(dataName = "appData_systemDefaultLocal") Locale systemDefaultLocal;
+	@AutoAccess(dataName = "appData_loggedUser")
+	User loggedUser;
+	@AutoAccess(dataName = "appData_authUser")
+	AuthUser authUser;
+	@AutoAccess(dataName = "appData_systemDefaultLocal")
+	Locale systemDefaultLocal;
 
-    public User getLoggedUser() {
-        return loggedUser;
-    }
+	public User getLoggedUser() {
+		return loggedUser;
+	}
 
-    public void setLoggedUser(User loggedUser) {
-        this.loggedUser = loggedUser;
-    }
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
+	}
 
-    public AuthUser getAuthUser() {
-        return authUser;
-    }
+	public AuthUser getAuthUser() {
+		return authUser;
+	}
 
-    public void setAuthUser(AuthUser authUser) {
-        this.authUser = authUser;
-    }
+	public void setAuthUser(AuthUser authUser) {
+		this.authUser = authUser;
+	}
 
-    @Nullable public String getAccessToken() {
-        return authUser == null ? null : authUser.getAccessToken();
-    }
+	@Nullable
+	public String getAccessToken() {
+		return authUser == null ? null : authUser.getAccessToken();
+	}
 
-    public Locale getSystemDefaultLocal() {
-        if(systemDefaultLocal == null){
-            systemDefaultLocal = Locale.getDefault();
-        }
-        return systemDefaultLocal;
-    }
+	public Locale getSystemDefaultLocal() {
+		if (systemDefaultLocal == null) {
+			systemDefaultLocal = Locale.getDefault();
+		}
+		return systemDefaultLocal;
+	}
 
 }

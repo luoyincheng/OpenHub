@@ -24,55 +24,55 @@ import java.util.ArrayList;
  */
 
 public class CollectionsFragment extends ListFragment<CollectionsPresenter, CollectionAdapter>
-        implements ICollectionsContract.View {
+		implements ICollectionsContract.View {
 
-    public static Fragment create(){
-        return new CollectionsFragment();
-    }
+	public static Fragment create() {
+		return new CollectionsFragment();
+	}
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_list;
-    }
+	@Override
+	protected int getLayoutId() {
+		return R.layout.fragment_list;
+	}
 
-    @Override
-    protected void setupFragmentComponent(AppComponent appComponent) {
-        DaggerFragmentComponent.builder()
-                .appComponent(appComponent)
-                .fragmentModule(new FragmentModule(this))
-                .build()
-                .inject(this);
-    }
+	@Override
+	protected void setupFragmentComponent(AppComponent appComponent) {
+		DaggerFragmentComponent.builder()
+				.appComponent(appComponent)
+				.fragmentModule(new FragmentModule(this))
+				.build()
+				.inject(this);
+	}
 
-    @Override
-    protected void initFragment(Bundle savedInstanceState) {
-        super.initFragment(savedInstanceState);
-        setLoadMoreEnable(false);
-    }
+	@Override
+	protected void initFragment(Bundle savedInstanceState) {
+		super.initFragment(savedInstanceState);
+		setLoadMoreEnable(false);
+	}
 
-    @Override
-    protected void onReLoadData() {
-        mPresenter.loadCollections(true);
-    }
+	@Override
+	protected void onReLoadData() {
+		mPresenter.loadCollections(true);
+	}
 
-    @Override
-    protected String getEmptyTip() {
-        return getString(R.string.no_repo_collections);
-    }
+	@Override
+	protected String getEmptyTip() {
+		return getString(R.string.no_repo_collections);
+	}
 
-    @Override
-    public void showCollections(ArrayList<Collection> collections) {
-        adapter.setData(collections);
-        postNotifyDataSetChanged();
-        if(collections != null && collections.size() > 0 && PrefUtils.isCollectionsTipAble()){
-            showOperationTip(R.string.collections_tip);
-            PrefUtils.set(PrefUtils.COLLECTIONS_TIP_ABLE, false);
-        }
-    }
+	@Override
+	public void showCollections(ArrayList<Collection> collections) {
+		adapter.setData(collections);
+		postNotifyDataSetChanged();
+		if (collections != null && collections.size() > 0 && PrefUtils.isCollectionsTipAble()) {
+			showOperationTip(R.string.collections_tip);
+			PrefUtils.set(PrefUtils.COLLECTIONS_TIP_ABLE, false);
+		}
+	}
 
-    @Override
-    public void onItemClick(int position, @NonNull View view) {
-        super.onItemClick(position, view);
-        RepoListActivity.showCollection(getActivity(), adapter.getData().get(position));
-    }
+	@Override
+	public void onItemClick(int position, @NonNull View view) {
+		super.onItemClick(position, view);
+		RepoListActivity.showCollection(getActivity(), adapter.getData().get(position));
+	}
 }

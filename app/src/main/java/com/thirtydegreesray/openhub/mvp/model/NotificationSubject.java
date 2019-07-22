@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -11,70 +9,69 @@ import android.os.Parcelable;
 
 public class NotificationSubject implements Parcelable {
 
-    public enum Type{
-        Issue, PullRequest, Commit
-    }
+	public static final Parcelable.Creator<NotificationSubject> CREATOR = new Parcelable.Creator<NotificationSubject>() {
+		@Override
+		public NotificationSubject createFromParcel(Parcel source) {
+			return new NotificationSubject(source);
+		}
 
-    private String title;
-    private String url;
-    private Type type;
+		@Override
+		public NotificationSubject[] newArray(int size) {
+			return new NotificationSubject[size];
+		}
+	};
+	private String title;
+	private String url;
+	private Type type;
 
-    public String getTitle() {
-        return title;
-    }
+	public NotificationSubject() {
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	protected NotificationSubject(Parcel in) {
+		this.title = in.readString();
+		this.url = in.readString();
+		int tmpType = in.readInt();
+		this.type = tmpType == -1 ? null : Type.values()[tmpType];
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public Type getType() {
-        return type;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setType(Type type) {
-        this.type = type;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.title);
-        dest.writeString(this.url);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-    }
+	public void setType(Type type) {
+		this.type = type;
+	}
 
-    public NotificationSubject() {
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    protected NotificationSubject(Parcel in) {
-        this.title = in.readString();
-        this.url = in.readString();
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : Type.values()[tmpType];
-    }
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.title);
+		dest.writeString(this.url);
+		dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+	}
 
-    public static final Parcelable.Creator<NotificationSubject> CREATOR = new Parcelable.Creator<NotificationSubject>() {
-        @Override
-        public NotificationSubject createFromParcel(Parcel source) {
-            return new NotificationSubject(source);
-        }
-
-        @Override
-        public NotificationSubject[] newArray(int size) {
-            return new NotificationSubject[size];
-        }
-    };
+	public enum Type {
+		Issue, PullRequest, Commit
+	}
 
 }

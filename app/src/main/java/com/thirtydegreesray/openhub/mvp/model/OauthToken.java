@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import com.google.gson.annotations.SerializedName;
@@ -12,27 +10,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class OauthToken {
 
-    @SerializedName("access_token")
-    private String accessToken;
+	@SerializedName("access_token")
+	private String accessToken;
 
-    private String scope;
+	private String scope;
 
-    public OauthToken() {
-    }
+	public OauthToken() {
+	}
 
-    public String getAccessToken() {
-        return accessToken;
-    }
+	public String getAccessToken() {
+		return accessToken;
+	}
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
 
-    public String getScope() {
-        return scope;
-    }
+	public String getScope() {
+		return scope;
+	}
 
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
 }

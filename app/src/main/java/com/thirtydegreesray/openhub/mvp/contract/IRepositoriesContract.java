@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
@@ -18,15 +16,16 @@ import java.util.ArrayList;
 
 public interface IRepositoriesContract {
 
-    interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
+	interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
 
-        void showRepositories(ArrayList<Repository> repositoryList);
+		void showRepositories(ArrayList<Repository> repositoryList);
 
-    }
+	}
 
-    interface Presenter extends IBasePagerContract.Presenter<IRepositoriesContract.View> {
-        void loadRepositories(boolean isReLoad, int page);
-        void loadRepositories(RepositoriesFilter filter);
-    }
+	interface Presenter extends IBasePagerContract.Presenter<IRepositoriesContract.View> {
+		void loadRepositories(boolean isReLoad, int page);
+
+		void loadRepositories(RepositoriesFilter filter);
+	}
 
 }

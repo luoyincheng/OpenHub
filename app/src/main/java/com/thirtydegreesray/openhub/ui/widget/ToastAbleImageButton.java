@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.ui.widget;
 
 import android.content.Context;
@@ -20,51 +18,51 @@ import com.thirtydegreesray.openhub.util.WindowUtil;
  */
 
 public class ToastAbleImageButton extends AppCompatImageView
-        implements View.OnLongClickListener {
+		implements View.OnLongClickListener {
 
-    private String toastText ;
+	private String toastText;
 
-    public ToastAbleImageButton(Context context) {
-        super(context);
-        init(null);
-    }
+	public ToastAbleImageButton(Context context) {
+		super(context);
+		init(null);
+	}
 
-    public ToastAbleImageButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs);
-    }
+	public ToastAbleImageButton(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init(attrs);
+	}
 
-    public ToastAbleImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(attrs);
-    }
+	public ToastAbleImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		init(attrs);
+	}
 
-    private void init(AttributeSet attrs) {
-        if (attrs != null) {
-            TypedArray tp = getContext().obtainStyledAttributes(attrs, R.styleable.ToastAbleImageButton);
-            try {
-                toastText = tp.getString(R.styleable.ToastAbleImageButton_toast_text);
-            } finally {
-                tp.recycle();
-            }
-            if(!StringUtils.isBlank(toastText)){
-                setOnLongClickListener(this);
-            }
-        }
-    }
+	private void init(AttributeSet attrs) {
+		if (attrs != null) {
+			TypedArray tp = getContext().obtainStyledAttributes(attrs, R.styleable.ToastAbleImageButton);
+			try {
+				toastText = tp.getString(R.styleable.ToastAbleImageButton_toast_text);
+			} finally {
+				tp.recycle();
+			}
+			if (!StringUtils.isBlank(toastText)) {
+				setOnLongClickListener(this);
+			}
+		}
+	}
 
-    @Override
-    public boolean onLongClick(View v) {
-        Toast toast = Toast.makeText(getContext(), toastText, Toast.LENGTH_SHORT);
-        int[] location = new int[2];
-        v.getLocationInWindow(location);
-        if(location[0] + v.getWidth() / 2 < WindowUtil.screenWidth / 2){
-            toast.setGravity(Gravity.TOP|Gravity.START, location[0] + v.getWidth() , location[1] + v.getHeight() / 2);
-        } else {
-            toast.setGravity(Gravity.TOP|Gravity.END, WindowUtil.screenWidth - location[0] , location[1] + v.getHeight() / 2);
-        }
-        toast.show();
-        return true;
-    }
+	@Override
+	public boolean onLongClick(View v) {
+		Toast toast = Toast.makeText(getContext(), toastText, Toast.LENGTH_SHORT);
+		int[] location = new int[2];
+		v.getLocationInWindow(location);
+		if (location[0] + v.getWidth() / 2 < WindowUtil.screenWidth / 2) {
+			toast.setGravity(Gravity.TOP | Gravity.START, location[0] + v.getWidth(), location[1] + v.getHeight() / 2);
+		} else {
+			toast.setGravity(Gravity.TOP | Gravity.END, WindowUtil.screenWidth - location[0], location[1] + v.getHeight() / 2);
+		}
+		toast.show();
+		return true;
+	}
 
 }

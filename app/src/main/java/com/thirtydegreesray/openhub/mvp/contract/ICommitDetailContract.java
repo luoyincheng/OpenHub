@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
@@ -12,14 +10,16 @@ import com.thirtydegreesray.openhub.mvp.model.RepoCommitExt;
 
 public interface ICommitDetailContract {
 
-    interface View extends IBaseContract.View{
-        void showCommit(RepoCommit commit);
-        void showCommitInfo(RepoCommitExt commitExt);
-        void showUserAvatar(String userAvatarUrl);
-    }
+	interface View extends IBaseContract.View {
+		void showCommit(RepoCommit commit);
 
-    interface Presenter extends IBaseContract.Presenter<ICommitDetailContract.View>{
-        void loadCommitInfo();
-    }
+		void showCommitInfo(RepoCommitExt commitExt);
+
+		void showUserAvatar(String userAvatarUrl);
+	}
+
+	interface Presenter extends IBaseContract.Presenter<ICommitDetailContract.View> {
+		void loadCommitInfo();
+	}
 
 }

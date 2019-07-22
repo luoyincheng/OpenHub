@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     tools:context=".ui.activity.ProfileActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -23,68 +22,68 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            android:paddingTop="0dp"
             app:collapsedTitleGravity="start"
+            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:expandedTitleMarginStart="96dp"
             app:expandedTitleMarginTop="60dp"
             app:expandedTitleTextAppearance="@style/Toolbar.Expand.TitleText"
-            android:paddingTop="0dp">
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/user_avatar_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.5"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_collapseMode="parallax"
                 android:background="?color_primary_blur"
-                android:fitsSystemWindows="true"/>
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|top"
+                android:layout_marginTop="86dp"
                 android:paddingStart="@dimen/spacing_normal"
                 android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_normal"
-                android:layout_marginTop="86dp">
+                android:paddingBottom="@dimen/spacing_normal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_avatar"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:transitionName="userAvatar"
-                    android:src="@mipmap/logo"/>
+                    android:src="@mipmap/logo"
+                    android:transitionName="userAvatar" />
 
                 <TextView
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="?title_color"
-                    android:layout_toEndOf="@+id/user_avatar"
                     android:layout_marginStart="@dimen/spacing_normal"
-                    android:layout_marginTop="@dimen/spacing_x_large"/>
+                    android:layout_marginTop="@dimen/spacing_x_large"
+                    android:layout_toEndOf="@+id/user_avatar"
+                    android:textColor="?title_color"
+                    android:textSize="@dimen/text_small" />
 
                 <TextView
                     android:id="@+id/joined_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="?title_color"
                     android:layout_below="@+id/location"
-                    android:layout_toEndOf="@+id/user_avatar"
                     android:layout_marginStart="@dimen/spacing_normal"
-                    android:transitionName="issueTitle"/>
+                    android:layout_toEndOf="@+id/user_avatar"
+                    android:gravity="center_vertical"
+                    android:textColor="?title_color"
+                    android:textSize="@dimen/text_small"
+                    android:transitionName="issueTitle" />
 
             </RelativeLayout>
 
@@ -93,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="?popup_theme"/>
+                app:popupTheme="?popup_theme" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -104,8 +103,8 @@
             android:visibility="visible"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabTextAppearance="@style/TextAppearance.Design.Tab"
-            app:tabSelectedTextColor="?title_color"/>
+            app:tabSelectedTextColor="?title_color"
+            app:tabTextAppearance="@style/TextAppearance.Design.Tab" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -117,7 +116,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <ProgressBar
             android:id="@+id/loader"
@@ -125,10 +124,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:paddingEnd="@dimen/spacing_large"
-            android:paddingStart="@dimen/spacing_large"
             android:indeterminate="true"
-            android:visibility="gone"/>
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            android:visibility="gone" />
 
     </android.support.design.widget.CoordinatorLayout>
 

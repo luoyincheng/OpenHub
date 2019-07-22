@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.util;
 
 import android.content.Context;
@@ -10,10 +8,10 @@ import android.util.Log;
 
 /**
  * 检测实时网络状态  <p>
- * @author Administrator
  *
+ * @author Administrator
  */
-public enum  NetHelper {
+public enum NetHelper {
 	INSTANCE;
 
 	public static final int TYPE_DISCONNECT = 0;
@@ -24,7 +22,7 @@ public enum  NetHelper {
 	private int mCurNetStatus;
 	private Context mContext;
 
-	public void init(Context context){
+	public void init(Context context) {
 		mContext = context;
 		checkNet();
 	}
@@ -32,27 +30,27 @@ public enum  NetHelper {
 	/**
 	 * 检测当前网络状态
 	 */
-	public void checkNet(){
+	public void checkNet() {
 		try {
 			ConnectivityManager connectivity = (ConnectivityManager) mContext
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			if (connectivity != null) {
 				// 获取网络连接管理的对象
 				NetworkInfo info = connectivity.getActiveNetworkInfo();
-				if (info != null&& info.isAvailable()) {
+				if (info != null && info.isAvailable()) {
 					// 判断当前网络是否已经连接
 					if (info.getState() == NetworkInfo.State.CONNECTED) {
-						if(info.getType() == ConnectivityManager.TYPE_WIFI)
-							mCurNetStatus =  TYPE_WIFI;
-						if(info.getType() == ConnectivityManager.TYPE_MOBILE)
-							mCurNetStatus =  TYPE_MOBILE;
+						if (info.getType() == ConnectivityManager.TYPE_WIFI)
+							mCurNetStatus = TYPE_WIFI;
+						if (info.getType() == ConnectivityManager.TYPE_MOBILE)
+							mCurNetStatus = TYPE_MOBILE;
 					}
-				} else{
+				} else {
 					mCurNetStatus = TYPE_DISCONNECT;
 				}
 			}
 		} catch (Exception e) {
-			Log.v("error",e.toString());
+			Log.v("error", e.toString());
 			e.printStackTrace();
 			mCurNetStatus = TYPE_DISCONNECT;
 		}
@@ -60,26 +58,29 @@ public enum  NetHelper {
 
 	/**
 	 * 网络是否可用
+	 *
 	 * @return
-     */
+	 */
 	@NonNull
-    public Boolean getNetEnabled(){
+	public Boolean getNetEnabled() {
 		return mCurNetStatus == TYPE_MOBILE || mCurNetStatus == TYPE_WIFI;
 	}
 
 	/**
 	 * 是否处于移动网络状态
+	 *
 	 * @return
-     */
+	 */
 	@NonNull
-    public Boolean isMobileStatus(){
+	public Boolean isMobileStatus() {
 		return mCurNetStatus == TYPE_MOBILE;
 	}
 
 	/**
 	 * 获取当前网络状态
+	 *
 	 * @return
-     */
+	 */
 	public int getNetStatus() {
 		return mCurNetStatus;
 	}

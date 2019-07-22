@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.common;
 
 import org.greenrobot.eventbus.EventBus;
@@ -9,21 +7,21 @@ import org.greenrobot.eventbus.EventBus;
  * Created by ThirtyDegreesRay on 2016/8/22 14:55
  */
 
-public enum  AppEventBus {
-    INSTANCE;
+public enum AppEventBus {
+	INSTANCE;
 
-    AppEventBus(){
-        init();
-    }
+	private EventBus eventBus;
 
-    private EventBus eventBus ;
+	AppEventBus() {
+		init();
+	}
 
-    private void init(){
-        eventBus = EventBus.builder()
-                .installDefaultEventBus();
-    }
+	private void init() {
+		eventBus = EventBus.builder()
+				.installDefaultEventBus();
+	}
 
-    public EventBus getEventBus() {
-        return eventBus;
-    }
+	public EventBus getEventBus() {
+		return eventBus;
+	}
 }

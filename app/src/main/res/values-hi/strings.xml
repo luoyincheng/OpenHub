@@ -162,13 +162,13 @@
     <string name="no_repository">कोई रिपॉजिटरी नहीं</string>
     <string name="no_file">कोई फ़ाइल नहीं</string>
     <string name="developing">डेवलपिंग</string>
-    <string name="version" >वर्शन</string>
-    <string name="source_code" >सोर्स कोड</string>
-    <string name="source_code_wishes" >मेरा समर्थन करने के लिए स्टार</string>
-    <string name="rate_in_market" >मार्केट में रेट या कमेंट करें</string>
-    <string name="author" >ऑथर</string>
-    <string name="follow_on_github" >GitHub पर फॉलो करें</string>
-    <string name="email" >ईमेल</string>
+    <string name="version">वर्शन</string>
+    <string name="source_code">सोर्स कोड</string>
+    <string name="source_code_wishes">मेरा समर्थन करने के लिए स्टार</string>
+    <string name="rate_in_market">मार्केट में रेट या कमेंट करें</string>
+    <string name="author">ऑथर</string>
+    <string name="follow_on_github">GitHub पर फॉलो करें</string>
+    <string name="email">ईमेल</string>
     <string name="loading">लोड हो रहा है</string>
 
     <string name="upgrade">अपग्रेड</string>

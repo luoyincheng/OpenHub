@@ -26,73 +26,73 @@ import java.util.ArrayList;
  */
 
 public class ReleasesFragment extends ListFragment<ReleasesPresenter, ReleasesAdapter>
-        implements IReleasesContract.View{
+		implements IReleasesContract.View {
 
-    public static ReleasesFragment create(String owner, String repo){
-        ReleasesFragment fragment = new ReleasesFragment();
-        fragment.setArguments(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
-        return fragment;
-    }
+	public static ReleasesFragment create(String owner, String repo) {
+		ReleasesFragment fragment = new ReleasesFragment();
+		fragment.setArguments(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
+		return fragment;
+	}
 
-    @Override
-    public void showReleases(ArrayList<Release> releases) {
-        adapter.setData(releases);
-        postNotifyDataSetChanged();
-        if(getCurPage() == 1 && !StringUtils.isBlankList(releases)
-                && PrefUtils.isReleasesLongClickTipAble()){
-            showOperationTip(R.string.releases_click_tip);
-            PrefUtils.set(PrefUtils.RELEASES_LONG_CLICK_TIP_ABLE, false);
-        }
-    }
+	@Override
+	public void showReleases(ArrayList<Release> releases) {
+		adapter.setData(releases);
+		postNotifyDataSetChanged();
+		if (getCurPage() == 1 && !StringUtils.isBlankList(releases)
+				&& PrefUtils.isReleasesLongClickTipAble()) {
+			showOperationTip(R.string.releases_click_tip);
+			PrefUtils.set(PrefUtils.RELEASES_LONG_CLICK_TIP_ABLE, false);
+		}
+	}
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_list;
-    }
+	@Override
+	protected int getLayoutId() {
+		return R.layout.fragment_list;
+	}
 
-    @Override
-    protected void setupFragmentComponent(AppComponent appComponent) {
-        DaggerFragmentComponent.builder()
-                .appComponent(appComponent)
-                .fragmentModule(new FragmentModule(this))
-                .build()
-                .inject(this);
-    }
+	@Override
+	protected void setupFragmentComponent(AppComponent appComponent) {
+		DaggerFragmentComponent.builder()
+				.appComponent(appComponent)
+				.fragmentModule(new FragmentModule(this))
+				.build()
+				.inject(this);
+	}
 
-    @Override
-    protected void initFragment(Bundle savedInstanceState) {
-        super.initFragment(savedInstanceState);
-        setLoadMoreEnable(true);
-    }
+	@Override
+	protected void initFragment(Bundle savedInstanceState) {
+		super.initFragment(savedInstanceState);
+		setLoadMoreEnable(true);
+	}
 
-    @Override
-    protected void onReLoadData() {
-        mPresenter.loadReleases(1, true);
-    }
+	@Override
+	protected void onReLoadData() {
+		mPresenter.loadReleases(1, true);
+	}
 
-    @Override
-    protected String getEmptyTip() {
-        return getString(R.string.no_releases);
-    }
+	@Override
+	protected String getEmptyTip() {
+		return getString(R.string.no_releases);
+	}
 
-    @Override
-    public void onItemClick(int position, @NonNull View view) {
-        super.onItemClick(position, view);
-        ReleaseInfoActivity.show(getActivity(), mPresenter.getOwner(), mPresenter.getRepoName(),
-                adapter.getData().get(position));
-    }
+	@Override
+	public void onItemClick(int position, @NonNull View view) {
+		super.onItemClick(position, view);
+		ReleaseInfoActivity.show(getActivity(), mPresenter.getOwner(), mPresenter.getRepoName(),
+				adapter.getData().get(position));
+	}
 
-    @Override
-    public boolean onItemLongClick(int position, @NonNull View view) {
-        Release release = adapter.getData().get(position);
-        DownloadSourceDialog.show(getActivity(), mPresenter.getRepoName(),
-                release.getTagName(), release);
-        return true;
-    }
+	@Override
+	public boolean onItemLongClick(int position, @NonNull View view) {
+		Release release = adapter.getData().get(position);
+		DownloadSourceDialog.show(getActivity(), mPresenter.getRepoName(),
+				release.getTagName(), release);
+		return true;
+	}
 
-    @Override
-    protected void onLoadMore(int page) {
-        super.onLoadMore(page);
-        mPresenter.loadReleases(page, false);
-    }
+	@Override
+	protected void onLoadMore(int page) {
+		super.onLoadMore(page);
+		mPresenter.loadReleases(page, false);
+	}
 }

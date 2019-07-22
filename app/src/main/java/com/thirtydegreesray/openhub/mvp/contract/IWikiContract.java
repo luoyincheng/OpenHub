@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 public interface IWikiContract {
 
-    interface View extends IBaseContract.View, IBaseListContract.View{
-        void showWiki(ArrayList<WikiModel> wikiList);
-    }
+	interface View extends IBaseContract.View, IBaseListContract.View {
+		void showWiki(ArrayList<WikiModel> wikiList);
+	}
 
-    interface Presenter extends IBaseContract.Presenter<IWikiContract.View>{
-        void loadWiki(boolean isReload);
-    }
+	interface Presenter extends IBaseContract.Presenter<IWikiContract.View> {
+		void loadWiki(boolean isReload);
+	}
 
 }

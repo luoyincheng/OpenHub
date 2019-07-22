@@ -8,170 +8,163 @@ import android.support.annotation.NonNull;
 
 public class ActivityRedirectionModel {
 
-    public enum Type {
-        User, Repo,
-        Fork,
-        Issues, Issue,
-        Commits, CommitCompare, Commit,
-        Releases, Release
-    }
+	private Type type;
+	private String actor;
+	private String owner;
+	private String repoName;
+	private Issue issue;
+	private String diffBefore;
+	private String diffHead;
+	private String branch;
+	private String commitSha;
+	private Release release;
 
-    private Type type;
+	public static ActivityRedirectionModel generateForUser(@NonNull Event event) {
+		return new ActivityRedirectionModel()
+				.setType(Type.User)
+				.setActor(event.getActor().getLogin());
+	}
 
-    private String actor;
+	public static ActivityRedirectionModel generateForRepo(@NonNull Event event) {
+		return generateRepoInfo(event, Type.Repo);
+	}
 
-    private String owner;
-    private String repoName;
+	public static ActivityRedirectionModel generateForFork(@NonNull Event event) {
+		return generateRepoInfo(event, Type.Fork).setActor(event.getActor().getLogin());
+	}
 
-    private Issue issue;
+	public static ActivityRedirectionModel generateRepoInfo(@NonNull Event event, @NonNull Type type) {
+		return new ActivityRedirectionModel()
+				.setRepoFullName(event.getRepo().getFullName())
+				.setType(type);
+	}
 
-    private String diffBefore;
-    private String diffHead;
+	public static ActivityRedirectionModel generateForIssues(@NonNull Event event) {
+		return generateRepoInfo(event, Type.Issue)
+				.setIssue(event.getPayload().getIssue());
+	}
 
-    private String branch;
-    private String commitSha;
+	public static ActivityRedirectionModel generateForCommits(@NonNull Event event) {
+		return generateRepoInfo(event, Type.Commits).setBranch(event.getPayload().getBranch());
+	}
 
-    private Release release;
+	public static ActivityRedirectionModel generateForCommitCompare(@NonNull Event event) {
+		return generateRepoInfo(event, Type.CommitCompare)
+				.setDiffBefore(event.getPayload().getBefore())
+				.setDiffHead(event.getPayload().getHead());
+	}
 
-    public static ActivityRedirectionModel generateForUser(@NonNull Event event) {
-        return new ActivityRedirectionModel()
-                .setType(Type.User)
-                .setActor(event.getActor().getLogin());
-    }
+	public static ActivityRedirectionModel generateForCommit(@NonNull Event event, int index) {
+		return generateRepoInfo(event, Type.Commit)
+				.setCommitSha(event.getPayload().getCommits().get(index).getSha());
+	}
 
-    public static ActivityRedirectionModel generateForRepo(@NonNull Event event) {
-        return generateRepoInfo(event, Type.Repo);
-    }
+	public static ActivityRedirectionModel generateForRelease(@NonNull Event event) {
+		return generateRepoInfo(event, Type.Release)
+				.setRelease(event.getPayload().getRelease());
+	}
 
-    public static ActivityRedirectionModel generateForFork(@NonNull Event event) {
-        return generateRepoInfo(event, Type.Fork).setActor(event.getActor().getLogin());
-    }
+	public String getOwner() {
+		return owner;
+	}
 
+	public ActivityRedirectionModel setOwner(String owner) {
+		this.owner = owner;
+		return this;
+	}
 
-    public static ActivityRedirectionModel generateRepoInfo(@NonNull Event event, @NonNull Type type) {
-        return new ActivityRedirectionModel()
-                .setRepoFullName(event.getRepo().getFullName())
-                .setType(type);
-    }
+	public String getRepoName() {
+		return repoName;
+	}
 
-    public static ActivityRedirectionModel generateForIssues(@NonNull Event event) {
-        return generateRepoInfo(event, Type.Issue)
-                .setIssue(event.getPayload().getIssue());
-    }
+	public ActivityRedirectionModel setRepoName(String repoName) {
+		this.repoName = repoName;
+		return this;
+	}
 
-    public static ActivityRedirectionModel generateForCommits(@NonNull Event event) {
-        return generateRepoInfo(event, Type.Commits).setBranch(event.getPayload().getBranch());
-    }
+	public Issue getIssue() {
+		return issue;
+	}
 
-    public static ActivityRedirectionModel generateForCommitCompare(@NonNull Event event) {
-        return generateRepoInfo(event, Type.CommitCompare)
-                .setDiffBefore(event.getPayload().getBefore())
-                .setDiffHead(event.getPayload().getHead());
-    }
+	public ActivityRedirectionModel setIssue(Issue issue) {
+		this.issue = issue;
+		return this;
+	}
 
-    public static ActivityRedirectionModel generateForCommit(@NonNull Event event, int index) {
-        return generateRepoInfo(event, Type.Commit)
-                .setCommitSha(event.getPayload().getCommits().get(index).getSha());
-    }
+	public String getDiffBefore() {
+		return diffBefore;
+	}
 
-    public static ActivityRedirectionModel generateForRelease(@NonNull Event event) {
-        return generateRepoInfo(event, Type.Release)
-                .setRelease(event.getPayload().getRelease());
-    }
+	public ActivityRedirectionModel setDiffBefore(String diffBefore) {
+		this.diffBefore = diffBefore;
+		return this;
+	}
 
-    public String getOwner() {
-        return owner;
-    }
+	public String getDiffHead() {
+		return diffHead;
+	}
 
-    public String getRepoName() {
-        return repoName;
-    }
+	public ActivityRedirectionModel setDiffHead(String diffHead) {
+		this.diffHead = diffHead;
+		return this;
+	}
 
-    public Issue getIssue() {
-        return issue;
-    }
+	public String getCommitSha() {
+		return commitSha;
+	}
 
-    public String getDiffBefore() {
-        return diffBefore;
-    }
+	public ActivityRedirectionModel setCommitSha(String commitSha) {
+		this.commitSha = commitSha;
+		return this;
+	}
 
-    public String getDiffHead() {
-        return diffHead;
-    }
+	public Release getRelease() {
+		return release;
+	}
 
-    public String getCommitSha() {
-        return commitSha;
-    }
+	public ActivityRedirectionModel setRelease(Release release) {
+		this.release = release;
+		return this;
+	}
 
-    public Release getRelease() {
-        return release;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    public ActivityRedirectionModel setOwner(String owner) {
-        this.owner = owner;
-        return this;
-    }
+	public ActivityRedirectionModel setType(Type type) {
+		this.type = type;
+		return this;
+	}
 
-    public ActivityRedirectionModel setRepoName(String repoName) {
-        this.repoName = repoName;
-        return this;
-    }
+	public String getActor() {
+		return actor;
+	}
 
-    public ActivityRedirectionModel setIssue(Issue issue) {
-        this.issue = issue;
-        return this;
-    }
+	public ActivityRedirectionModel setActor(String actor) {
+		this.actor = actor;
+		return this;
+	}
 
-    public ActivityRedirectionModel setDiffBefore(String diffBefore) {
-        this.diffBefore = diffBefore;
-        return this;
-    }
+	public ActivityRedirectionModel setRepoFullName(@NonNull String fullName) {
+		owner = fullName.split("/")[0];
+		repoName = fullName.split("/")[1];
+		return this;
+	}
 
-    public ActivityRedirectionModel setDiffHead(String diffHead) {
-        this.diffHead = diffHead;
-        return this;
-    }
+	public String getBranch() {
+		return branch;
+	}
 
-    public ActivityRedirectionModel setCommitSha(String commitSha) {
-        this.commitSha = commitSha;
-        return this;
-    }
+	public ActivityRedirectionModel setBranch(String branch) {
+		this.branch = branch;
+		return this;
+	}
 
-    public ActivityRedirectionModel setRelease(Release release) {
-        this.release = release;
-        return this;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public ActivityRedirectionModel setType(Type type) {
-        this.type = type;
-        return this;
-    }
-
-    public String getActor() {
-        return actor;
-    }
-
-    public ActivityRedirectionModel setActor(String actor) {
-        this.actor = actor;
-        return this;
-    }
-
-    public ActivityRedirectionModel setRepoFullName(@NonNull String fullName) {
-        owner = fullName.split("/")[0];
-        repoName = fullName.split("/")[1];
-        return this;
-    }
-
-    public String getBranch() {
-        return branch;
-    }
-
-    public ActivityRedirectionModel setBranch(String branch) {
-        this.branch = branch;
-        return this;
-    }
+	public enum Type {
+		User, Repo,
+		Fork,
+		Issues, Issue,
+		Commits, CommitCompare, Commit,
+		Releases, Release
+	}
 }

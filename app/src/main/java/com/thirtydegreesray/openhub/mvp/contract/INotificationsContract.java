@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import android.support.annotation.NonNull;
@@ -19,16 +17,20 @@ import java.util.ArrayList;
 
 public interface INotificationsContract {
 
-    interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View{
-        void showNotifications(ArrayList<DoubleTypesModel<Repository, Notification>> notifications);
-    }
+	interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
+		void showNotifications(ArrayList<DoubleTypesModel<Repository, Notification>> notifications);
+	}
 
-    interface Presenter extends IBasePagerContract.Presenter<INotificationsContract.View> {
-        void loadNotifications(int page, boolean isReload);
-        void markNotificationAsRead(String threadId);
-        void markAllNotificationsAsRead();
-        boolean isNotificationsAllRead();
-        void markRepoNotificationsAsRead(@NonNull Repository repository);
-    }
+	interface Presenter extends IBasePagerContract.Presenter<INotificationsContract.View> {
+		void loadNotifications(int page, boolean isReload);
+
+		void markNotificationAsRead(String threadId);
+
+		void markAllNotificationsAsRead();
+
+		boolean isNotificationsAllRead();
+
+		void markRepoNotificationsAsRead(@NonNull Repository repository);
+	}
 
 }

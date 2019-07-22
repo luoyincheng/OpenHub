@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.http;
 
 import android.support.annotation.NonNull;
@@ -23,19 +21,19 @@ import rx.Observable;
 
 public interface LoginService {
 
-    @POST("authorizations")
-    @Headers("Accept: application/json")
-    Observable<Response<BasicToken>> authorizations(
-            @NonNull @Body AuthRequestModel authRequestModel
-    );
+	@POST("authorizations")
+	@Headers("Accept: application/json")
+	Observable<Response<BasicToken>> authorizations(
+			@NonNull @Body AuthRequestModel authRequestModel
+	);
 
-    @POST("login/oauth/access_token")
-    @Headers("Accept: application/json")
-    Observable<Response<OauthToken>> getAccessToken(
-            @Query("client_id") String clientId,
-            @Query("client_secret") String clientSecret,
-            @Query("code") String code,
-            @Query("state") String state
-    );
+	@POST("login/oauth/access_token")
+	@Headers("Accept: application/json")
+	Observable<Response<OauthToken>> getAccessToken(
+			@Query("client_id") String clientId,
+			@Query("client_secret") String clientSecret,
+			@Query("code") String code,
+			@Query("state") String state
+	);
 
 }

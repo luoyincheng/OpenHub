@@ -11,108 +11,110 @@ import com.google.gson.annotations.SerializedName;
 
 public class Reactions implements Parcelable {
 
-    @SerializedName("total_count") private int totalCount;
-    @SerializedName("+1") private int plusOne;
-    @SerializedName("-1") private int minusOne;
-    private int laugh;
-    private int hooray;
-    private int confused;
-    private int heart;
+	public static final Parcelable.Creator<Reactions> CREATOR = new Parcelable.Creator<Reactions>() {
+		@Override
+		public Reactions createFromParcel(Parcel source) {
+			return new Reactions(source);
+		}
 
-    public int getTotalCount() {
-        return totalCount;
-    }
+		@Override
+		public Reactions[] newArray(int size) {
+			return new Reactions[size];
+		}
+	};
+	@SerializedName("total_count")
+	private int totalCount;
+	@SerializedName("+1")
+	private int plusOne;
+	@SerializedName("-1")
+	private int minusOne;
+	private int laugh;
+	private int hooray;
+	private int confused;
+	private int heart;
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
+	public Reactions() {
+	}
 
-    public int getPlusOne() {
-        return plusOne;
-    }
+	protected Reactions(Parcel in) {
+		this.totalCount = in.readInt();
+		this.plusOne = in.readInt();
+		this.minusOne = in.readInt();
+		this.laugh = in.readInt();
+		this.hooray = in.readInt();
+		this.confused = in.readInt();
+		this.heart = in.readInt();
+	}
 
-    public void setPlusOne(int plusOne) {
-        this.plusOne = plusOne;
-    }
+	public int getTotalCount() {
+		return totalCount;
+	}
 
-    public int getMinusOne() {
-        return minusOne;
-    }
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
 
-    public void setMinusOne(int minusOne) {
-        this.minusOne = minusOne;
-    }
+	public int getPlusOne() {
+		return plusOne;
+	}
 
-    public int getLaugh() {
-        return laugh;
-    }
+	public void setPlusOne(int plusOne) {
+		this.plusOne = plusOne;
+	}
 
-    public void setLaugh(int laugh) {
-        this.laugh = laugh;
-    }
+	public int getMinusOne() {
+		return minusOne;
+	}
 
-    public int getHooray() {
-        return hooray;
-    }
+	public void setMinusOne(int minusOne) {
+		this.minusOne = minusOne;
+	}
 
-    public void setHooray(int hooray) {
-        this.hooray = hooray;
-    }
+	public int getLaugh() {
+		return laugh;
+	}
 
-    public int getConfused() {
-        return confused;
-    }
+	public void setLaugh(int laugh) {
+		this.laugh = laugh;
+	}
 
-    public void setConfused(int confused) {
-        this.confused = confused;
-    }
+	public int getHooray() {
+		return hooray;
+	}
 
-    public int getHeart() {
-        return heart;
-    }
+	public void setHooray(int hooray) {
+		this.hooray = hooray;
+	}
 
-    public void setHeart(int heart) {
-        this.heart = heart;
-    }
+	public int getConfused() {
+		return confused;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setConfused(int confused) {
+		this.confused = confused;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.totalCount);
-        dest.writeInt(this.plusOne);
-        dest.writeInt(this.minusOne);
-        dest.writeInt(this.laugh);
-        dest.writeInt(this.hooray);
-        dest.writeInt(this.confused);
-        dest.writeInt(this.heart);
-    }
+	public int getHeart() {
+		return heart;
+	}
 
-    public Reactions() {
-    }
+	public void setHeart(int heart) {
+		this.heart = heart;
+	}
 
-    protected Reactions(Parcel in) {
-        this.totalCount = in.readInt();
-        this.plusOne = in.readInt();
-        this.minusOne = in.readInt();
-        this.laugh = in.readInt();
-        this.hooray = in.readInt();
-        this.confused = in.readInt();
-        this.heart = in.readInt();
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<Reactions> CREATOR = new Parcelable.Creator<Reactions>() {
-        @Override
-        public Reactions createFromParcel(Parcel source) {
-            return new Reactions(source);
-        }
-
-        @Override
-        public Reactions[] newArray(int size) {
-            return new Reactions[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(this.totalCount);
+		dest.writeInt(this.plusOne);
+		dest.writeInt(this.minusOne);
+		dest.writeInt(this.laugh);
+		dest.writeInt(this.hooray);
+		dest.writeInt(this.confused);
+		dest.writeInt(this.heart);
+	}
 }

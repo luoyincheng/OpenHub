@@ -17,31 +17,33 @@ import com.thirtydegreesray.openhub.util.BundleHelper;
 
 public class ReleasesActivity extends SingleFragmentActivity<IBaseContract.Presenter, ReleasesFragment> {
 
-    public static void show(Activity activity, String owner, String repo) {
-        Intent intent = createIntent(activity, owner, repo);
-        activity.startActivity(intent);
-    }
+	@AutoAccess
+	String owner;
+	@AutoAccess
+	String repo;
 
-    public static Intent createIntent(Activity activity, String owner, String repo) {
-        return new Intent(activity, ReleasesActivity.class)
-                .putExtras(BundleHelper.builder()
-                        .put("owner", owner)
-                        .put("repo", repo).build());
-    }
+	public static void show(Activity activity, String owner, String repo) {
+		Intent intent = createIntent(activity, owner, repo);
+		activity.startActivity(intent);
+	}
 
-    @AutoAccess String owner;
-    @AutoAccess String repo;
+	public static Intent createIntent(Activity activity, String owner, String repo) {
+		return new Intent(activity, ReleasesActivity.class)
+				.putExtras(BundleHelper.builder()
+						.put("owner", owner)
+						.put("repo", repo).build());
+	}
 
-    @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-        String subTitle = owner.concat("/").concat(repo);
-        setToolbarTitle(getString(R.string.releases), subTitle);
-        setToolbarScrollAble(true);
-    }
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
+		String subTitle = owner.concat("/").concat(repo);
+		setToolbarTitle(getString(R.string.releases), subTitle);
+		setToolbarScrollAble(true);
+	}
 
-    @Override
-    protected ReleasesFragment createFragment() {
-        return ReleasesFragment.create(owner, repo);
-    }
+	@Override
+	protected ReleasesFragment createFragment() {
+		return ReleasesFragment.create(owner, repo);
+	}
 }

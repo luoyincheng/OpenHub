@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -13,140 +11,142 @@ import com.google.gson.annotations.SerializedName;
 
 public class FileModel implements Parcelable {
 
-    private String name;
-    private String path;
-    private String sha;
-    private int size;
-    private String url;
-    @SerializedName("html_url") private String htmlUrl;
-    @SerializedName("git_url") private String gitUrl;
-    @SerializedName("download_url") private String downloadUrl;
-    @SerializedName("type") private String type;
+	public static final Parcelable.Creator<FileModel> CREATOR = new Parcelable.Creator<FileModel>() {
+		@Override
+		public FileModel createFromParcel(Parcel source) {
+			return new FileModel(source);
+		}
 
-    public FileModel() {
+		@Override
+		public FileModel[] newArray(int size) {
+			return new FileModel[size];
+		}
+	};
+	private String name;
+	private String path;
+	private String sha;
+	private int size;
+	private String url;
+	@SerializedName("html_url")
+	private String htmlUrl;
+	@SerializedName("git_url")
+	private String gitUrl;
+	@SerializedName("download_url")
+	private String downloadUrl;
+	@SerializedName("type")
+	private String type;
 
-    }
+	public FileModel() {
 
-    public String getName() {
-        return name;
-    }
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	protected FileModel(Parcel in) {
+		this.name = in.readString();
+		this.path = in.readString();
+		this.sha = in.readString();
+		this.size = in.readInt();
+		this.url = in.readString();
+		this.htmlUrl = in.readString();
+		this.gitUrl = in.readString();
+		this.downloadUrl = in.readString();
+		this.type = in.readString();
+	}
 
-    public String getPath() {
-        return path;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setPath(String path) {
-        this.path = path;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getSha() {
-        return sha;
-    }
+	public String getPath() {
+		return path;
+	}
 
-    public void setSha(String sha) {
-        this.sha = sha;
-    }
+	public void setPath(String path) {
+		this.path = path;
+	}
 
-    public int getSize() {
-        return size;
-    }
+	public String getSha() {
+		return sha;
+	}
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+	public void setSha(String sha) {
+		this.sha = sha;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public int getSize() {
+		return size;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setSize(int size) {
+		this.size = size;
+	}
 
-    public String getHtmlUrl() {
-        return htmlUrl;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String getGitUrl() {
-        return gitUrl;
-    }
+	public String getHtmlUrl() {
+		return htmlUrl;
+	}
 
-    public void setGitUrl(String gitUrl) {
-        this.gitUrl = gitUrl;
-    }
+	public void setHtmlUrl(String htmlUrl) {
+		this.htmlUrl = htmlUrl;
+	}
 
-    public String getDownloadUrl() {
-        return downloadUrl;
-    }
+	public String getGitUrl() {
+		return gitUrl;
+	}
 
-    public void setDownloadUrl(String downloadUrl) {
-        this.downloadUrl = downloadUrl;
-    }
+	public void setGitUrl(String gitUrl) {
+		this.gitUrl = gitUrl;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getDownloadUrl() {
+		return downloadUrl;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setDownloadUrl(String downloadUrl) {
+		this.downloadUrl = downloadUrl;
+	}
 
-    public boolean isFile(){
-        return type.equals("file");
-    }
+	public String getType() {
+		return type;
+	}
 
-    public boolean isDir(){
-        return type.equals("dir");
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
+	public boolean isFile() {
+		return type.equals("file");
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public boolean isDir() {
+		return type.equals("dir");
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.path);
-        dest.writeString(this.sha);
-        dest.writeInt(this.size);
-        dest.writeString(this.url);
-        dest.writeString(this.htmlUrl);
-        dest.writeString(this.gitUrl);
-        dest.writeString(this.downloadUrl);
-        dest.writeString(this.type);
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    protected FileModel(Parcel in) {
-        this.name = in.readString();
-        this.path = in.readString();
-        this.sha = in.readString();
-        this.size = in.readInt();
-        this.url = in.readString();
-        this.htmlUrl = in.readString();
-        this.gitUrl = in.readString();
-        this.downloadUrl = in.readString();
-        this.type = in.readString();
-    }
-
-    public static final Parcelable.Creator<FileModel> CREATOR = new Parcelable.Creator<FileModel>() {
-        @Override
-        public FileModel createFromParcel(Parcel source) {
-            return new FileModel(source);
-        }
-
-        @Override
-        public FileModel[] newArray(int size) {
-            return new FileModel[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.name);
+		dest.writeString(this.path);
+		dest.writeString(this.sha);
+		dest.writeInt(this.size);
+		dest.writeString(this.url);
+		dest.writeString(this.htmlUrl);
+		dest.writeString(this.gitUrl);
+		dest.writeString(this.downloadUrl);
+		dest.writeString(this.type);
+	}
 }

@@ -5,5 +5,5 @@ package com.thirtydegreesray.openhub.mvp.model.filter;
  */
 
 public enum SortDirection {
-    Desc, Asc
+	Desc, Asc
 }

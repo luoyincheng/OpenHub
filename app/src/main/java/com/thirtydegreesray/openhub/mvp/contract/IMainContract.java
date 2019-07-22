@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import android.support.annotation.NonNull;
@@ -17,15 +15,18 @@ import java.util.List;
 
 public interface IMainContract {
 
-    interface View extends IBaseContract.View{
-        void restartApp();
-    }
+	interface View extends IBaseContract.View {
+		void restartApp();
+	}
 
-    interface Presenter extends IBaseContract.Presenter<IMainContract.View>{
-        boolean isFirstUseAndNoNewsUser();
-        List<AuthUser> getLoggedUserList();
-        void toggleAccount(@NonNull String loginId);
-        void logout();
-    }
+	interface Presenter extends IBaseContract.Presenter<IMainContract.View> {
+		boolean isFirstUseAndNoNewsUser();
+
+		List<AuthUser> getLoggedUserList();
+
+		void toggleAccount(@NonNull String loginId);
+
+		void logout();
+	}
 
 }

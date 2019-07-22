@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import android.content.Intent;
@@ -15,28 +13,28 @@ import com.thirtydegreesray.openhub.mvp.model.BasicToken;
 
 public interface ILoginContract {
 
-    interface View extends IBaseContract.View{
+	interface View extends IBaseContract.View {
 
-        void onGetTokenSuccess(BasicToken basicToken);
+		void onGetTokenSuccess(BasicToken basicToken);
 
-        void onGetTokenError(String errorMsg);
+		void onGetTokenError(String errorMsg);
 
-        void onLoginComplete();
+		void onLoginComplete();
 
-    }
+	}
 
-    interface Presenter extends IBaseContract.Presenter<ILoginContract.View>{
+	interface Presenter extends IBaseContract.Presenter<ILoginContract.View> {
 
-        void getToken(String code, String state);
+		void getToken(String code, String state);
 
-        String getOAuth2Url();
+		String getOAuth2Url();
 
-        void basicLogin(String userName, String password);
+		void basicLogin(String userName, String password);
 
-        void handleOauth(Intent intent);
+		void handleOauth(Intent intent);
 
-        void getUserInfo(BasicToken basicToken);
+		void getUserInfo(BasicToken basicToken);
 
-    }
+	}
 
 }

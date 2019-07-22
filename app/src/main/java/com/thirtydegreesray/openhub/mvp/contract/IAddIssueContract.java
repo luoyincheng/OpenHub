@@ -8,12 +8,12 @@ import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
 
 public interface IAddIssueContract {
 
-    interface View extends IBaseContract.View{
+	interface View extends IBaseContract.View {
 
-    }
+	}
 
-    interface Presenter extends IBaseContract.Presenter<IAddIssueContract.View>{
+	interface Presenter extends IBaseContract.Presenter<IAddIssueContract.View> {
 
-    }
+	}
 
 }

@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.ui.activity;
 
 import android.animation.Animator;
@@ -30,95 +28,97 @@ import butterknife.BindView;
  */
 
 public class SettingsActivity extends SingleFragmentActivity<SettingsPresenter, SettingsFragment>
-        implements ISettingsContract.View ,
-        SettingsFragment.SettingsCallBack{
+		implements ISettingsContract.View,
+		SettingsFragment.SettingsCallBack {
 
-    public static void show(@NonNull Activity activity, int requestCode){
-        Intent intent = new Intent(activity, SettingsActivity.class);
-        activity.startActivityForResult(intent, requestCode);
-    }
+	@BindView(R.id.root_layout)
+	View rootLayout;
+	@AutoAccess
+	boolean recreated = false;
 
-    @BindView(R.id.root_layout) View rootLayout;
-    @AutoAccess boolean recreated = false;
+	public static void show(@NonNull Activity activity, int requestCode) {
+		Intent intent = new Intent(activity, SettingsActivity.class);
+		activity.startActivityForResult(intent, requestCode);
+	}
 
-    @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerActivityComponent.builder()
-                .appComponent(appComponent)
-                .activityModule(new ActivityModule(getActivity()))
-                .build()
-                .inject(this);
-    }
+	@Override
+	protected void setupActivityComponent(AppComponent appComponent) {
+		DaggerActivityComponent.builder()
+				.appComponent(appComponent)
+				.activityModule(new ActivityModule(getActivity()))
+				.build()
+				.inject(this);
+	}
 
-    @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-        setToolbarTitle(getString(R.string.settings));
-        if(recreated){
-            rootLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    startAnimation();
-                }
-            });
-            setResult(Activity.RESULT_OK);
-            recreated = false;
-        }
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
+		setToolbarTitle(getString(R.string.settings));
+		if (recreated) {
+			rootLayout.post(new Runnable() {
+				@Override
+				public void run() {
+					startAnimation();
+				}
+			});
+			setResult(Activity.RESULT_OK);
+			recreated = false;
+		}
 
-    }
+	}
 
-    @Override
-    protected SettingsFragment createFragment() {
-        return new SettingsFragment();
-    }
+	@Override
+	protected SettingsFragment createFragment() {
+		return new SettingsFragment();
+	}
 
-    private void startAnimation(){
-        int cx = rootLayout.getWidth() / 2;
-        int cy = rootLayout.getHeight() / 2;
-        float finalRadius = (float) Math.hypot(cx, cy);
-        Animator anim = ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, 0f, finalRadius);
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-            }
-        });
-        rootLayout.setVisibility(View.VISIBLE);
-        anim.start();
-    }
+	private void startAnimation() {
+		int cx = rootLayout.getWidth() / 2;
+		int cy = rootLayout.getHeight() / 2;
+		float finalRadius = (float) Math.hypot(cx, cy);
+		Animator anim = ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, 0f, finalRadius);
+		anim.addListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				super.onAnimationEnd(animation);
+			}
+		});
+		rootLayout.setVisibility(View.VISIBLE);
+		anim.start();
+	}
 
 
-    @Override
-    public void onLogout() {
-        /*
-         * if set RESULT_OK, then called finishAffinity(), will caused crash:
-         *      IllegalStateException Can not be called to deliver a result
-         * set RESULT_CANCELED can solve the problem
-         */
-        setResult(Activity.RESULT_CANCELED);
-        mPresenter.logout();
-    }
+	@Override
+	public void onLogout() {
+		/*
+		 * if set RESULT_OK, then called finishAffinity(), will caused crash:
+		 *      IllegalStateException Can not be called to deliver a result
+		 * set RESULT_CANCELED can solve the problem
+		 */
+		setResult(Activity.RESULT_CANCELED);
+		mPresenter.logout();
+	}
 
-    @Override
-    public void onRecreate() {
-        recreated = true;
-        recreate();
-    }
+	@Override
+	public void onRecreate() {
+		recreated = true;
+		recreate();
+	}
 
-    @Override
-    public void finishActivity() {
-        super.finishActivity();
-    }
+	@Override
+	public void finishActivity() {
+		super.finishActivity();
+	}
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
 //      finish setting activity to avoid  java.io.NotSerializableException
 //      com.thirtydegreesray.openhub.ui.widget.colorChooser.ColorChooserPreference
 //      android.os.Parcel.writeSerializable(Parcel.java:1761)
-        if(recreated){
-            super.onSaveInstanceState(outState);
-        } else {
-            finish();
-        }
-    }
+		if (recreated) {
+			super.onSaveInstanceState(outState);
+		} else {
+			finish();
+		}
+	}
 }

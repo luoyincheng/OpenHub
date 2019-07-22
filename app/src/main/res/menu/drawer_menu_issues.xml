@@ -8,17 +8,17 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_all"
-                    android:title="@string/all"
-                    android:checked="true"/>
+                    android:checked="true"
+                    android:title="@string/all" />
                 <item
                     android:id="@+id/nav_created"
-                    android:title="@string/created"/>
+                    android:title="@string/created" />
                 <item
                     android:id="@+id/nav_assigned"
-                    android:title="@string/assigned"/>
+                    android:title="@string/assigned" />
                 <item
                     android:id="@+id/nav_mentioned"
-                    android:title="@string/mentioned"/>
+                    android:title="@string/mentioned" />
             </group>
         </menu>
     </item>
@@ -30,23 +30,23 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_recently_created"
-                    android:title="@string/recently_created"
-                    android:checked="true"/>
+                    android:checked="true"
+                    android:title="@string/recently_created" />
                 <item
                     android:id="@+id/nav_previously_created"
-                    android:title="@string/previously_created"/>
+                    android:title="@string/previously_created" />
                 <item
                     android:id="@+id/nav_recently_updated"
-                    android:title="@string/recently_updated"/>
+                    android:title="@string/recently_updated" />
                 <item
                     android:id="@+id/nav_least_recently_updated"
-                    android:title="@string/least_recently_updated"/>
+                    android:title="@string/least_recently_updated" />
                 <item
                     android:id="@+id/nav_most_comments"
-                    android:title="@string/most_comments"/>
+                    android:title="@string/most_comments" />
                 <item
                     android:id="@+id/nav_fewest_comments"
-                    android:title="@string/fewest_comments"/>
+                    android:title="@string/fewest_comments" />
             </group>
         </menu>
     </item>

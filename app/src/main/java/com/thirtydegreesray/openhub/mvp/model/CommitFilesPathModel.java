@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -11,43 +9,42 @@ import android.os.Parcelable;
 
 public class CommitFilesPathModel implements Parcelable {
 
-    private String path;
+	public static final Parcelable.Creator<CommitFilesPathModel> CREATOR = new Parcelable.Creator<CommitFilesPathModel>() {
+		@Override
+		public CommitFilesPathModel createFromParcel(Parcel source) {
+			return new CommitFilesPathModel(source);
+		}
 
-    public String getPath() {
-        return path;
-    }
+		@Override
+		public CommitFilesPathModel[] newArray(int size) {
+			return new CommitFilesPathModel[size];
+		}
+	};
+	private String path;
 
-    public CommitFilesPathModel setPath(String path) {
-        this.path = path;
-        return this;
-    }
+	public CommitFilesPathModel() {
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	protected CommitFilesPathModel(Parcel in) {
+		this.path = in.readString();
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.path);
-    }
+	public String getPath() {
+		return path;
+	}
 
-    public CommitFilesPathModel() {
-    }
+	public CommitFilesPathModel setPath(String path) {
+		this.path = path;
+		return this;
+	}
 
-    protected CommitFilesPathModel(Parcel in) {
-        this.path = in.readString();
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<CommitFilesPathModel> CREATOR = new Parcelable.Creator<CommitFilesPathModel>() {
-        @Override
-        public CommitFilesPathModel createFromParcel(Parcel source) {
-            return new CommitFilesPathModel(source);
-        }
-
-        @Override
-        public CommitFilesPathModel[] newArray(int size) {
-            return new CommitFilesPathModel[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.path);
+	}
 }

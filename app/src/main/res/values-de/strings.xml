@@ -111,7 +111,7 @@
     <string name="no_readme">KEIN LIESMICH</string>
     <string name="warning_dialog_tile">Warnung</string>
     <string name="cancel">Abbrechen</string>
-    <string name="close">Schließen</string>   
+    <string name="close">Schließen</string>
     <string name="ok">OK</string>
     <string name="confirm">OK</string>
     <string name="select_branch">Branch oder Tag auswählen</string>
@@ -184,18 +184,15 @@
     <string name="no_repository">Keine Quellen</string>
     <string name="no_file">Keine Dateien</string>
     <string name="developing">Entwicklung</string>
-    <string name="version" >Version</string>
-    <string name="source_code" >Quellcode</string>
-    <string name="source_code_wishes" >Markieren, um mich zu unterstützen</string>
-    <string name="rate_in_market" >Bewerten oder kommentieren Sie im Markt</string>
-    <string name="author" >Autor</string>
+    <string name="version">Version</string>
+    <string name="source_code">Quellcode</string>
+    <string name="source_code_wishes">Markieren, um mich zu unterstützen</string>
+    <string name="rate_in_market">Bewerten oder kommentieren Sie im Markt</string>
+    <string name="author">Autor</string>
 
 
-
-
-
-    <string name="follow_on_github" >Folge auf GitHub</string>
-    <string name="email" >E-Mail</string>
+    <string name="follow_on_github">Folge auf GitHub</string>
+    <string name="email">E-Mail</string>
 
     <string name="loading">wird geladen</string>
 

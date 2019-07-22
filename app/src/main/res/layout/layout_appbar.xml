@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.design.widget.AppBarLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
@@ -25,7 +24,7 @@
         android:visibility="gone"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabTextAppearance="@style/TextAppearance.Design.Tab"
-        app:tabSelectedTextColor="?title_color"/>
+        app:tabSelectedTextColor="?title_color"
+        app:tabTextAppearance="@style/TextAppearance.Design.Tab" />
 
 </android.support.design.widget.AppBarLayout>

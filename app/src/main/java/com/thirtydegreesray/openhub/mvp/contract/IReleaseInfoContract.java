@@ -9,12 +9,12 @@ import com.thirtydegreesray.openhub.mvp.model.Release;
 
 public interface IReleaseInfoContract {
 
-    interface View extends IBaseContract.View{
-        void showReleaseInfo(Release release);
-    }
+	interface View extends IBaseContract.View {
+		void showReleaseInfo(Release release);
+	}
 
-    interface Presenter extends IBaseContract.Presenter<IReleaseInfoContract.View>{
+	interface Presenter extends IBaseContract.Presenter<IReleaseInfoContract.View> {
 
-    }
+	}
 
 }

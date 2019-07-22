@@ -16,112 +16,115 @@ import java.net.URLDecoder;
 @Root(name = "entry")
 public class WikiModel implements Parcelable {
 
-    @Element(name = "id") private String id;
-    @Element(name = "published") private String published;
-    @Element(name = "updated") private String updated;
-    @Element(name = "content") private String content;
-    private String simpleTextContent;
+	public static final Creator<WikiModel> CREATOR = new Creator<WikiModel>() {
+		@Override
+		public WikiModel createFromParcel(Parcel source) {
+			return new WikiModel(source);
+		}
 
-    public String getId() {
-        return id;
-    }
+		@Override
+		public WikiModel[] newArray(int size) {
+			return new WikiModel[size];
+		}
+	};
+	@Element(name = "id")
+	private String id;
+	@Element(name = "published")
+	private String published;
+	@Element(name = "updated")
+	private String updated;
+	@Element(name = "content")
+	private String content;
+	private String simpleTextContent;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public WikiModel() {
+	}
 
-    public String getPublished() {
-        return published;
-    }
+	protected WikiModel(Parcel in) {
+		this.id = in.readString();
+		this.published = in.readString();
+		this.updated = in.readString();
+		this.content = in.readString();
+	}
 
-    public void setPublished(String published) {
-        this.published = published;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getUpdated() {
-        return updated;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setUpdated(String updated) {
-        this.updated = updated;
-    }
+	public String getPublished() {
+		return published;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public void setPublished(String published) {
+		this.published = published;
+	}
 
-    public String getSimpleTextContent() {
-        if(simpleTextContent == null){
-            int DEFAULT_MAX_LENGTH = 1024;
-            int maxLength = content.length() > DEFAULT_MAX_LENGTH ? DEFAULT_MAX_LENGTH : content.length();
-            simpleTextContent =  content.substring(0, maxLength)
-                    .replaceAll("<(.*?)>", "").trim();
-        }
-        return simpleTextContent;
-    }
+	public String getUpdated() {
+		return updated;
+	}
 
-    public String getContentWithTitle() {
-        String titleHtml = "<h1>" + getName() + "</h1>";
-        return titleHtml + content;
-    }
+	public void setUpdated(String updated) {
+		this.updated = updated;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public String getName(){
-        if(id != null && id.contains("wiki")){
-            int start = id.indexOf("wiki/") + 5;
-            int end = id.lastIndexOf("/");
-            if(end > start){
-                String name = id.substring(start, end).replaceAll("-", " ");
-                try {
-                    name = URLDecoder.decode(name, "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                return name;
-            } else {
-                return "Home";
-            }
-        } else {
-            return null;
-        }
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public String getSimpleTextContent() {
+		if (simpleTextContent == null) {
+			int DEFAULT_MAX_LENGTH = 1024;
+			int maxLength = content.length() > DEFAULT_MAX_LENGTH ? DEFAULT_MAX_LENGTH : content.length();
+			simpleTextContent = content.substring(0, maxLength)
+					.replaceAll("<(.*?)>", "").trim();
+		}
+		return simpleTextContent;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.published);
-        dest.writeString(this.updated);
-        dest.writeString(this.content);
-    }
+	public String getContentWithTitle() {
+		String titleHtml = "<h1>" + getName() + "</h1>";
+		return titleHtml + content;
+	}
 
-    public WikiModel() {
-    }
+	public String getName() {
+		if (id != null && id.contains("wiki")) {
+			int start = id.indexOf("wiki/") + 5;
+			int end = id.lastIndexOf("/");
+			if (end > start) {
+				String name = id.substring(start, end).replaceAll("-", " ");
+				try {
+					name = URLDecoder.decode(name, "utf-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				return name;
+			} else {
+				return "Home";
+			}
+		} else {
+			return null;
+		}
+	}
 
-    protected WikiModel(Parcel in) {
-        this.id = in.readString();
-        this.published = in.readString();
-        this.updated = in.readString();
-        this.content = in.readString();
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Creator<WikiModel> CREATOR = new Creator<WikiModel>() {
-        @Override
-        public WikiModel createFromParcel(Parcel source) {
-            return new WikiModel(source);
-        }
-
-        @Override
-        public WikiModel[] newArray(int size) {
-            return new WikiModel[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.id);
+		dest.writeString(this.published);
+		dest.writeString(this.updated);
+		dest.writeString(this.content);
+	}
 
 }

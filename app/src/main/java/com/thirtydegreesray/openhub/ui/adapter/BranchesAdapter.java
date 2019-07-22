@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.ui.adapter;
 
 import android.content.Context;
@@ -23,45 +21,48 @@ import butterknife.BindView;
 
 public class BranchesAdapter extends BaseAdapter<BranchesAdapter.ViewHolder, Branch> {
 
-    private String curBranch;
+	private String curBranch;
 
-    public BranchesAdapter(Context context, String curBranch) {
-        super(context);
-        this.curBranch = curBranch;
-    }
+	public BranchesAdapter(Context context, String curBranch) {
+		super(context);
+		this.curBranch = curBranch;
+	}
 
-    @Override
-    protected int getLayoutId(int viewType) {
-        return R.layout.layout_item_branch;
-    }
+	@Override
+	protected int getLayoutId(int viewType) {
+		return R.layout.layout_item_branch;
+	}
 
-    @Override
-    protected ViewHolder getViewHolder(View itemView, int viewType) {
-        return new ViewHolder(itemView);
-    }
+	@Override
+	protected ViewHolder getViewHolder(View itemView, int viewType) {
+		return new ViewHolder(itemView);
+	}
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-        Branch branch = data.get(position);
-        holder.icon.setImageResource(branch.isBranch() ? R.drawable.ic_branch : R.drawable.ic_tag);
-        holder.name.setText(branch.getName());
-        if(branch.getName().equals(curBranch)){
-            holder.rootLayout.setBackgroundColor(ViewUtils.getSelectedColor(context));
-        }else{
-            holder.rootLayout.setBackground(null);
-        }
-    }
+	@Override
+	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+		super.onBindViewHolder(holder, position);
+		Branch branch = data.get(position);
+		holder.icon.setImageResource(branch.isBranch() ? R.drawable.ic_branch : R.drawable.ic_tag);
+		holder.name.setText(branch.getName());
+		if (branch.getName().equals(curBranch)) {
+			holder.rootLayout.setBackgroundColor(ViewUtils.getSelectedColor(context));
+		} else {
+			holder.rootLayout.setBackground(null);
+		}
+	}
 
-    class ViewHolder extends BaseViewHolder {
+	class ViewHolder extends BaseViewHolder {
 
-        @BindView(R.id.root_layout) LinearLayout rootLayout;
-        @BindView(R.id.icon) AppCompatImageView icon;
-        @BindView(R.id.name) TextView name;
+		@BindView(R.id.root_layout)
+		LinearLayout rootLayout;
+		@BindView(R.id.icon)
+		AppCompatImageView icon;
+		@BindView(R.id.name)
+		TextView name;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
+		public ViewHolder(@NonNull View itemView) {
+			super(itemView);
+		}
+	}
 
 }

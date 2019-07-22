@@ -23,32 +23,35 @@ import butterknife.OnClick;
 
 public class LabelManageActivity extends SingleFragmentActivity<IBaseContract.Presenter, LabelManageFragment> {
 
-    public static void show(@NonNull Activity activity, @NonNull String owner, @NonNull String repo){
-        Intent intent = new Intent(activity, LabelManageActivity.class);
-        intent.putExtras(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
-        activity.startActivity(intent);
-    }
+	@AutoAccess
+	String owner;
+	@AutoAccess
+	String repo;
+	@BindView(R.id.float_action_bn)
+	FloatingActionButton floatingActionButton;
 
-    @AutoAccess String owner;
-    @AutoAccess String repo;
-    @BindView(R.id.float_action_bn) FloatingActionButton floatingActionButton;
+	public static void show(@NonNull Activity activity, @NonNull String owner, @NonNull String repo) {
+		Intent intent = new Intent(activity, LabelManageActivity.class);
+		intent.putExtras(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
+		activity.startActivity(intent);
+	}
 
+	@Override
+	protected LabelManageFragment createFragment() {
+		return LabelManageFragment.create(owner, repo);
+	}
 
-    @Override
-    protected LabelManageFragment createFragment() {
-        return LabelManageFragment.create(owner, repo);
-    }
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
+		setToolbarTitle(getString(R.string.labels), owner + "/" + repo);
+		floatingActionButton.setVisibility(View.VISIBLE);
+		setToolbarScrollAble(true);
+	}
 
-    @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-        setToolbarTitle(getString(R.string.labels), owner + "/" + repo);
-        floatingActionButton.setVisibility(View.VISIBLE);
-        setToolbarScrollAble(true);
-    }
-
-    @OnClick(R.id.float_action_bn) public void onCreateLabelClick(){
-        getFragment().onCreateLabelClick();
-    }
+	@OnClick(R.id.float_action_bn)
+	public void onCreateLabelClick() {
+		getFragment().onCreateLabelClick();
+	}
 
 }

@@ -1,8 +1,4 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
-
-import android.support.annotation.NonNull;
 
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseListContract;
@@ -17,12 +13,12 @@ import java.util.ArrayList;
 
 public interface ICommitsContract {
 
-    interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
-        void showCommits(ArrayList<RepoCommit> commits);
-    }
+	interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
+		void showCommits(ArrayList<RepoCommit> commits);
+	}
 
-    interface Presenter extends IBasePagerContract.Presenter<ICommitsContract.View>{
-        void loadCommits(boolean isReload, int page);
-    }
+	interface Presenter extends IBasePagerContract.Presenter<ICommitsContract.View> {
+		void loadCommits(boolean isReload, int page);
+	}
 
 }

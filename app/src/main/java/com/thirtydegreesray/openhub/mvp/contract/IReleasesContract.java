@@ -11,14 +11,16 @@ import java.util.ArrayList;
 
 public interface IReleasesContract {
 
-    interface View extends IBaseContract.View{
-        void showReleases(ArrayList<Release> releases);
-        void setCanLoadMore(boolean canLoadMore);
-        void showLoadError(String error);
-    }
+	interface View extends IBaseContract.View {
+		void showReleases(ArrayList<Release> releases);
 
-    interface Presenter extends IBaseContract.Presenter<IReleasesContract.View>{
-        void loadReleases(int page, boolean isReload);
-    }
+		void setCanLoadMore(boolean canLoadMore);
+
+		void showLoadError(String error);
+	}
+
+	interface Presenter extends IBaseContract.Presenter<IReleasesContract.View> {
+		void loadReleases(int page, boolean isReload);
+	}
 
 }

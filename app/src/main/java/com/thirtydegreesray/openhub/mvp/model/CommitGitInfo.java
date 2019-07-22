@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -13,87 +11,87 @@ import com.google.gson.annotations.SerializedName;
 
 public class CommitGitInfo implements Parcelable {
 
-    private String message;
-    private String url;
-    @SerializedName("comment_count") private int commentCount;
-    private CommitGitUser author;
-    private CommitGitUser committer;
+	public static final Parcelable.Creator<CommitGitInfo> CREATOR = new Parcelable.Creator<CommitGitInfo>() {
+		@Override
+		public CommitGitInfo createFromParcel(Parcel source) {
+			return new CommitGitInfo(source);
+		}
 
-    public String getMessage() {
-        return message;
-    }
+		@Override
+		public CommitGitInfo[] newArray(int size) {
+			return new CommitGitInfo[size];
+		}
+	};
+	private String message;
+	private String url;
+	@SerializedName("comment_count")
+	private int commentCount;
+	private CommitGitUser author;
+	private CommitGitUser committer;
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public CommitGitInfo() {
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	protected CommitGitInfo(Parcel in) {
+		this.message = in.readString();
+		this.url = in.readString();
+		this.commentCount = in.readInt();
+		this.committer = in.readParcelable(CommitGitUser.class.getClassLoader());
+		this.author = in.readParcelable(CommitGitUser.class.getClassLoader());
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public int getCommentCount() {
-        return commentCount;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public CommitGitUser getAuthor() {
-        return author;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public void setAuthor(CommitGitUser author) {
-        this.author = author;
-    }
+	public int getCommentCount() {
+		return commentCount;
+	}
 
-    public CommitGitUser getCommitter() {
-        return committer;
-    }
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
 
-    public void setCommitter(CommitGitUser committer) {
-        this.committer = committer;
-    }
+	public CommitGitUser getAuthor() {
+		return author;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setAuthor(CommitGitUser author) {
+		this.author = author;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.message);
-        dest.writeString(this.url);
-        dest.writeInt(this.commentCount);
-        dest.writeParcelable(this.committer, flags);
-        dest.writeParcelable(this.author, flags);
-    }
+	public CommitGitUser getCommitter() {
+		return committer;
+	}
 
-    public CommitGitInfo() {
-    }
+	public void setCommitter(CommitGitUser committer) {
+		this.committer = committer;
+	}
 
-    protected CommitGitInfo(Parcel in) {
-        this.message = in.readString();
-        this.url = in.readString();
-        this.commentCount = in.readInt();
-        this.committer = in.readParcelable(CommitGitUser.class.getClassLoader());
-        this.author = in.readParcelable(CommitGitUser.class.getClassLoader());
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<CommitGitInfo> CREATOR = new Parcelable.Creator<CommitGitInfo>() {
-        @Override
-        public CommitGitInfo createFromParcel(Parcel source) {
-            return new CommitGitInfo(source);
-        }
-
-        @Override
-        public CommitGitInfo[] newArray(int size) {
-            return new CommitGitInfo[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.message);
+		dest.writeString(this.url);
+		dest.writeInt(this.commentCount);
+		dest.writeParcelable(this.committer, flags);
+		dest.writeParcelable(this.author, flags);
+	}
 
 }

@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
@@ -26,93 +24,95 @@ import rx.Observable;
  */
 
 public class RepoInfoPresenter extends BasePagerPresenter<IRepoInfoContract.View>
-        implements IRepoInfoContract.Presenter{
+		implements IRepoInfoContract.Presenter {
 
-    @AutoAccess Repository repository;
-    @AutoAccess String curBranch = "";
-    private String readmeSource;
+	@AutoAccess
+	Repository repository;
+	@AutoAccess
+	String curBranch = "";
+	private String readmeSource;
 
-    @Inject
-    public RepoInfoPresenter(DaoSession daoSession) {
-        super(daoSession);
-    }
+	@Inject
+	public RepoInfoPresenter(DaoSession daoSession) {
+		super(daoSession);
+	}
 
-    @Override
-    public void onViewInitialized() {
-        super.onViewInitialized();
-    }
+	@Override
+	public void onViewInitialized() {
+		super.onViewInitialized();
+	}
 
-    @Override
-    protected void loadData() {
-        mView.showRepoInfo(repository);
-        if(readmeSource == null){
-            loadReadMe();
-        }
-    }
+	@Override
+	protected void loadData() {
+		mView.showRepoInfo(repository);
+		if (readmeSource == null) {
+			loadReadMe();
+		}
+	}
 
-    @Override
-    public void loadReadMe() {
-        final String readmeFileUrl = AppConfig.GITHUB_API_BASE_URL + "repos/" + repository.getFullName()
-                + "/" + "readme" + (StringUtils.isBlank(curBranch) ? "" : "?ref=" + curBranch);
+	@Override
+	public void loadReadMe() {
+		final String readmeFileUrl = AppConfig.GITHUB_API_BASE_URL + "repos/" + repository.getFullName()
+				+ "/" + "readme" + (StringUtils.isBlank(curBranch) ? "" : "?ref=" + curBranch);
 
-        String branch = StringUtils.isBlank(curBranch) ? repository.getDefaultBranch() : curBranch;
-        final String baseUrl = AppConfig.GITHUB_BASE_URL + repository.getFullName()
-                + "/blob/" + branch  + "/" + "README.md";
+		String branch = StringUtils.isBlank(curBranch) ? repository.getDefaultBranch() : curBranch;
+		final String baseUrl = AppConfig.GITHUB_BASE_URL + repository.getFullName()
+				+ "/blob/" + branch + "/" + "README.md";
 
 //        if(!StringUtils.isBlank(readmeSource)){
 //            mView.showReadMe(readmeSource, baseUrl);
 //            return;
 //        }
 
-        mView.showReadMeLoader();
-        HttpObserver<ResponseBody> httpObserver = new HttpObserver<ResponseBody>() {
-            @Override
-            public void onError(Throwable error) {
-                if(error instanceof HttpPageNoFoundError){
-                    mView.showNoReadMe();
-                } else {
-                    mView.showErrorToast(getErrorTip(error));
-                }
-            }
+		mView.showReadMeLoader();
+		HttpObserver<ResponseBody> httpObserver = new HttpObserver<ResponseBody>() {
+			@Override
+			public void onError(Throwable error) {
+				if (error instanceof HttpPageNoFoundError) {
+					mView.showNoReadMe();
+				} else {
+					mView.showErrorToast(getErrorTip(error));
+				}
+			}
 
-            @Override
-            public void onSuccess(HttpResponse<ResponseBody> response) {
-                try {
-                    readmeSource = response.body().string();
-                    mView.showReadMe(readmeSource, baseUrl);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        generalRxHttpExecute(new IObservableCreator<ResponseBody>() {
-            @Override
-            public Observable<Response<ResponseBody>> createObservable(boolean forceNetWork) {
-                return getRepoService().getFileAsHtmlStream(forceNetWork, readmeFileUrl);
-            }
-        }, httpObserver, true);
+			@Override
+			public void onSuccess(HttpResponse<ResponseBody> response) {
+				try {
+					readmeSource = response.body().string();
+					mView.showReadMe(readmeSource, baseUrl);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		generalRxHttpExecute(new IObservableCreator<ResponseBody>() {
+			@Override
+			public Observable<Response<ResponseBody>> createObservable(boolean forceNetWork) {
+				return getRepoService().getFileAsHtmlStream(forceNetWork, readmeFileUrl);
+			}
+		}, httpObserver, true);
 
-    }
+	}
 
-    public Repository getRepository() {
-        return repository;
-    }
+	public Repository getRepository() {
+		return repository;
+	}
 
-    /**
-     * check if the string size is too large to save
-     */
-    private void checkReadmeSourceSize(){
-        if(readmeSource != null && readmeSource.getBytes().length > 128 * 1024){
-            readmeSource = null;
-        }
-    }
+	public void setRepository(Repository repository) {
+		this.repository = repository;
+	}
 
-    public void setRepository(Repository repository) {
-        this.repository = repository;
-    }
+	/**
+	 * check if the string size is too large to save
+	 */
+	private void checkReadmeSourceSize() {
+		if (readmeSource != null && readmeSource.getBytes().length > 128 * 1024) {
+			readmeSource = null;
+		}
+	}
 
-    public void setCurBranch(String curBranch) {
-        this.curBranch = curBranch;
-        readmeSource = null;
-    }
+	public void setCurBranch(String curBranch) {
+		this.curBranch = curBranch;
+		readmeSource = null;
+	}
 }

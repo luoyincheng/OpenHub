@@ -6,10 +6,10 @@ package com.thirtydegreesray.openhub.mvp.contract.base;
 
 public interface IBaseListContract {
 
-    interface View {
-        void showLoadError(String errorMsg);
+	interface View {
+		void showLoadError(String errorMsg);
 
-        void setCanLoadMore(boolean canLoadMore);
-    }
+		void setCanLoadMore(boolean canLoadMore);
+	}
 
 }

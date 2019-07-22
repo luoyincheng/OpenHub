@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import android.support.annotation.NonNull;
@@ -32,152 +30,155 @@ import rx.Observable;
  */
 
 public class RepoFilesPresenter extends BasePagerPresenter<IRepoFilesContract.View>
-        implements IRepoFilesContract.Presenter{
+		implements IRepoFilesContract.Presenter {
 
-    private Map<String, ArrayList<FileModel>> cacheMap;
-    @AutoAccess Repository repo ;
-    @AutoAccess String curPath = "";
-    @AutoAccess String curBranch = "";
-    private ArrayList<FilePath> filePath;
-    private FilePath homePath ;
+	@AutoAccess
+	Repository repo;
+	@AutoAccess
+	String curPath = "";
+	@AutoAccess
+	String curBranch = "";
+	private Map<String, ArrayList<FileModel>> cacheMap;
+	private ArrayList<FilePath> filePath;
+	private FilePath homePath;
 
-    @Inject
-    public RepoFilesPresenter(DaoSession daoSession) {
-        super(daoSession);
-        cacheMap = new SizedMap<>();
-        filePath = new ArrayList<>();
-        homePath = new FilePath("", "");
-        filePath.add(homePath);
-    }
+	@Inject
+	public RepoFilesPresenter(DaoSession daoSession) {
+		super(daoSession);
+		cacheMap = new SizedMap<>();
+		filePath = new ArrayList<>();
+		homePath = new FilePath("", "");
+		filePath.add(homePath);
+	}
 
-    @Override
-    public void onViewInitialized() {
-        super.onViewInitialized();
-    }
+	@Override
+	public void onViewInitialized() {
+		super.onViewInitialized();
+	}
 
-    @Override
-    protected void loadData() {
-        loadFiles(curPath, false);
-    }
+	@Override
+	protected void loadData() {
+		loadFiles(curPath, false);
+	}
 
-    @Override
-    public void loadFiles(boolean isReload) {
-        loadFiles(curPath, isReload);
-    }
+	@Override
+	public void loadFiles(boolean isReload) {
+		loadFiles(curPath, isReload);
+	}
 
-    @Override
-    public void loadFiles(@NonNull String path, boolean isReload) {
-        curPath = path;
-        curBranch = StringUtils.isBlank(curBranch) ? repo.getDefaultBranch() : curBranch;
-        updateFilePath();
-        ArrayList<FileModel> filesCache = cacheMap.get(getCacheKey());
-        if(!isReload && filesCache != null){
-            mView.showFiles(filesCache);
-            return ;
-        }
+	@Override
+	public void loadFiles(@NonNull String path, boolean isReload) {
+		curPath = path;
+		curBranch = StringUtils.isBlank(curBranch) ? repo.getDefaultBranch() : curBranch;
+		updateFilePath();
+		ArrayList<FileModel> filesCache = cacheMap.get(getCacheKey());
+		if (!isReload && filesCache != null) {
+			mView.showFiles(filesCache);
+			return;
+		}
 
-        mView.showLoading();
-        HttpObserver<ArrayList<FileModel>> httpObserver =
-                new HttpObserver<ArrayList<FileModel>>() {
-                    @Override
-                    public void onError(Throwable error) {
-                        if(error instanceof HttpPageNoFoundError){
-                            mView.showFiles(new ArrayList<FileModel>());
-                        }else{
-                            mView.showLoadError(getErrorTip(error));
-                        }
-                        mView.hideLoading();
-                    }
+		mView.showLoading();
+		HttpObserver<ArrayList<FileModel>> httpObserver =
+				new HttpObserver<ArrayList<FileModel>>() {
+					@Override
+					public void onError(Throwable error) {
+						if (error instanceof HttpPageNoFoundError) {
+							mView.showFiles(new ArrayList<FileModel>());
+						} else {
+							mView.showLoadError(getErrorTip(error));
+						}
+						mView.hideLoading();
+					}
 
-                    @Override
-                    public void onSuccess(HttpResponse<ArrayList<FileModel>> response) {
-                        sort(response.body());
-                        cacheMap.put(getCacheKey(), response.body());
-                        mView.showFiles(response.body());
-                        mView.hideLoading();
-                    }
-                };
-        generalRxHttpExecute(new IObservableCreator<ArrayList<FileModel>>() {
-            @Override
-            public Observable<Response<ArrayList<FileModel>>> createObservable(boolean forceNetWork) {
-                return getRepoService().getRepoFiles(repo.getOwner().getLogin(),
-                        repo.getName(), curPath, curBranch);
-            }
-        }, httpObserver, false);
-    }
+					@Override
+					public void onSuccess(HttpResponse<ArrayList<FileModel>> response) {
+						sort(response.body());
+						cacheMap.put(getCacheKey(), response.body());
+						mView.showFiles(response.body());
+						mView.hideLoading();
+					}
+				};
+		generalRxHttpExecute(new IObservableCreator<ArrayList<FileModel>>() {
+			@Override
+			public Observable<Response<ArrayList<FileModel>>> createObservable(boolean forceNetWork) {
+				return getRepoService().getRepoFiles(repo.getOwner().getLogin(),
+						repo.getName(), curPath, curBranch);
+			}
+		}, httpObserver, false);
+	}
 
-    @Override
-    public boolean goBack() {
-        if(!StringUtils.isBlank(curPath)){
-            curPath = curPath.contains("/") ?
-                    curPath.substring(0, curPath.lastIndexOf("/")) : "";
-            loadFiles(false);
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean goBack() {
+		if (!StringUtils.isBlank(curPath)) {
+			curPath = curPath.contains("/") ?
+					curPath.substring(0, curPath.lastIndexOf("/")) : "";
+			loadFiles(false);
+			return true;
+		}
+		return false;
+	}
 
-    @Override
-    public void goHome() {
-        if(curPath.equals("")) return;
-        curPath = "";
-        loadFiles(false);
-    }
+	@Override
+	public void goHome() {
+		if (curPath.equals("")) return;
+		curPath = "";
+		loadFiles(false);
+	}
 
-    private void sort(ArrayList<FileModel> oriList){
-        Collections.sort(oriList, new Comparator<FileModel>() {
-            @Override
-            public int compare(FileModel o1, FileModel o2) {
-                if(!o1.getType().equals(o2.getType())){
-                    return o1.isDir() ? -1 : 1;
-                }
-                return 0;
-            }
-        });
-    }
+	private void sort(ArrayList<FileModel> oriList) {
+		Collections.sort(oriList, new Comparator<FileModel>() {
+			@Override
+			public int compare(FileModel o1, FileModel o2) {
+				if (!o1.getType().equals(o2.getType())) {
+					return o1.isDir() ? -1 : 1;
+				}
+				return 0;
+			}
+		});
+	}
 
-    private String getCacheKey(){
-        return curBranch + "-" + curPath;
-    }
+	private String getCacheKey() {
+		return curBranch + "-" + curPath;
+	}
 
-    public String getCurPath() {
-        return curPath;
-    }
+	public String getCurPath() {
+		return curPath;
+	}
 
-    public void setCurPath(String curPath) {
-        this.curPath = curPath;
-    }
+	public void setCurPath(String curPath) {
+		this.curPath = curPath;
+	}
 
-    public ArrayList<FilePath> getFilePath(){
-        return filePath;
-    }
+	public ArrayList<FilePath> getFilePath() {
+		return filePath;
+	}
 
-    private void updateFilePath(){
-        filePath.clear();
-        filePath.add(homePath);
-        if(!StringUtils.isBlank(curPath)){
-            String[] pathArray = curPath.split("/");
-            for(int i = 0; i < pathArray.length; i++){
-                String name = pathArray[i];
-                String fullPath = "";
-                for(int j = 0; j <= i; j++){
-                    fullPath = fullPath.concat(pathArray[j]).concat("/");
-                }
-                fullPath = fullPath.endsWith("/") ?
-                        fullPath.substring(0, fullPath.length() - 1) : fullPath;
-                FilePath path = new FilePath(name, fullPath);
-                filePath.add(path);
-            }
-        }
-        mView.showFilePath(filePath);
-    }
+	private void updateFilePath() {
+		filePath.clear();
+		filePath.add(homePath);
+		if (!StringUtils.isBlank(curPath)) {
+			String[] pathArray = curPath.split("/");
+			for (int i = 0; i < pathArray.length; i++) {
+				String name = pathArray[i];
+				String fullPath = "";
+				for (int j = 0; j <= i; j++) {
+					fullPath = fullPath.concat(pathArray[j]).concat("/");
+				}
+				fullPath = fullPath.endsWith("/") ?
+						fullPath.substring(0, fullPath.length() - 1) : fullPath;
+				FilePath path = new FilePath(name, fullPath);
+				filePath.add(path);
+			}
+		}
+		mView.showFilePath(filePath);
+	}
 
-    public String getRepoName(){
-        return repo.getName();
-    }
+	public String getRepoName() {
+		return repo.getName();
+	}
 
-    public void setCurBranch(String curBranch) {
-        this.curBranch = curBranch;
-        curPath = "";
-    }
+	public void setCurBranch(String curBranch) {
+		this.curBranch = curBranch;
+		curPath = "";
+	}
 }

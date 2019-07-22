@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import com.google.gson.annotations.SerializedName;
@@ -16,73 +14,75 @@ import java.util.List;
 
 public class BasicToken {
 
-    private int id;
-    private String url;
-    private String token;
-    @SerializedName("created_at") private Date createdAt;
-    @SerializedName("updated_at") private Date updatedAt;
-    private List<String> scopes;
+	private int id;
+	private String url;
+	private String token;
+	@SerializedName("created_at")
+	private Date createdAt;
+	@SerializedName("updated_at")
+	private Date updatedAt;
+	private List<String> scopes;
 
-    public BasicToken() {
+	public BasicToken() {
 
-    }
+	}
 
-    public static BasicToken generateFromOauthToken(OauthToken oauthToken){
-        BasicToken basicToken = new BasicToken();
-        basicToken.setToken(oauthToken.getAccessToken());
-        basicToken.setScopes(Arrays.asList(oauthToken.getScope().split(",")));
-        return basicToken;
-    }
+	public static BasicToken generateFromOauthToken(OauthToken oauthToken) {
+		BasicToken basicToken = new BasicToken();
+		basicToken.setToken(oauthToken.getAccessToken());
+		basicToken.setScopes(Arrays.asList(oauthToken.getScope().split(",")));
+		return basicToken;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public String getToken() {
+		return token;
+	}
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+	public void setToken(String token) {
+		this.token = token;
+	}
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public List<String> getScopes() {
-        return scopes;
-    }
+	public List<String> getScopes() {
+		return scopes;
+	}
 
-    public void setScopes(List<String> scopes) {
-        this.scopes = scopes;
-    }
+	public void setScopes(List<String> scopes) {
+		this.scopes = scopes;
+	}
 
-    //    {
+	//    {
 //        "id": 118469758,
 //            "url": "https://api.github.com/authorizations/118469758",
 //            "app": {

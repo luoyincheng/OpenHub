@@ -15,37 +15,37 @@ import com.thirtydegreesray.openhub.common.GlideApp;
 
 public class MenuAvatarLoader {
 
-    private Context context;
-    private MenuItem menuItem;
-    private int placeholderIcon;
-    private String url;
+	private Context context;
+	private MenuItem menuItem;
+	private int placeholderIcon;
+	private String url;
 
-    public MenuAvatarLoader(@NonNull Context context, MenuItem menuItem, int placeholderIcon, String url) {
-        this.context = context;
-        this.menuItem = menuItem;
-        this.placeholderIcon = placeholderIcon;
-        this.url = url;
-    }
+	public MenuAvatarLoader(@NonNull Context context, MenuItem menuItem, int placeholderIcon, String url) {
+		this.context = context;
+		this.menuItem = menuItem;
+		this.placeholderIcon = placeholderIcon;
+		this.url = url;
+	}
 
-    public void load(){
-        menuItem.setIcon(placeholderIcon);
-        GlideApp.with(context)
-                .asDrawable()
-                .centerCrop()
-                .load(url)
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+	public void load() {
+		menuItem.setIcon(placeholderIcon);
+		GlideApp.with(context)
+				.asDrawable()
+				.centerCrop()
+				.load(url)
+				.into(new SimpleTarget<Drawable>() {
+					@Override
+					public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
 //                        menuItem.setIcon(resource);
-                        destroy();
-                    }
-                });
+						destroy();
+					}
+				});
 
-    }
+	}
 
-    private void destroy(){
-        context = null;
-        menuItem = null;
-    }
+	private void destroy() {
+		context = null;
+		menuItem = null;
+	}
 
 }

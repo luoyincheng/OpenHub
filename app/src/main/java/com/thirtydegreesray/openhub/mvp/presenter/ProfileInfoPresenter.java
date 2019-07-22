@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import com.thirtydegreesray.dataautoaccess.annotation.AutoAccess;
@@ -22,59 +20,60 @@ import rx.Observable;
  */
 
 public class ProfileInfoPresenter extends BasePagerPresenter<IProfileInfoContract.View>
-        implements IProfileInfoContract.Presenter{
+		implements IProfileInfoContract.Presenter {
 
-    @AutoAccess User user;
-    private ArrayList<User> orgs;
+	@AutoAccess
+	User user;
+	private ArrayList<User> orgs;
 
-    @Inject
-    public ProfileInfoPresenter(DaoSession daoSession) {
-        super(daoSession);
-    }
+	@Inject
+	public ProfileInfoPresenter(DaoSession daoSession) {
+		super(daoSession);
+	}
 
-    @Override
-    public void onViewInitialized() {
-        super.onViewInitialized();
-    }
+	@Override
+	public void onViewInitialized() {
+		super.onViewInitialized();
+	}
 
-    @Override
-    protected void loadData() {
-        mView.showProfileInfo(user);
-        if(user.isUser()) loadOrgs();
-    }
+	@Override
+	protected void loadData() {
+		mView.showProfileInfo(user);
+		if (user.isUser()) loadOrgs();
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    private void loadOrgs(){
-        if(orgs != null && orgs.size() != 0){
-            mView.showUserOrgs(orgs);
-            return;
-        }
-        HttpObserver<ArrayList<User>> httpObserver = new HttpObserver<ArrayList<User>>() {
-            @Override
-            public void onError(Throwable error) {
-                mView.showErrorToast(getErrorTip(error));
-            }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-            @Override
-            public void onSuccess(HttpResponse<ArrayList<User>> response) {
-                if(response.body().size() != 0){
-                    orgs = response.body();
-                    mView.showUserOrgs(orgs);
-                }
-            }
-        };
-        generalRxHttpExecute(new IObservableCreator<ArrayList<User>>() {
-            @Override
-            public Observable<Response<ArrayList<User>>> createObservable(boolean forceNetWork) {
-                return getUserService().getUserOrgs(forceNetWork, user.getLogin());
-            }
-        }, httpObserver, true);
-    }
+	private void loadOrgs() {
+		if (orgs != null && orgs.size() != 0) {
+			mView.showUserOrgs(orgs);
+			return;
+		}
+		HttpObserver<ArrayList<User>> httpObserver = new HttpObserver<ArrayList<User>>() {
+			@Override
+			public void onError(Throwable error) {
+				mView.showErrorToast(getErrorTip(error));
+			}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+			@Override
+			public void onSuccess(HttpResponse<ArrayList<User>> response) {
+				if (response.body().size() != 0) {
+					orgs = response.body();
+					mView.showUserOrgs(orgs);
+				}
+			}
+		};
+		generalRxHttpExecute(new IObservableCreator<ArrayList<User>>() {
+			@Override
+			public Observable<Response<ArrayList<User>>> createObservable(boolean forceNetWork) {
+				return getUserService().getUserOrgs(forceNetWork, user.getLogin());
+			}
+		}, httpObserver, true);
+	}
 }

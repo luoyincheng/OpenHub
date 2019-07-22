@@ -24,38 +24,42 @@ import butterknife.BindView;
 
 public class LanguagesAdapter extends BaseAdapter<LanguagesAdapter.ViewHolder, TrendingLanguage> {
 
-    @Inject
-    public LanguagesAdapter(Context context, BaseFragment fragment) {
-        super(context, fragment);
-    }
+	@Inject
+	public LanguagesAdapter(Context context, BaseFragment fragment) {
+		super(context, fragment);
+	}
 
-    @Override
-    protected int getLayoutId(int viewType) {
-        return R.layout.layout_item_language;
-    }
+	@Override
+	protected int getLayoutId(int viewType) {
+		return R.layout.layout_item_language;
+	}
 
-    @Override
-    protected ViewHolder getViewHolder(View itemView, int viewType) {
-        return new ViewHolder(itemView);
-    }
+	@Override
+	protected ViewHolder getViewHolder(View itemView, int viewType) {
+		return new ViewHolder(itemView);
+	}
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-        TrendingLanguage language = data.get(position);
-        holder.languageName.setText(language.getName());
-        holder.selectedFlag.setVisibility(language.isSelected() ? View.VISIBLE : View.INVISIBLE);
-        int languageColor = LanguageColorsHelper.INSTANCE.getColor(context, language.getName());
-        holder.languageColor.setImageTintList(ColorStateList.valueOf(languageColor));
-    }
+	@Override
+	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+		super.onBindViewHolder(holder, position);
+		TrendingLanguage language = data.get(position);
+		holder.languageName.setText(language.getName());
+		holder.selectedFlag.setVisibility(language.isSelected() ? View.VISIBLE : View.INVISIBLE);
+		int languageColor = LanguageColorsHelper.INSTANCE.getColor(context, language.getName());
+		holder.languageColor.setImageTintList(ColorStateList.valueOf(languageColor));
+	}
 
-    class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.language_name) TextView languageName;
-        @BindView(R.id.selected_flag) AppCompatImageView selectedFlag;
-        @BindView(R.id.language_color) AppCompatImageView languageColor;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
+	class ViewHolder extends BaseViewHolder {
+		@BindView(R.id.language_name)
+		TextView languageName;
+		@BindView(R.id.selected_flag)
+		AppCompatImageView selectedFlag;
+		@BindView(R.id.language_color)
+		AppCompatImageView languageColor;
+
+		public ViewHolder(@NonNull View itemView) {
+			super(itemView);
+		}
+	}
 
 }

@@ -14,193 +14,198 @@ import java.util.List;
 
 public class Release implements Parcelable {
 
-    private String id;
-    @SerializedName("tag_name") private String tagName;
-    @SerializedName("target_commitish") private String targetCommitish;
-    private String name;
-    private String body;
-    @SerializedName("body_html") private String bodyHtml;
-    @SerializedName("tarball_url") private String tarballUrl;
-    @SerializedName("zipball_url") private String zipballUrl;
+	public static final Parcelable.Creator<Release> CREATOR = new Parcelable.Creator<Release>() {
+		@Override
+		public Release createFromParcel(Parcel source) {
+			return new Release(source);
+		}
 
-    private boolean draft;
-    @SerializedName("prerelease") private boolean preRelease;
-    @SerializedName("created_at") private Date createdAt;
-    @SerializedName("published_at") private Date publishedAt;
+		@Override
+		public Release[] newArray(int size) {
+			return new Release[size];
+		}
+	};
+	private String id;
+	@SerializedName("tag_name")
+	private String tagName;
+	@SerializedName("target_commitish")
+	private String targetCommitish;
+	private String name;
+	private String body;
+	@SerializedName("body_html")
+	private String bodyHtml;
+	@SerializedName("tarball_url")
+	private String tarballUrl;
+	@SerializedName("zipball_url")
+	private String zipballUrl;
+	private boolean draft;
+	@SerializedName("prerelease")
+	private boolean preRelease;
+	@SerializedName("created_at")
+	private Date createdAt;
+	@SerializedName("published_at")
+	private Date publishedAt;
+	private User author;
+	private List<ReleaseAsset> assets;
 
-    private User author;
-    private List<ReleaseAsset> assets;
+	public Release() {
+	}
 
-    public String getId() {
-        return id;
-    }
+	protected Release(Parcel in) {
+		this.id = in.readString();
+		this.tagName = in.readString();
+		this.targetCommitish = in.readString();
+		this.name = in.readString();
+		this.body = in.readString();
+		this.bodyHtml = in.readString();
+		this.tarballUrl = in.readString();
+		this.zipballUrl = in.readString();
+		this.draft = in.readByte() != 0;
+		this.preRelease = in.readByte() != 0;
+		long tmpCreatedAt = in.readLong();
+		this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
+		long tmpPublishedAt = in.readLong();
+		this.publishedAt = tmpPublishedAt == -1 ? null : new Date(tmpPublishedAt);
+		this.author = in.readParcelable(User.class.getClassLoader());
+		this.assets = in.createTypedArrayList(ReleaseAsset.CREATOR);
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getTagName() {
-        return tagName;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
+	public String getTagName() {
+		return tagName;
+	}
 
-    public String getTargetCommitish() {
-        return targetCommitish;
-    }
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
 
-    public void setTargetCommitish(String targetCommitish) {
-        this.targetCommitish = targetCommitish;
-    }
+	public String getTargetCommitish() {
+		return targetCommitish;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setTargetCommitish(String targetCommitish) {
+		this.targetCommitish = targetCommitish;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getBody() {
-        return body;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+	public String getBody() {
+		return body;
+	}
 
-    public String getTarballUrl() {
-        return tarballUrl;
-    }
+	public void setBody(String body) {
+		this.body = body;
+	}
 
-    public void setTarballUrl(String tarballUrl) {
-        this.tarballUrl = tarballUrl;
-    }
+	public String getTarballUrl() {
+		return tarballUrl;
+	}
 
-    public String getZipballUrl() {
-        return zipballUrl;
-    }
+	public void setTarballUrl(String tarballUrl) {
+		this.tarballUrl = tarballUrl;
+	}
 
-    public void setZipballUrl(String zipballUrl) {
-        this.zipballUrl = zipballUrl;
-    }
+	public String getZipballUrl() {
+		return zipballUrl;
+	}
 
-    public boolean isDraft() {
-        return draft;
-    }
+	public void setZipballUrl(String zipballUrl) {
+		this.zipballUrl = zipballUrl;
+	}
 
-    public void setDraft(boolean draft) {
-        this.draft = draft;
-    }
+	public boolean isDraft() {
+		return draft;
+	}
 
-    public boolean isPreRelease() {
-        return preRelease;
-    }
+	public void setDraft(boolean draft) {
+		this.draft = draft;
+	}
 
-    public void setPreRelease(boolean preRelease) {
-        this.preRelease = preRelease;
-    }
+	public boolean isPreRelease() {
+		return preRelease;
+	}
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+	public void setPreRelease(boolean preRelease) {
+		this.preRelease = preRelease;
+	}
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-    public Date getPublishedAt() {
-        return publishedAt;
-    }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public void setPublishedAt(Date publishedAt) {
-        this.publishedAt = publishedAt;
-    }
+	public Date getPublishedAt() {
+		return publishedAt;
+	}
 
-    public User getAuthor() {
-        return author;
-    }
+	public void setPublishedAt(Date publishedAt) {
+		this.publishedAt = publishedAt;
+	}
 
-    public void setAuthor(User author) {
-        this.author = author;
-    }
+	public User getAuthor() {
+		return author;
+	}
 
-    public List<ReleaseAsset> getAssets() {
-        return assets;
-    }
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 
-    public void setAssets(List<ReleaseAsset> assets) {
-        this.assets = assets;
-    }
+	public List<ReleaseAsset> getAssets() {
+		return assets;
+	}
 
-    public String getBodyHtml() {
-        return bodyHtml;
-    }
+	public void setAssets(List<ReleaseAsset> assets) {
+		this.assets = assets;
+	}
 
-    public void setBodyHtml(String bodyHtml) {
-        this.bodyHtml = bodyHtml;
-    }
+	public String getBodyHtml() {
+		return bodyHtml;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setBodyHtml(String bodyHtml) {
+		this.bodyHtml = bodyHtml;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.tagName);
-        dest.writeString(this.targetCommitish);
-        dest.writeString(this.name);
-        dest.writeString(this.body);
-        dest.writeString(this.bodyHtml);
-        dest.writeString(this.tarballUrl);
-        dest.writeString(this.zipballUrl);
-        dest.writeByte(this.draft ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.preRelease ? (byte) 1 : (byte) 0);
-        dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
-        dest.writeLong(this.publishedAt != null ? this.publishedAt.getTime() : -1);
-        dest.writeParcelable(this.author, flags);
-        dest.writeTypedList(this.assets);
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public Release() {
-    }
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.id);
+		dest.writeString(this.tagName);
+		dest.writeString(this.targetCommitish);
+		dest.writeString(this.name);
+		dest.writeString(this.body);
+		dest.writeString(this.bodyHtml);
+		dest.writeString(this.tarballUrl);
+		dest.writeString(this.zipballUrl);
+		dest.writeByte(this.draft ? (byte) 1 : (byte) 0);
+		dest.writeByte(this.preRelease ? (byte) 1 : (byte) 0);
+		dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
+		dest.writeLong(this.publishedAt != null ? this.publishedAt.getTime() : -1);
+		dest.writeParcelable(this.author, flags);
+		dest.writeTypedList(this.assets);
+	}
 
-    protected Release(Parcel in) {
-        this.id = in.readString();
-        this.tagName = in.readString();
-        this.targetCommitish = in.readString();
-        this.name = in.readString();
-        this.body = in.readString();
-        this.bodyHtml = in.readString();
-        this.tarballUrl = in.readString();
-        this.zipballUrl = in.readString();
-        this.draft = in.readByte() != 0;
-        this.preRelease = in.readByte() != 0;
-        long tmpCreatedAt = in.readLong();
-        this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
-        long tmpPublishedAt = in.readLong();
-        this.publishedAt = tmpPublishedAt == -1 ? null : new Date(tmpPublishedAt);
-        this.author = in.readParcelable(User.class.getClassLoader());
-        this.assets = in.createTypedArrayList(ReleaseAsset.CREATOR);
-    }
-
-    public static final Parcelable.Creator<Release> CREATOR = new Parcelable.Creator<Release>() {
-        @Override
-        public Release createFromParcel(Parcel source) {
-            return new Release(source);
-        }
-
-        @Override
-        public Release[] newArray(int size) {
-            return new Release[size];
-        }
-    };
-
-    //    {
+	//    {
 //        "url": "https://api.github.com/repos/ThirtyDegreesRay/OpenHub/releases/7754776",
 //        "assets_url": "https://api.github.com/repos/ThirtyDegreesRay/OpenHub/releases/7754776/assets",
 //        "upload_url": "https://uploads.github.com/repos/ThirtyDegreesRay/OpenHub/releases/7754776/assets{?name,label}",

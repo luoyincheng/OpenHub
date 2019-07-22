@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.inject;
 
 import java.lang.annotation.Documented;

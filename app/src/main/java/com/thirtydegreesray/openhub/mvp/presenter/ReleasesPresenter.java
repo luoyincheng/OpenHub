@@ -20,68 +20,70 @@ import rx.Observable;
  */
 
 public class ReleasesPresenter extends BasePresenter<IReleasesContract.View>
-        implements IReleasesContract.Presenter{
+		implements IReleasesContract.Presenter {
 
-    @AutoAccess String owner;
-    @AutoAccess String repo;
-    private ArrayList<Release> releases;
+	@AutoAccess
+	String owner;
+	@AutoAccess
+	String repo;
+	private ArrayList<Release> releases;
 
-    @Inject
-    public ReleasesPresenter(DaoSession daoSession) {
-        super(daoSession);
-    }
+	@Inject
+	public ReleasesPresenter(DaoSession daoSession) {
+		super(daoSession);
+	}
 
-    @Override
-    public void onViewInitialized() {
-        super.onViewInitialized();
-        if(releases == null){
-            loadReleases(1, false);
-        } else {
-            mView.showReleases(releases);
-            mView.hideLoading();
-        }
-    }
+	@Override
+	public void onViewInitialized() {
+		super.onViewInitialized();
+		if (releases == null) {
+			loadReleases(1, false);
+		} else {
+			mView.showReleases(releases);
+			mView.hideLoading();
+		}
+	}
 
-    @Override
-    public void loadReleases(final int page, final boolean isReload) {
-        mView.showLoading();
-        final boolean readCacheFirst = page == 1 && !isReload;
-        final HttpObserver<ArrayList<Release>> httpObserver = new HttpObserver<ArrayList<Release>>() {
-            @Override
-            public void onError(Throwable error) {
-                mView.hideLoading();
-            }
+	@Override
+	public void loadReleases(final int page, final boolean isReload) {
+		mView.showLoading();
+		final boolean readCacheFirst = page == 1 && !isReload;
+		final HttpObserver<ArrayList<Release>> httpObserver = new HttpObserver<ArrayList<Release>>() {
+			@Override
+			public void onError(Throwable error) {
+				mView.hideLoading();
+			}
 
-            @Override
-            public void onSuccess(HttpResponse<ArrayList<Release>> response) {
-                mView.hideLoading();
-                if (isReload || releases == null || readCacheFirst) {
-                    releases = response.body();
-                } else {
-                    releases.addAll(response.body());
-                }
-                if(response.body().size() == 0 && releases.size() != 0){
-                    mView.setCanLoadMore(false);
-                } else {
-                    mView.showReleases(releases);
-                }
-            }
-        };
+			@Override
+			public void onSuccess(HttpResponse<ArrayList<Release>> response) {
+				mView.hideLoading();
+				if (isReload || releases == null || readCacheFirst) {
+					releases = response.body();
+				} else {
+					releases.addAll(response.body());
+				}
+				if (response.body().size() == 0 && releases.size() != 0) {
+					mView.setCanLoadMore(false);
+				} else {
+					mView.showReleases(releases);
+				}
+			}
+		};
 
-        generalRxHttpExecute(new IObservableCreator<ArrayList<Release>>() {
-            @Override
-            public Observable<Response<ArrayList<Release>>> createObservable(boolean forceNetWork) {
-                return getRepoService().getReleases(forceNetWork, owner, repo, page);
-            }
-        }, httpObserver, readCacheFirst);
+		generalRxHttpExecute(new IObservableCreator<ArrayList<Release>>() {
+			@Override
+			public Observable<Response<ArrayList<Release>>> createObservable(boolean forceNetWork) {
+				return getRepoService().getReleases(forceNetWork, owner, repo, page);
+			}
+		}, httpObserver, readCacheFirst);
 
-    }
+	}
 
-    public String getRepoName(){
-        return repo;
-    }
+	public String getRepoName() {
+		return repo;
+	}
 
-    public String getOwner() {
-        return owner;
-    }
+	public String getOwner() {
+		return owner;
+	}
 }

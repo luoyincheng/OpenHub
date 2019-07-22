@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 public interface ITopicsContract {
 
-    interface View extends IBaseContract.View, IBaseListContract.View{
-        void showTopics(ArrayList<Topic> topics);
-    }
+	interface View extends IBaseContract.View, IBaseListContract.View {
+		void showTopics(ArrayList<Topic> topics);
+	}
 
-    interface Presenter extends IBaseContract.Presenter<ITopicsContract.View>{
-        void loadTopics(boolean isReload);
-    }
+	interface Presenter extends IBaseContract.Presenter<ITopicsContract.View> {
+		void loadTopics(boolean isReload);
+	}
 
 }

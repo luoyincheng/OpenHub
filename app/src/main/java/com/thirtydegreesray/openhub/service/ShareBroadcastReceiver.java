@@ -13,13 +13,13 @@ import com.thirtydegreesray.openhub.util.AppOpener;
 
 public class ShareBroadcastReceiver extends BroadcastReceiver {
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Uri uri = intent.getData();
-        if(uri != null){
-            String content = uri.toString();
-            AppOpener.shareText(context, content);
-        }
-    }
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		Uri uri = intent.getData();
+		if (uri != null) {
+			String content = uri.toString();
+			AppOpener.shareText(context, content);
+		}
+	}
 
 }

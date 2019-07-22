@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.ui.activity;
 
 import android.app.Activity;
@@ -19,28 +17,28 @@ import com.thirtydegreesray.openhub.util.AppOpener;
 
 public class BrowserFilterActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(AppData.INSTANCE.getLoggedUser() != null){
-            handleBrowserUri(this, getIntent().getData());
-        } else {
-            Intent intent = new Intent(this, SplashActivity.class);
-            intent.setData(getIntent().getData());
-            startActivity(intent);
-        }
-        finish();
-    }
+	public static void handleBrowserUri(@NonNull Activity activity, @NonNull Uri uri) {
+		//handle shortcuts redirection
+		if (uri.toString().equals("trending")) {
+			activity.startActivity(new Intent(activity, TrendingActivity.class));
+		} else if (uri.toString().equals("search")) {
+			activity.startActivity(new Intent(activity, SearchActivity.class));
+		} else {
+			AppOpener.launchUrl(activity, uri);
+		}
+	}
 
-    public static void handleBrowserUri(@NonNull Activity activity, @NonNull Uri uri){
-        //handle shortcuts redirection
-        if (uri.toString().equals("trending")){
-            activity.startActivity(new Intent(activity, TrendingActivity.class));
-        } else if (uri.toString().equals("search")){
-            activity.startActivity(new Intent(activity, SearchActivity.class));
-        } else {
-            AppOpener.launchUrl(activity, uri);
-        }
-    }
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (AppData.INSTANCE.getLoggedUser() != null) {
+			handleBrowserUri(this, getIntent().getData());
+		} else {
+			Intent intent = new Intent(this, SplashActivity.class);
+			intent.setData(getIntent().getData());
+			startActivity(intent);
+		}
+		finish();
+	}
 
 }

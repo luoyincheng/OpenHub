@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.inject.module;
 
 import android.content.Context;
@@ -18,28 +16,28 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private BaseActivity mActivity;
+	private BaseActivity mActivity;
 
-    public ActivityModule(BaseActivity activity) {
-        mActivity = activity;
-    }
+	public ActivityModule(BaseActivity activity) {
+		mActivity = activity;
+	}
 
-    @Provides
-    @ActivityScope
-    public BaseActivity provideActivity(){
-        return mActivity;
-    }
+	@Provides
+	@ActivityScope
+	public BaseActivity provideActivity() {
+		return mActivity;
+	}
 
-    @Provides
-    @ActivityScope
-    public Context provideContext(){
-        return mActivity;
-    }
+	@Provides
+	@ActivityScope
+	public Context provideContext() {
+		return mActivity;
+	}
 
-    @Provides
-    @ActivityScope
-    public FragmentManager provideFragmentManager(){
-        return mActivity.getSupportFragmentManager();
-    }
+	@Provides
+	@ActivityScope
+	public FragmentManager provideFragmentManager() {
+		return mActivity.getSupportFragmentManager();
+	}
 
 }

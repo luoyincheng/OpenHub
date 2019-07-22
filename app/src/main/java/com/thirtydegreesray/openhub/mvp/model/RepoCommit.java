@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -15,126 +13,126 @@ import java.util.ArrayList;
 
 public class RepoCommit implements Parcelable {
 
-    private String sha;
-    private String url;
-    @SerializedName("html_url") private String htmlUrl;
-    @SerializedName("comments_url") private String commentsUrl;
+	public static final Creator<RepoCommit> CREATOR = new Creator<RepoCommit>() {
+		@Override
+		public RepoCommit createFromParcel(Parcel in) {
+			return new RepoCommit(in);
+		}
 
-    private CommitGitInfo commit;
-    private User author;
-    private User committer;
-    private ArrayList<RepoCommit> parents;
+		@Override
+		public RepoCommit[] newArray(int size) {
+			return new RepoCommit[size];
+		}
+	};
+	private String sha;
+	private String url;
+	@SerializedName("html_url")
+	private String htmlUrl;
+	@SerializedName("comments_url")
+	private String commentsUrl;
+	private CommitGitInfo commit;
+	private User author;
+	private User committer;
+	private ArrayList<RepoCommit> parents;
 
-    public String getSha() {
-        return sha;
-    }
+	public RepoCommit() {
+	}
 
-    public String getShortSha() {
-        return sha == null || sha.length() <= 7 ? sha : sha.substring(0, 7);
-    }
+	protected RepoCommit(Parcel in) {
+		this.sha = in.readString();
+		this.url = in.readString();
+		this.htmlUrl = in.readString();
+		this.commentsUrl = in.readString();
+		this.commit = in.readParcelable(CommitGitInfo.class.getClassLoader());
+		this.author = in.readParcelable(User.class.getClassLoader());
+		this.committer = in.readParcelable(User.class.getClassLoader());
+		this.parents = new ArrayList<RepoCommit>();
+		in.readList(this.parents, RepoCommit.class.getClassLoader());
+	}
 
-    public void setSha(String sha) {
-        this.sha = sha;
-    }
+	public String getSha() {
+		return sha;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setSha(String sha) {
+		this.sha = sha;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public String getShortSha() {
+		return sha == null || sha.length() <= 7 ? sha : sha.substring(0, 7);
+	}
 
-    public String getHtmlUrl() {
-        return htmlUrl;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String getCommentsUrl() {
-        return commentsUrl;
-    }
+	public String getHtmlUrl() {
+		return htmlUrl;
+	}
 
-    public void setCommentsUrl(String commentsUrl) {
-        this.commentsUrl = commentsUrl;
-    }
+	public void setHtmlUrl(String htmlUrl) {
+		this.htmlUrl = htmlUrl;
+	}
 
-    public CommitGitInfo getCommit() {
-        return commit;
-    }
+	public String getCommentsUrl() {
+		return commentsUrl;
+	}
 
-    public void setCommit(CommitGitInfo commit) {
-        this.commit = commit;
-    }
+	public void setCommentsUrl(String commentsUrl) {
+		this.commentsUrl = commentsUrl;
+	}
 
-    public User getAuthor() {
-        return author;
-    }
+	public CommitGitInfo getCommit() {
+		return commit;
+	}
 
-    public void setAuthor(User author) {
-        this.author = author;
-    }
+	public void setCommit(CommitGitInfo commit) {
+		this.commit = commit;
+	}
 
-    public User getCommitter() {
-        return committer;
-    }
+	public User getAuthor() {
+		return author;
+	}
 
-    public void setCommitter(User committer) {
-        this.committer = committer;
-    }
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 
-    public ArrayList<RepoCommit> getParents() {
-        return parents;
-    }
+	public User getCommitter() {
+		return committer;
+	}
 
-    public void setParents(ArrayList<RepoCommit> parents) {
-        this.parents = parents;
-    }
+	public void setCommitter(User committer) {
+		this.committer = committer;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public ArrayList<RepoCommit> getParents() {
+		return parents;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.sha);
-        dest.writeString(this.url);
-        dest.writeString(this.htmlUrl);
-        dest.writeString(this.commentsUrl);
-        dest.writeParcelable(this.commit, flags);
-        dest.writeParcelable(this.author, flags);
-        dest.writeParcelable(this.committer, flags);
-        dest.writeList(this.parents);
-    }
+	public void setParents(ArrayList<RepoCommit> parents) {
+		this.parents = parents;
+	}
 
-    public RepoCommit() {
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    protected RepoCommit(Parcel in) {
-        this.sha = in.readString();
-        this.url = in.readString();
-        this.htmlUrl = in.readString();
-        this.commentsUrl = in.readString();
-        this.commit = in.readParcelable(CommitGitInfo.class.getClassLoader());
-        this.author = in.readParcelable(User.class.getClassLoader());
-        this.committer = in.readParcelable(User.class.getClassLoader());
-        this.parents = new ArrayList<RepoCommit>();
-        in.readList(this.parents, RepoCommit.class.getClassLoader());
-    }
-
-    public static final Creator<RepoCommit> CREATOR = new Creator<RepoCommit>() {
-        @Override
-        public RepoCommit createFromParcel(Parcel in) {
-            return new RepoCommit(in);
-        }
-
-        @Override
-        public RepoCommit[] newArray(int size) {
-            return new RepoCommit[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.sha);
+		dest.writeString(this.url);
+		dest.writeString(this.htmlUrl);
+		dest.writeString(this.commentsUrl);
+		dest.writeParcelable(this.commit, flags);
+		dest.writeParcelable(this.author, flags);
+		dest.writeParcelable(this.committer, flags);
+		dest.writeList(this.parents);
+	}
 
 }

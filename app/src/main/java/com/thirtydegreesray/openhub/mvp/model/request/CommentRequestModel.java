@@ -9,44 +9,43 @@ import android.os.Parcelable;
 
 public class CommentRequestModel implements Parcelable {
 
-    private String body;
+	public static final Parcelable.Creator<CommentRequestModel> CREATOR = new Parcelable.Creator<CommentRequestModel>() {
+		@Override
+		public CommentRequestModel createFromParcel(Parcel source) {
+			return new CommentRequestModel(source);
+		}
 
-    public CommentRequestModel(String body) {
-        this.body = body;
-    }
+		@Override
+		public CommentRequestModel[] newArray(int size) {
+			return new CommentRequestModel[size];
+		}
+	};
+	private String body;
 
-    public String getBody() {
-        return body;
-    }
+	public CommentRequestModel(String body) {
+		this.body = body;
+	}
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+	protected CommentRequestModel(Parcel in) {
+		this.body = in.readString();
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public String getBody() {
+		return body;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.body);
-    }
+	public void setBody(String body) {
+		this.body = body;
+	}
 
-    protected CommentRequestModel(Parcel in) {
-        this.body = in.readString();
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<CommentRequestModel> CREATOR = new Parcelable.Creator<CommentRequestModel>() {
-        @Override
-        public CommentRequestModel createFromParcel(Parcel source) {
-            return new CommentRequestModel(source);
-        }
-
-        @Override
-        public CommentRequestModel[] newArray(int size) {
-            return new CommentRequestModel[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.body);
+	}
 
 }

@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import android.support.annotation.NonNull;
@@ -26,116 +24,120 @@ import rx.Observable;
  */
 
 public class EditIssuePresenter extends BasePresenter<IEditIssueContract.View>
-        implements IEditIssueContract.Presenter{
+		implements IEditIssueContract.Presenter {
 
-    @AutoAccess String userId;
-    @AutoAccess String repoName;
-    @AutoAccess Issue issue;
-    @AutoAccess boolean addMode;
+	@AutoAccess
+	String userId;
+	@AutoAccess
+	String repoName;
+	@AutoAccess
+	Issue issue;
+	@AutoAccess
+	boolean addMode;
 
-    private ArrayList<Label> allLabels;
+	private ArrayList<Label> allLabels;
 
-    @Inject
-    public EditIssuePresenter(DaoSession daoSession) {
-        super(daoSession);
-        issue = new Issue();
-    }
+	@Inject
+	public EditIssuePresenter(DaoSession daoSession) {
+		super(daoSession);
+		issue = new Issue();
+	}
 
-    public String getIssueTitle(){
-        return issue.getTitle();
-    }
+	public String getIssueTitle() {
+		return issue.getTitle();
+	}
 
-    public String getIssueComment(){
-        return issue.getBody();
-    }
+	public String getIssueComment() {
+		return issue.getBody();
+	}
 
-    public ArrayList<Label> getLabels(){
-        return issue.getLabels();
-    }
+	public ArrayList<Label> getLabels() {
+		return issue.getLabels();
+	}
 
-    @Override
-    public void commitIssue(@NonNull String title, @NonNull String comment) {
-        HttpObserver<Issue> httpObserver = new HttpObserver<Issue>() {
-            @Override
-            public void onError(Throwable error) {
-                mView.showErrorToast(getErrorTip(error));
-            }
+	@Override
+	public void commitIssue(@NonNull String title, @NonNull String comment) {
+		HttpObserver<Issue> httpObserver = new HttpObserver<Issue>() {
+			@Override
+			public void onError(Throwable error) {
+				mView.showErrorToast(getErrorTip(error));
+			}
 
-            @Override
-            public void onSuccess(HttpResponse<Issue> response) {
-                mView.showNewIssue(response.body());
-            }
-        };
+			@Override
+			public void onSuccess(HttpResponse<Issue> response) {
+				mView.showNewIssue(response.body());
+			}
+		};
 
-        issue.setTitle(title);
-        issue.setBody(comment);
+		issue.setTitle(title);
+		issue.setBody(comment);
 
-        generalRxHttpExecute(new IObservableCreator<Issue>() {
-            @Override
-            public Observable<Response<Issue>> createObservable(boolean forceNetWork) {
-                return addMode ? getIssueService().createIssue(userId, repoName, issue) :
-                        getIssueService().editIssue(getRepoOwner(), getRepoName(), issue.getNumber(),
-                                IssueRequestModel.generateFromIssue(issue));
-            }
-        }, httpObserver, false, mView.getProgressDialog(getLoadTip()));
+		generalRxHttpExecute(new IObservableCreator<Issue>() {
+			@Override
+			public Observable<Response<Issue>> createObservable(boolean forceNetWork) {
+				return addMode ? getIssueService().createIssue(userId, repoName, issue) :
+						getIssueService().editIssue(getRepoOwner(), getRepoName(), issue.getNumber(),
+								IssueRequestModel.generateFromIssue(issue));
+			}
+		}, httpObserver, false, mView.getProgressDialog(getLoadTip()));
 
-    }
+	}
 
-    @Override
-    public void loadLabels() {
-        if(allLabels != null){
-            mView.onLoadLabelsComplete(getAllLabelsWithSelectFlag());
-            return;
-        }
+	@Override
+	public void loadLabels() {
+		if (allLabels != null) {
+			mView.onLoadLabelsComplete(getAllLabelsWithSelectFlag());
+			return;
+		}
 
-        HttpObserver<ArrayList<Label>> httpObserver = new HttpObserver<ArrayList<Label>>() {
-            @Override
-            public void onError(Throwable error) {
-                mView.showErrorToast(getErrorTip(error));
-            }
+		HttpObserver<ArrayList<Label>> httpObserver = new HttpObserver<ArrayList<Label>>() {
+			@Override
+			public void onError(Throwable error) {
+				mView.showErrorToast(getErrorTip(error));
+			}
 
-            @Override
-            public void onSuccess(HttpResponse<ArrayList<Label>> response) {
-                allLabels = response.body();
-                mView.onLoadLabelsComplete(getAllLabelsWithSelectFlag());
-            }
-        };
+			@Override
+			public void onSuccess(HttpResponse<ArrayList<Label>> response) {
+				allLabels = response.body();
+				mView.onLoadLabelsComplete(getAllLabelsWithSelectFlag());
+			}
+		};
 
-        generalRxHttpExecute(forceNetWork ->
-                        getIssueService().getRepoLabels(forceNetWork, getRepoOwner(), getRepoName()),
-                httpObserver, false, mView.getProgressDialog(getLoadTip()));
-    }
+		generalRxHttpExecute(forceNetWork ->
+						getIssueService().getRepoLabels(forceNetWork, getRepoOwner(), getRepoName()),
+				httpObserver, false, mView.getProgressDialog(getLoadTip()));
+	}
 
-    @Override
-    public void clearAllLabelsData() {
-        allLabels = null;
-    }
+	@Override
+	public void clearAllLabelsData() {
+		allLabels = null;
+	}
 
-    private ArrayList<Label> getAllLabelsWithSelectFlag(){
-        for(Label label : allLabels){
-            if(issue.getLabels() == null || !issue.getLabels().contains(label)){
-                label.setSelect(false);
-            } else {
-                label.setSelect(true);
-            }
-        }
-        return allLabels;
-    }
+	private ArrayList<Label> getAllLabelsWithSelectFlag() {
+		for (Label label : allLabels) {
+			if (issue.getLabels() == null || !issue.getLabels().contains(label)) {
+				label.setSelect(false);
+			} else {
+				label.setSelect(true);
+			}
+		}
+		return allLabels;
+	}
 
-    public boolean isAddMode() {
-        return addMode;
-    }
+	public boolean isAddMode() {
+		return addMode;
+	}
 
-    public String getRepoOwner() {
-        return addMode ? userId : issue.getRepoAuthorName();
-    }
+	public String getRepoOwner() {
+		return addMode ? userId : issue.getRepoAuthorName();
+	}
 
-    public String getRepoName() {
-        return addMode ? repoName : issue.getRepoName();
-    }
+	public String getRepoName() {
+		return addMode ? repoName : issue.getRepoName();
+	}
 
-    public Issue getIssue() {
-        return issue;
-    }
+	public Issue getIssue() {
+		return issue;
+	}
 
 }

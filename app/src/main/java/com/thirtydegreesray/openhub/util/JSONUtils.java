@@ -13,18 +13,18 @@ import java.util.ArrayList;
 
 public class JSONUtils {
 
-    public static <T> ArrayList<T> jsonToArrayList(String jsonArrayStr, Class<T> tClass){
-        Gson gson = new Gson();
-        ArrayList<T> arrayList = new ArrayList<>();
-        try {
-            JSONArray jsonArray = new JSONArray(jsonArrayStr);
-            for( int i = 0; i < jsonArray.length(); i++){
-                arrayList.add(gson.fromJson(jsonArray.get(i).toString(), tClass));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return arrayList;
-    }
+	public static <T> ArrayList<T> jsonToArrayList(String jsonArrayStr, Class<T> tClass) {
+		Gson gson = new Gson();
+		ArrayList<T> arrayList = new ArrayList<>();
+		try {
+			JSONArray jsonArray = new JSONArray(jsonArrayStr);
+			for (int i = 0; i < jsonArray.length(); i++) {
+				arrayList.add(gson.fromJson(jsonArray.get(i).toString(), tClass));
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return arrayList;
+	}
 
 }

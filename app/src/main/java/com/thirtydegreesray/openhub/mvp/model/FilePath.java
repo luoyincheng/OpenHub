@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 /**
@@ -8,28 +6,28 @@ package com.thirtydegreesray.openhub.mvp.model;
 
 public class FilePath {
 
-    private String name;
-    private String fullPath;
+	private String name;
+	private String fullPath;
 
-    public FilePath(String name, String fullPath) {
-        this.name = name;
-        this.fullPath = fullPath;
-    }
+	public FilePath(String name, String fullPath) {
+		this.name = name;
+		this.fullPath = fullPath;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getFullPath() {
-        return fullPath;
-    }
+	public String getFullPath() {
+		return fullPath;
+	}
 
-    public void setFullPath(String fullPath) {
-        this.fullPath = fullPath;
-    }
+	public void setFullPath(String fullPath) {
+		this.fullPath = fullPath;
+	}
 
 }

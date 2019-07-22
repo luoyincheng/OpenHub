@@ -27,86 +27,88 @@ import butterknife.OnClick;
  */
 
 public class LanguagesEditorActivity extends
-        SingleFragmentActivity<IBaseContract.Presenter, LanguagesEditorFragment>
-        implements ListFragment.ListScrollListener{
+		SingleFragmentActivity<IBaseContract.Presenter, LanguagesEditorFragment>
+		implements ListFragment.ListScrollListener {
 
-    public static void showForChoose(@NonNull Activity activity, @NonNull LanguageEditorMode mode,
-                                     @NonNull ArrayList<TrendingLanguage> selectedLanguages, int requestCode) {
-        Intent intent = new Intent(activity, LanguagesEditorActivity.class);
-        intent.putExtras(BundleHelper.builder().put("mode", mode)
-                .put("selectedLanguages", selectedLanguages).build());
-        activity.startActivityForResult(intent, requestCode);
-    }
+	private final int ADD_LANGUAGE_REQUEST_CODE = 100;
+	@BindView(R.id.float_action_bn)
+	ZoomAbleFloatingActionButton floatingActionButton;
+	@AutoAccess
+	LanguageEditorMode mode;
+	@AutoAccess
+	ArrayList<TrendingLanguage> selectedLanguages;
 
-    public static void show(@NonNull Activity activity, @NonNull LanguageEditorMode mode,
-                            int requestCode) {
-        Intent intent = new Intent(activity, LanguagesEditorActivity.class);
-        intent.putExtras(BundleHelper.builder().put("mode", mode).build());
-        activity.startActivityForResult(intent, requestCode);
-    }
+	public static void showForChoose(@NonNull Activity activity, @NonNull LanguageEditorMode mode,
+	                                 @NonNull ArrayList<TrendingLanguage> selectedLanguages, int requestCode) {
+		Intent intent = new Intent(activity, LanguagesEditorActivity.class);
+		intent.putExtras(BundleHelper.builder().put("mode", mode)
+				.put("selectedLanguages", selectedLanguages).build());
+		activity.startActivityForResult(intent, requestCode);
+	}
 
-    @BindView(R.id.float_action_bn) ZoomAbleFloatingActionButton floatingActionButton;
-    private final int ADD_LANGUAGE_REQUEST_CODE = 100;
+	public static void show(@NonNull Activity activity, @NonNull LanguageEditorMode mode,
+	                        int requestCode) {
+		Intent intent = new Intent(activity, LanguagesEditorActivity.class);
+		intent.putExtras(BundleHelper.builder().put("mode", mode).build());
+		activity.startActivityForResult(intent, requestCode);
+	}
 
-    @Override
-    public void onScrollUp() {
-        floatingActionButton.zoomIn();
-    }
+	@Override
+	public void onScrollUp() {
+		floatingActionButton.zoomIn();
+	}
 
-    @Override
-    public void onScrollDown() {
-        floatingActionButton.zoomOut();
-    }
+	@Override
+	public void onScrollDown() {
+		floatingActionButton.zoomOut();
+	}
 
-    public enum LanguageEditorMode {
-        Sort, Choose
-    }
+	@Override
+	protected LanguagesEditorFragment createFragment() {
+		if (LanguageEditorMode.Sort.equals(mode)) {
+			LanguagesEditorFragment fragment = LanguagesEditorFragment.create(mode);
+			fragment.setListScrollListener(this);
+			return fragment;
+		} else {
+			return LanguagesEditorFragment.createForChoose(mode, selectedLanguages);
+		}
+	}
 
-    @AutoAccess LanguageEditorMode mode;
-    @AutoAccess ArrayList<TrendingLanguage> selectedLanguages;
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
+		if (LanguageEditorMode.Sort.equals(mode)) {
+			floatingActionButton.setVisibility(View.VISIBLE);
+			floatingActionButton.setImageResource(R.drawable.ic_add);
+			setToolbarTitle(getString(R.string.my_languages));
+		} else {
+			setToolbarTitle(getString(R.string.choose_languages));
+		}
+		setToolbarScrollAble(true);
+	}
 
-    @Override
-    protected LanguagesEditorFragment createFragment() {
-        if (LanguageEditorMode.Sort.equals(mode)) {
-            LanguagesEditorFragment fragment = LanguagesEditorFragment.create(mode);
-            fragment.setListScrollListener(this);
-            return fragment;
-        } else {
-            return LanguagesEditorFragment.createForChoose(mode, selectedLanguages);
-        }
-    }
+	@OnClick(R.id.float_action_bn)
+	public void onAddClick() {
+		LanguagesEditorActivity.showForChoose(getActivity(), LanguageEditorMode.Choose,
+				getFragment().getSelectedLanguages(), ADD_LANGUAGE_REQUEST_CODE);
+	}
 
-    @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-        if (LanguageEditorMode.Sort.equals(mode)) {
-            floatingActionButton.setVisibility(View.VISIBLE);
-            floatingActionButton.setImageResource(R.drawable.ic_add);
-            setToolbarTitle(getString(R.string.my_languages));
-        } else {
-            setToolbarTitle(getString(R.string.choose_languages));
-        }
-        setToolbarScrollAble(true);
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_confirm, menu);
+		return true;
+	}
 
-    @OnClick(R.id.float_action_bn)
-    public void onAddClick() {
-        LanguagesEditorActivity.showForChoose(getActivity(), LanguageEditorMode.Choose,
-                getFragment().getSelectedLanguages(), ADD_LANGUAGE_REQUEST_CODE);
-    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK && requestCode == ADD_LANGUAGE_REQUEST_CODE) {
+			getFragment().updateLanguages();
+		}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_confirm, menu);
-        return true;
-    }
+	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == ADD_LANGUAGE_REQUEST_CODE) {
-            getFragment().updateLanguages();
-        }
-
-    }
+	public enum LanguageEditorMode {
+		Sort, Choose
+	}
 }

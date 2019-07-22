@@ -14,13 +14,14 @@ import java.util.ArrayList;
 
 public interface IIssuesContract {
 
-    interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View{
-        void showIssues(ArrayList<Issue> issues);
-    }
+	interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
+		void showIssues(ArrayList<Issue> issues);
+	}
 
-    interface Presenter extends IBasePagerContract.Presenter<IIssuesContract.View>{
-        void loadIssues(int page, boolean isReload);
-        void loadIssues(IssuesFilter issuesFilter, int page, boolean isReload);
-    }
+	interface Presenter extends IBasePagerContract.Presenter<IIssuesContract.View> {
+		void loadIssues(int page, boolean isReload);
+
+		void loadIssues(IssuesFilter issuesFilter, int page, boolean isReload);
+	}
 
 }

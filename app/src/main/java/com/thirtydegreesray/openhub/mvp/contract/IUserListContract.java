@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
@@ -15,12 +13,12 @@ import java.util.ArrayList;
 
 public interface IUserListContract {
 
-    interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View{
-        void showUsers(ArrayList<User> users);
-    }
+	interface View extends IBaseContract.View, IBasePagerContract.View, IBaseListContract.View {
+		void showUsers(ArrayList<User> users);
+	}
 
-    interface Presenter extends IBasePagerContract.Presenter<IUserListContract.View>{
-        void loadUsers(int page, boolean isReload);
-    }
+	interface Presenter extends IBasePagerContract.Presenter<IUserListContract.View> {
+		void loadUsers(int page, boolean isReload);
+	}
 
 }

@@ -34,110 +34,122 @@ import butterknife.OnClick;
 
 public class BookmarksAdapter extends BaseAdapter<BaseViewHolder, BookmarkExt> {
 
-    @Inject
-    public BookmarksAdapter(Context context, BaseFragment fragment) {
-        super(context, fragment);
-    }
+	@Inject
+	public BookmarksAdapter(Context context, BaseFragment fragment) {
+		super(context, fragment);
+	}
 
-    @Override
-    protected int getLayoutId(int viewType) {
-        if(viewType == 0){
-            return R.layout.layout_item_user;
-        } else {
-            return R.layout.layout_item_repository;
-        }
-    }
+	@Override
+	protected int getLayoutId(int viewType) {
+		if (viewType == 0) {
+			return R.layout.layout_item_user;
+		} else {
+			return R.layout.layout_item_repository;
+		}
+	}
 
-    @Override
-    protected BaseViewHolder getViewHolder(View itemView, int viewType) {
-        if(viewType == 0){
-            return new UserViewHolder(itemView);
-        } else {
-            return new RepoViewHolder(itemView);
-        }
-    }
+	@Override
+	protected BaseViewHolder getViewHolder(View itemView, int viewType) {
+		if (viewType == 0) {
+			return new UserViewHolder(itemView);
+		} else {
+			return new RepoViewHolder(itemView);
+		}
+	}
 
-    @Override
-    public int getItemViewType(int position) {
-        if("user".equals(data.get(position).getType())){
-            return 0;
-        }else {
-            return 1;
-        }
-    }
+	@Override
+	public int getItemViewType(int position) {
+		if ("user".equals(data.get(position).getType())) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
 
-    @Override
-    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-        BookmarkExt model = data.get(position);
-        if(getItemViewType(position) == 0){
-            User user = model.getUser();
-            UserViewHolder userViewHolder = (UserViewHolder) holder;
-            GlideApp.with(fragment)
-                    .load(user.getAvatarUrl())
-                    .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-                    .into(userViewHolder.avatar);
-            userViewHolder.name.setText(user.getLogin());
-            userViewHolder.name.setTextColor(ViewUtils.getAccentColor(context));
-        } else {
-            Repository repository = data.get(position).getRepository();
-            RepoViewHolder repoViewHolder = (RepoViewHolder) holder;
-            repoViewHolder.tvRepoName.setText(repository.getName());
-            repoViewHolder.tvRepoDescription.setText(repository.getDescription());
-            repoViewHolder.tvStarNum.setText(String.valueOf(repository.getStargazersCount()));
-            repoViewHolder.tvForkNum.setText(String.valueOf(repository.getForksCount()));
-            repoViewHolder.tvOwnerName.setText(repository.getOwner().getLogin());
-            GlideApp.with(fragment)
-                    .load(repository.getOwner().getAvatarUrl())
-                    .onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
-                    .into(repoViewHolder.ivUserAvatar);
-            repoViewHolder.forkMark.setVisibility(repository.isFork() ? View.VISIBLE : View.GONE);
+	@Override
+	public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+		super.onBindViewHolder(holder, position);
+		BookmarkExt model = data.get(position);
+		if (getItemViewType(position) == 0) {
+			User user = model.getUser();
+			UserViewHolder userViewHolder = (UserViewHolder) holder;
+			GlideApp.with(fragment)
+					.load(user.getAvatarUrl())
+					.onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
+					.into(userViewHolder.avatar);
+			userViewHolder.name.setText(user.getLogin());
+			userViewHolder.name.setTextColor(ViewUtils.getAccentColor(context));
+		} else {
+			Repository repository = data.get(position).getRepository();
+			RepoViewHolder repoViewHolder = (RepoViewHolder) holder;
+			repoViewHolder.tvRepoName.setText(repository.getName());
+			repoViewHolder.tvRepoDescription.setText(repository.getDescription());
+			repoViewHolder.tvStarNum.setText(String.valueOf(repository.getStargazersCount()));
+			repoViewHolder.tvForkNum.setText(String.valueOf(repository.getForksCount()));
+			repoViewHolder.tvOwnerName.setText(repository.getOwner().getLogin());
+			GlideApp.with(fragment)
+					.load(repository.getOwner().getAvatarUrl())
+					.onlyRetrieveFromCache(!PrefUtils.isLoadImageEnable())
+					.into(repoViewHolder.ivUserAvatar);
+			repoViewHolder.forkMark.setVisibility(repository.isFork() ? View.VISIBLE : View.GONE);
 
-            if(StringUtils.isBlank(repository.getLanguage())){
-                repoViewHolder.tvLanguage.setText("");
-                repoViewHolder.languageColor.setVisibility(View.INVISIBLE);
-            } else {
-                repoViewHolder.languageColor.setVisibility(View.VISIBLE);
-                repoViewHolder.tvLanguage.setText(repository.getLanguage());
-                int languageColor = LanguageColorsHelper.INSTANCE.getColor(context, repository.getLanguage());
-                repoViewHolder.languageColor.setImageTintList(ColorStateList.valueOf(languageColor));
-            }
-        }
+			if (StringUtils.isBlank(repository.getLanguage())) {
+				repoViewHolder.tvLanguage.setText("");
+				repoViewHolder.languageColor.setVisibility(View.INVISIBLE);
+			} else {
+				repoViewHolder.languageColor.setVisibility(View.VISIBLE);
+				repoViewHolder.tvLanguage.setText(repository.getLanguage());
+				int languageColor = LanguageColorsHelper.INSTANCE.getColor(context, repository.getLanguage());
+				repoViewHolder.languageColor.setImageTintList(ColorStateList.valueOf(languageColor));
+			}
+		}
 
-    }
+	}
 
-    class UserViewHolder extends BaseViewHolder {
-        @BindView(R.id.avatar) ImageView avatar;
-        @BindView(R.id.name) TextView name;
-        public UserViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
+	class UserViewHolder extends BaseViewHolder {
+		@BindView(R.id.avatar)
+		ImageView avatar;
+		@BindView(R.id.name)
+		TextView name;
 
-    public class RepoViewHolder extends BaseViewHolder {
+		public UserViewHolder(@NonNull View itemView) {
+			super(itemView);
+		}
+	}
 
-        @BindView(R.id.iv_user_avatar) ImageView ivUserAvatar;
-        @BindView(R.id.language_color) ImageView languageColor;
-        @BindView(R.id.tv_repo_name) TextView tvRepoName;
-        @BindView(R.id.tv_language) TextView tvLanguage;
-        @BindView(R.id.tv_repo_description) TextView tvRepoDescription;
-        @BindView(R.id.tv_star_num) TextView tvStarNum;
-        @BindView(R.id.tv_fork_num) TextView tvForkNum;
-        @BindView(R.id.tv_owner_name) TextView tvOwnerName;
-        @BindView(R.id.fork_mark) View forkMark;
+	public class RepoViewHolder extends BaseViewHolder {
 
-        public RepoViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
+		@BindView(R.id.iv_user_avatar)
+		ImageView ivUserAvatar;
+		@BindView(R.id.language_color)
+		ImageView languageColor;
+		@BindView(R.id.tv_repo_name)
+		TextView tvRepoName;
+		@BindView(R.id.tv_language)
+		TextView tvLanguage;
+		@BindView(R.id.tv_repo_description)
+		TextView tvRepoDescription;
+		@BindView(R.id.tv_star_num)
+		TextView tvStarNum;
+		@BindView(R.id.tv_fork_num)
+		TextView tvForkNum;
+		@BindView(R.id.tv_owner_name)
+		TextView tvOwnerName;
+		@BindView(R.id.fork_mark)
+		View forkMark;
 
-        @OnClick(R.id.iv_user_avatar)
-        public void onUserClick(){
-            if(getAdapterPosition() != RecyclerView.NO_POSITION) {
-                ProfileActivity.show((Activity) context, ivUserAvatar,
-                        data.get(getAdapterPosition()).getRepository().getOwner().getLogin(),
-                        data.get(getAdapterPosition()).getRepository().getOwner().getAvatarUrl());
-            }
-        }
-    }
+		public RepoViewHolder(@NonNull View itemView) {
+			super(itemView);
+		}
+
+		@OnClick(R.id.iv_user_avatar)
+		public void onUserClick() {
+			if (getAdapterPosition() != RecyclerView.NO_POSITION) {
+				ProfileActivity.show((Activity) context, ivUserAvatar,
+						data.get(getAdapterPosition()).getRepository().getOwner().getLogin(),
+						data.get(getAdapterPosition()).getRepository().getOwner().getAvatarUrl());
+			}
+		}
+	}
 
 }

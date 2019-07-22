@@ -23,88 +23,88 @@ import java.util.ArrayList;
  */
 
 public class LabelManageFragment extends ListFragment<LabelManagePresenter, LabelManageAdapter>
-        implements ILabelManageContract.View, EditLabelDialog.EditLabelListener{
+		implements ILabelManageContract.View, EditLabelDialog.EditLabelListener {
 
-    public static LabelManageFragment create(@NonNull String owner, @NonNull String repo){
-        LabelManageFragment fragment = new LabelManageFragment();
-        fragment.setArguments(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
-        return fragment;
-    }
+	public static LabelManageFragment create(@NonNull String owner, @NonNull String repo) {
+		LabelManageFragment fragment = new LabelManageFragment();
+		fragment.setArguments(BundleHelper.builder().put("owner", owner).put("repo", repo).build());
+		return fragment;
+	}
 
-    @Override
-    protected void initFragment(Bundle savedInstanceState) {
-        super.initFragment(savedInstanceState);
-        setLoadMoreEnable(false);
-        addVerticalDivider();
-    }
+	@Override
+	protected void initFragment(Bundle savedInstanceState) {
+		super.initFragment(savedInstanceState);
+		setLoadMoreEnable(false);
+		addVerticalDivider();
+	}
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_list;
-    }
+	@Override
+	protected int getLayoutId() {
+		return R.layout.fragment_list;
+	}
 
-    @Override
-    protected void setupFragmentComponent(AppComponent appComponent) {
-        DaggerFragmentComponent.builder()
-                .appComponent(appComponent)
-                .fragmentModule(new FragmentModule(this))
-                .build()
-                .inject(this);
-    }
+	@Override
+	protected void setupFragmentComponent(AppComponent appComponent) {
+		DaggerFragmentComponent.builder()
+				.appComponent(appComponent)
+				.fragmentModule(new FragmentModule(this))
+				.build()
+				.inject(this);
+	}
 
-    @Override
-    protected void onReLoadData() {
-        mPresenter.loadLabels(true);
-    }
+	@Override
+	protected void onReLoadData() {
+		mPresenter.loadLabels(true);
+	}
 
-    @Override
-    protected String getEmptyTip() {
-        return null;
-    }
+	@Override
+	protected String getEmptyTip() {
+		return null;
+	}
 
-    @Override
-    public void showLabels(ArrayList<Label> labels) {
-        adapter.setData(labels);
-        postNotifyDataSetChanged();
-    }
+	@Override
+	public void showLabels(ArrayList<Label> labels) {
+		adapter.setData(labels);
+		postNotifyDataSetChanged();
+	}
 
-    @Override
-    public void notifyItemInserted(int position) {
-        adapter.notifyItemInserted(position);
-    }
+	@Override
+	public void notifyItemInserted(int position) {
+		adapter.notifyItemInserted(position);
+	}
 
-    @Override
-    public void notifyItemRemoved(int position) {
-        adapter.notifyItemRemoved(position);
-    }
+	@Override
+	public void notifyItemRemoved(int position) {
+		adapter.notifyItemRemoved(position);
+	}
 
-    @Override
-    public void notifyItemChanged(int position) {
-        adapter.notifyItemChanged(position);
-    }
+	@Override
+	public void notifyItemChanged(int position) {
+		adapter.notifyItemChanged(position);
+	}
 
-    @Override
-    public void onItemClick(int position, @NonNull View view) {
-        super.onItemClick(position, view);
-        new EditLabelDialog(getActivity(), this, adapter.getData().get(position)).show();
-    }
+	@Override
+	public void onItemClick(int position, @NonNull View view) {
+		super.onItemClick(position, view);
+		new EditLabelDialog(getActivity(), this, adapter.getData().get(position)).show();
+	}
 
-    @Override
-    public void onUpdateLabel(@NonNull Label oriLabel, @NonNull Label newLabel) {
-        mPresenter.updateLabel(oriLabel, newLabel);
-    }
+	@Override
+	public void onUpdateLabel(@NonNull Label oriLabel, @NonNull Label newLabel) {
+		mPresenter.updateLabel(oriLabel, newLabel);
+	}
 
-    @Override
-    public void onCreateLabel(@NonNull Label label) {
-        mPresenter.createLabel(label);
-    }
+	@Override
+	public void onCreateLabel(@NonNull Label label) {
+		mPresenter.createLabel(label);
+	}
 
-    @Override
-    public void onDeleteLabel(@NonNull Label label) {
-        mPresenter.deleteLabel(label);
-    }
+	@Override
+	public void onDeleteLabel(@NonNull Label label) {
+		mPresenter.deleteLabel(label);
+	}
 
-    public void onCreateLabelClick(){
-        new EditLabelDialog(getActivity(), this).show();
-    }
+	public void onCreateLabelClick() {
+		new EditLabelDialog(getActivity(), this).show();
+	}
 }

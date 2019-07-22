@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    android:id="@+id/root_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?android:selectableItemBackground"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:paddingStart="@dimen/spacing_x_large"
-    android:paddingEnd="@dimen/spacing_x_large"
     android:paddingTop="@dimen/spacing_normal"
-    android:paddingBottom="@dimen/spacing_normal"
-    android:foreground="?android:selectableItemBackground">
+    android:paddingEnd="@dimen/spacing_x_large"
+    android:paddingBottom="@dimen/spacing_normal">
+
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:srcCompat="@drawable/ic_branch"/>
+        app:srcCompat="@drawable/ic_branch" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_normal"
+        android:layout_marginStart="@dimen/spacing_x_large"
         android:textColor="?android:textColorPrimary"
-        android:layout_marginStart="@dimen/spacing_x_large"/>
+        android:textSize="@dimen/text_normal" />
 </LinearLayout>

@@ -10,6 +10,6 @@ import android.view.MenuItem;
 
 public interface OnDrawerSelectedListener {
 
-    void onDrawerSelected(@NonNull NavigationView navView, @NonNull MenuItem item);
+	void onDrawerSelected(@NonNull NavigationView navView, @NonNull MenuItem item);
 
 }

@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -15,155 +13,158 @@ import java.util.Date;
 
 public class CommitComment implements Parcelable {
 
-    private int id;
-    private String body;
-    private String path;
-    private int position;
-    private int line;
-    @SerializedName("commit_id") private String commitId;
-    @SerializedName("created_at") private Date createdAt;
-    @SerializedName("updated_at") private Date updatedAt;
-    @SerializedName("html_url") private String htmlUrl;
-    private String url;
-    private User user;
+	public static final Parcelable.Creator<CommitComment> CREATOR = new Parcelable.Creator<CommitComment>() {
+		@Override
+		public CommitComment createFromParcel(Parcel source) {
+			return new CommitComment(source);
+		}
 
-    public int getId() {
-        return id;
-    }
+		@Override
+		public CommitComment[] newArray(int size) {
+			return new CommitComment[size];
+		}
+	};
+	private int id;
+	private String body;
+	private String path;
+	private int position;
+	private int line;
+	@SerializedName("commit_id")
+	private String commitId;
+	@SerializedName("created_at")
+	private Date createdAt;
+	@SerializedName("updated_at")
+	private Date updatedAt;
+	@SerializedName("html_url")
+	private String htmlUrl;
+	private String url;
+	private User user;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public CommitComment() {
+	}
 
-    public String getBody() {
-        return body;
-    }
+	protected CommitComment(Parcel in) {
+		this.id = in.readInt();
+		this.body = in.readString();
+		this.path = in.readString();
+		this.position = in.readInt();
+		this.line = in.readInt();
+		this.commitId = in.readString();
+		long tmpCreatedAt = in.readLong();
+		this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
+		long tmpUpdatedAt = in.readLong();
+		this.updatedAt = tmpUpdatedAt == -1 ? null : new Date(tmpUpdatedAt);
+		this.htmlUrl = in.readString();
+		this.url = in.readString();
+		this.user = in.readParcelable(User.class.getClassLoader());
+	}
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getPath() {
-        return path;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setPath(String path) {
-        this.path = path;
-    }
+	public String getBody() {
+		return body;
+	}
 
-    public int getPosition() {
-        return position;
-    }
+	public void setBody(String body) {
+		this.body = body;
+	}
 
-    public void setPosition(int position) {
-        this.position = position;
-    }
+	public String getPath() {
+		return path;
+	}
 
-    public int getLine() {
-        return line;
-    }
+	public void setPath(String path) {
+		this.path = path;
+	}
 
-    public void setLine(int line) {
-        this.line = line;
-    }
+	public int getPosition() {
+		return position;
+	}
 
-    public String getCommitId() {
-        return commitId;
-    }
+	public void setPosition(int position) {
+		this.position = position;
+	}
 
-    public void setCommitId(String commitId) {
-        this.commitId = commitId;
-    }
+	public int getLine() {
+		return line;
+	}
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+	public void setLine(int line) {
+		this.line = line;
+	}
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+	public String getCommitId() {
+		return commitId;
+	}
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+	public void setCommitId(String commitId) {
+		this.commitId = commitId;
+	}
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-    public String getHtmlUrl() {
-        return htmlUrl;
-    }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public String getHtmlUrl() {
+		return htmlUrl;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public void setHtmlUrl(String htmlUrl) {
+		this.htmlUrl = htmlUrl;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.body);
-        dest.writeString(this.path);
-        dest.writeInt(this.position);
-        dest.writeInt(this.line);
-        dest.writeString(this.commitId);
-        dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
-        dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
-        dest.writeString(this.htmlUrl);
-        dest.writeString(this.url);
-        dest.writeParcelable(this.user, flags);
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public CommitComment() {
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    protected CommitComment(Parcel in) {
-        this.id = in.readInt();
-        this.body = in.readString();
-        this.path = in.readString();
-        this.position = in.readInt();
-        this.line = in.readInt();
-        this.commitId = in.readString();
-        long tmpCreatedAt = in.readLong();
-        this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
-        long tmpUpdatedAt = in.readLong();
-        this.updatedAt = tmpUpdatedAt == -1 ? null : new Date(tmpUpdatedAt);
-        this.htmlUrl = in.readString();
-        this.url = in.readString();
-        this.user = in.readParcelable(User.class.getClassLoader());
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<CommitComment> CREATOR = new Parcelable.Creator<CommitComment>() {
-        @Override
-        public CommitComment createFromParcel(Parcel source) {
-            return new CommitComment(source);
-        }
-
-        @Override
-        public CommitComment[] newArray(int size) {
-            return new CommitComment[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(this.id);
+		dest.writeString(this.body);
+		dest.writeString(this.path);
+		dest.writeInt(this.position);
+		dest.writeInt(this.line);
+		dest.writeString(this.commitId);
+		dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
+		dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
+		dest.writeString(this.htmlUrl);
+		dest.writeString(this.url);
+		dest.writeParcelable(this.user, flags);
+	}
 
 }

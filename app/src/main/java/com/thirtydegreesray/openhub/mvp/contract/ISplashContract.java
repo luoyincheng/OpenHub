@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract;
 
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
@@ -10,18 +8,18 @@ import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;
  * @author ThirtyDegreesRay
  */
 
-public interface ISplashContract{
+public interface ISplashContract {
 
-    interface View extends IBaseContract.View{
-        void showMainPage();
-    }
+	interface View extends IBaseContract.View {
+		void showMainPage();
+	}
 
-    interface Presenter extends IBaseContract.Presenter<ISplashContract.View>{
+	interface Presenter extends IBaseContract.Presenter<ISplashContract.View> {
 
-        void getUser();
+		void getUser();
 
-        void saveAccessToken(String accessToken, String scope, int expireIn);
+		void saveAccessToken(String accessToken, String scope, int expireIn);
 
-    }
+	}
 
 }

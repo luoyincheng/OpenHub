@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -15,120 +13,123 @@ import java.util.ArrayList;
 
 public class CommitsComparison implements Parcelable {
 
-    private String url;
-    @SerializedName("html_url") private String htmlUrl;
-    @SerializedName("base_commit") private RepoCommit baseCommit;
-    @SerializedName("merge_base_commit") private RepoCommit mergeBaseCommit;
-    private String status;
-    @SerializedName("total_commits") private int totalCommits;
-    private ArrayList<RepoCommit> commits;
-    private ArrayList<CommitFile> files;
+	public static final Parcelable.Creator<CommitsComparison> CREATOR = new Parcelable.Creator<CommitsComparison>() {
+		@Override
+		public CommitsComparison createFromParcel(Parcel source) {
+			return new CommitsComparison(source);
+		}
 
-    public String getUrl() {
-        return url;
-    }
+		@Override
+		public CommitsComparison[] newArray(int size) {
+			return new CommitsComparison[size];
+		}
+	};
+	private String url;
+	@SerializedName("html_url")
+	private String htmlUrl;
+	@SerializedName("base_commit")
+	private RepoCommit baseCommit;
+	@SerializedName("merge_base_commit")
+	private RepoCommit mergeBaseCommit;
+	private String status;
+	@SerializedName("total_commits")
+	private int totalCommits;
+	private ArrayList<RepoCommit> commits;
+	private ArrayList<CommitFile> files;
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public CommitsComparison() {
+	}
 
-    public String getHtmlUrl() {
-        return htmlUrl;
-    }
+	protected CommitsComparison(Parcel in) {
+		this.url = in.readString();
+		this.htmlUrl = in.readString();
+		this.baseCommit = in.readParcelable(RepoCommit.class.getClassLoader());
+		this.mergeBaseCommit = in.readParcelable(RepoCommit.class.getClassLoader());
+		this.status = in.readString();
+		this.totalCommits = in.readInt();
+		this.commits = in.createTypedArrayList(RepoCommit.CREATOR);
+		this.files = in.createTypedArrayList(CommitFile.CREATOR);
+	}
 
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public RepoCommit getBaseCommit() {
-        return baseCommit;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public void setBaseCommit(RepoCommit baseCommit) {
-        this.baseCommit = baseCommit;
-    }
+	public String getHtmlUrl() {
+		return htmlUrl;
+	}
 
-    public RepoCommit getMergeBaseCommit() {
-        return mergeBaseCommit;
-    }
+	public void setHtmlUrl(String htmlUrl) {
+		this.htmlUrl = htmlUrl;
+	}
 
-    public void setMergeBaseCommit(RepoCommit mergeBaseCommit) {
-        this.mergeBaseCommit = mergeBaseCommit;
-    }
+	public RepoCommit getBaseCommit() {
+		return baseCommit;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public void setBaseCommit(RepoCommit baseCommit) {
+		this.baseCommit = baseCommit;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public RepoCommit getMergeBaseCommit() {
+		return mergeBaseCommit;
+	}
 
-    public int getTotalCommits() {
-        return totalCommits;
-    }
+	public void setMergeBaseCommit(RepoCommit mergeBaseCommit) {
+		this.mergeBaseCommit = mergeBaseCommit;
+	}
 
-    public void setTotalCommits(int totalCommits) {
-        this.totalCommits = totalCommits;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public ArrayList<RepoCommit> getCommits() {
-        return commits;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public void setCommits(ArrayList<RepoCommit> commits) {
-        this.commits = commits;
-    }
+	public int getTotalCommits() {
+		return totalCommits;
+	}
 
-    public ArrayList<CommitFile> getFiles() {
-        return files;
-    }
+	public void setTotalCommits(int totalCommits) {
+		this.totalCommits = totalCommits;
+	}
 
-    public void setFiles(ArrayList<CommitFile> files) {
-        this.files = files;
-    }
+	public ArrayList<RepoCommit> getCommits() {
+		return commits;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setCommits(ArrayList<RepoCommit> commits) {
+		this.commits = commits;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.url);
-        dest.writeString(this.htmlUrl);
-        dest.writeParcelable(this.baseCommit, flags);
-        dest.writeParcelable(this.mergeBaseCommit, flags);
-        dest.writeString(this.status);
-        dest.writeInt(this.totalCommits);
-        dest.writeTypedList(this.commits);
-        dest.writeTypedList(this.files);
-    }
+	public ArrayList<CommitFile> getFiles() {
+		return files;
+	}
 
-    public CommitsComparison() {
-    }
+	public void setFiles(ArrayList<CommitFile> files) {
+		this.files = files;
+	}
 
-    protected CommitsComparison(Parcel in) {
-        this.url = in.readString();
-        this.htmlUrl = in.readString();
-        this.baseCommit = in.readParcelable(RepoCommit.class.getClassLoader());
-        this.mergeBaseCommit = in.readParcelable(RepoCommit.class.getClassLoader());
-        this.status = in.readString();
-        this.totalCommits = in.readInt();
-        this.commits = in.createTypedArrayList(RepoCommit.CREATOR);
-        this.files = in.createTypedArrayList(CommitFile.CREATOR);
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<CommitsComparison> CREATOR = new Parcelable.Creator<CommitsComparison>() {
-        @Override
-        public CommitsComparison createFromParcel(Parcel source) {
-            return new CommitsComparison(source);
-        }
-
-        @Override
-        public CommitsComparison[] newArray(int size) {
-            return new CommitsComparison[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.url);
+		dest.writeString(this.htmlUrl);
+		dest.writeParcelable(this.baseCommit, flags);
+		dest.writeParcelable(this.mergeBaseCommit, flags);
+		dest.writeString(this.status);
+		dest.writeInt(this.totalCommits);
+		dest.writeTypedList(this.commits);
+		dest.writeTypedList(this.files);
+	}
 
 }

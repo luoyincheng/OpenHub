@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.ui.activity;
 
 /**
@@ -7,7 +5,7 @@ package com.thirtydegreesray.openhub.ui.activity;
  */
 
 public interface MarkdownEditorCallback {
-    String getText();
+	String getText();
 
-    boolean isTextChanged();
+	boolean isTextChanged();
 }

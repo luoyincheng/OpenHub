@@ -9,29 +9,30 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 
 public class ItemTouchHelperCallback extends ItemTouchHelper.SimpleCallback {
 
-    private ItemGestureListener listener;
+	private ItemGestureListener listener;
 
 
-    public ItemTouchHelperCallback(int dragDirs, int swipeDirs, ItemGestureListener listener) {
-        super(dragDirs, swipeDirs);
-        this.listener = listener;
-    }
+	public ItemTouchHelperCallback(int dragDirs, int swipeDirs, ItemGestureListener listener) {
+		super(dragDirs, swipeDirs);
+		this.listener = listener;
+	}
 
-    @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        int from = viewHolder.getAdapterPosition();
-        int to = target.getAdapterPosition();
-        return listener.onItemMoved(from, to);
-    }
+	@Override
+	public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+		int from = viewHolder.getAdapterPosition();
+		int to = target.getAdapterPosition();
+		return listener.onItemMoved(from, to);
+	}
 
-    @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        listener.onItemSwiped(viewHolder.getAdapterPosition(), direction);
-    }
+	@Override
+	public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+		listener.onItemSwiped(viewHolder.getAdapterPosition(), direction);
+	}
 
-    public interface ItemGestureListener{
-        boolean onItemMoved(int fromPosition, int toPosition);
-        void onItemSwiped(int position, int direction);
-    }
+	public interface ItemGestureListener {
+		boolean onItemMoved(int fromPosition, int toPosition);
+
+		void onItemSwiped(int position, int direction);
+	}
 
 }

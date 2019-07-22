@@ -10,19 +10,20 @@ import java.util.Date;
 
 public class MarkNotificationReadRequestModel {
 
-    @SerializedName("last_read_at") private Date lastReadAt ;
+	@SerializedName("last_read_at")
+	private Date lastReadAt;
 
-    public static MarkNotificationReadRequestModel newInstance(){
-        MarkNotificationReadRequestModel model = new MarkNotificationReadRequestModel();
-        model.setLastReadAt(new Date());
-        return model;
-    }
+	public static MarkNotificationReadRequestModel newInstance() {
+		MarkNotificationReadRequestModel model = new MarkNotificationReadRequestModel();
+		model.setLastReadAt(new Date());
+		return model;
+	}
 
-    public Date getLastReadAt() {
-        return lastReadAt;
-    }
+	public Date getLastReadAt() {
+		return lastReadAt;
+	}
 
-    public void setLastReadAt(Date lastReadAt) {
-        this.lastReadAt = lastReadAt;
-    }
+	public void setLastReadAt(Date lastReadAt) {
+		this.lastReadAt = lastReadAt;
+	}
 }

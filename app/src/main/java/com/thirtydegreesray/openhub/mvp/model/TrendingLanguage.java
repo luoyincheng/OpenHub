@@ -15,113 +15,112 @@ import java.util.List;
 
 public class TrendingLanguage implements Parcelable {
 
-    private String name;
-    private String slug;
-    private int order;
-    private boolean selected;
+	public static final Parcelable.Creator<TrendingLanguage> CREATOR = new Parcelable.Creator<TrendingLanguage>() {
+		@Override
+		public TrendingLanguage createFromParcel(Parcel source) {
+			return new TrendingLanguage(source);
+		}
 
-    public TrendingLanguage(String name, String slug) {
-        this.name = name;
-        this.slug = slug;
-    }
+		@Override
+		public TrendingLanguage[] newArray(int size) {
+			return new TrendingLanguage[size];
+		}
+	};
+	private String name;
+	private String slug;
+	private int order;
+	private boolean selected;
 
-    public static ArrayList<TrendingLanguage> generateFromDB(@NonNull List<MyTrendingLanguage> myLanguages){
-        ArrayList<TrendingLanguage> languages = new ArrayList<>();
-        for(MyTrendingLanguage myTrendingLanguage : myLanguages){
-            languages.add(generateFromDB(myTrendingLanguage));
-        }
-        return languages;
-    }
+	public TrendingLanguage(String name, String slug) {
+		this.name = name;
+		this.slug = slug;
+	}
 
-    public static TrendingLanguage generateFromDB(@NonNull MyTrendingLanguage myTrendingLanguage){
-        TrendingLanguage language = new TrendingLanguage();
-        language.setSlug(myTrendingLanguage.getSlug());
-        language.setName(myTrendingLanguage.getName());
-        language.setOrder(myTrendingLanguage.getOrder());
-        return language;
-    }
+	public TrendingLanguage() {
+	}
 
-    public static MyTrendingLanguage generateDB(@NonNull TrendingLanguage trendingLanguage, int order){
-        MyTrendingLanguage myTrendingLanguage = new MyTrendingLanguage();
-        myTrendingLanguage.setName(trendingLanguage.getName());
-        myTrendingLanguage.setOrder(order);
-        myTrendingLanguage.setSlug(trendingLanguage.getSlug());
-        return myTrendingLanguage;
-    }
+	protected TrendingLanguage(Parcel in) {
+		this.name = in.readString();
+		this.slug = in.readString();
+		this.order = in.readInt();
+		this.selected = in.readByte() != 0;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public static ArrayList<TrendingLanguage> generateFromDB(@NonNull List<MyTrendingLanguage> myLanguages) {
+		ArrayList<TrendingLanguage> languages = new ArrayList<>();
+		for (MyTrendingLanguage myTrendingLanguage : myLanguages) {
+			languages.add(generateFromDB(myTrendingLanguage));
+		}
+		return languages;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public static TrendingLanguage generateFromDB(@NonNull MyTrendingLanguage myTrendingLanguage) {
+		TrendingLanguage language = new TrendingLanguage();
+		language.setSlug(myTrendingLanguage.getSlug());
+		language.setName(myTrendingLanguage.getName());
+		language.setOrder(myTrendingLanguage.getOrder());
+		return language;
+	}
 
-    public String getSlug() {
-        return slug;
-    }
+	public static MyTrendingLanguage generateDB(@NonNull TrendingLanguage trendingLanguage, int order) {
+		MyTrendingLanguage myTrendingLanguage = new MyTrendingLanguage();
+		myTrendingLanguage.setName(trendingLanguage.getName());
+		myTrendingLanguage.setOrder(order);
+		myTrendingLanguage.setSlug(trendingLanguage.getSlug());
+		return myTrendingLanguage;
+	}
 
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public int getOrder() {
-        return order;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	public String getSlug() {
+		return slug;
+	}
 
-    public boolean isSelected() {
-        return selected;
-    }
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
+	public int getOrder() {
+		return order;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.slug);
-        dest.writeInt(this.order);
-        dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
-    }
+	public boolean isSelected() {
+		return selected;
+	}
 
-    public TrendingLanguage() {
-    }
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 
-    protected TrendingLanguage(Parcel in) {
-        this.name = in.readString();
-        this.slug = in.readString();
-        this.order = in.readInt();
-        this.selected = in.readByte() != 0;
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<TrendingLanguage> CREATOR = new Parcelable.Creator<TrendingLanguage>() {
-        @Override
-        public TrendingLanguage createFromParcel(Parcel source) {
-            return new TrendingLanguage(source);
-        }
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.name);
+		dest.writeString(this.slug);
+		dest.writeInt(this.order);
+		dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
+	}
 
-        @Override
-        public TrendingLanguage[] newArray(int size) {
-            return new TrendingLanguage[size];
-        }
-    };
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj != null && obj instanceof TrendingLanguage){
-            TrendingLanguage compare = (TrendingLanguage) obj;
-            return slug == null ? slug == compare.getSlug() : slug.equals(compare.getSlug());
-        }
-        return super.equals(obj);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj != null && obj instanceof TrendingLanguage) {
+			TrendingLanguage compare = (TrendingLanguage) obj;
+			return slug == null ? slug == compare.getSlug() : slug.equals(compare.getSlug());
+		}
+		return super.equals(obj);
+	}
 }

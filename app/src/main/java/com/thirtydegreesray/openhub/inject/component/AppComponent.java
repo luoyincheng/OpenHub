@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.inject.component;
 
 import com.thirtydegreesray.openhub.AppApplication;
@@ -17,16 +15,18 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
-    /**
-     * 获取AppApplication
-     * @return
-     */
-    AppApplication getApplication();
+	/**
+	 * 获取AppApplication
+	 *
+	 * @return
+	 */
+	AppApplication getApplication();
 
-    /**
-     * 获取数据库Dao
-     * @return
-     */
-    DaoSession getDaoSession();
+	/**
+	 * 获取数据库Dao
+	 *
+	 * @return
+	 */
+	DaoSession getDaoSession();
 
 }

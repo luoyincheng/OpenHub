@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.ui.activity;
 
 import android.app.Activity;
@@ -22,61 +20,61 @@ import com.thirtydegreesray.openhub.ui.fragment.NotificationsFragment;
 
 public class NotificationsActivity extends PagerActivity {
 
-    public static void show(@NonNull Activity activity){
-        Intent intent = new Intent(activity, NotificationsActivity.class);
-        activity.startActivity(intent);
-    }
+	public static void show(@NonNull Activity activity) {
+		Intent intent = new Intent(activity, NotificationsActivity.class);
+		activity.startActivity(intent);
+	}
 
-    @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
+	@Override
+	protected void setupActivityComponent(AppComponent appComponent) {
 
-    }
+	}
 
-    @Override
-    protected void initActivity() {
-        super.initActivity();
-        pagerAdapter =  new FragmentViewPagerAdapter(getSupportFragmentManager());
-    }
+	@Override
+	protected void initActivity() {
+		super.initActivity();
+		pagerAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager());
+	}
 
-    @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-        setToolbarScrollAble(true);
-        setToolbarBackEnable();
-        setToolbarTitle(getString(R.string.notifications));
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+		super.initView(savedInstanceState);
+		setToolbarScrollAble(true);
+		setToolbarBackEnable();
+		setToolbarTitle(getString(R.string.notifications));
 
-        pagerAdapter.setPagerList(FragmentPagerModel.createNotificationsPagerList(getActivity(), getFragments()));
-        tabLayout.setVisibility(View.VISIBLE);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setAdapter(pagerAdapter);
-        showFirstPager();
-    }
+		pagerAdapter.setPagerList(FragmentPagerModel.createNotificationsPagerList(getActivity(), getFragments()));
+		tabLayout.setVisibility(View.VISIBLE);
+		tabLayout.setupWithViewPager(viewPager);
+		viewPager.setAdapter(pagerAdapter);
+		showFirstPager();
+	}
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_view_pager;
-    }
+	@Override
+	protected int getContentView() {
+		return R.layout.activity_view_pager;
+	}
 
-    @Override
-    public int getPagerSize() {
-        return 3;
-    }
+	@Override
+	public int getPagerSize() {
+		return 3;
+	}
 
-    @Override
-    protected int getFragmentPosition(Fragment fragment) {
-        if(fragment instanceof NotificationsFragment){
-            NotificationsFragment.NotificationsType type
-                    = (NotificationsFragment.NotificationsType) fragment.getArguments().get("type");
-            if(NotificationsFragment.NotificationsType.Unread.equals(type)){
-                return 0;
-            } else if(NotificationsFragment.NotificationsType.Participating.equals(type)){
-                return 1;
-            } else if(NotificationsFragment.NotificationsType.All.equals(type)){
-                return 2;
-            } else
-                return -1;
-        } else
-            return -1;
-    }
+	@Override
+	protected int getFragmentPosition(Fragment fragment) {
+		if (fragment instanceof NotificationsFragment) {
+			NotificationsFragment.NotificationsType type
+					= (NotificationsFragment.NotificationsType) fragment.getArguments().get("type");
+			if (NotificationsFragment.NotificationsType.Unread.equals(type)) {
+				return 0;
+			} else if (NotificationsFragment.NotificationsType.Participating.equals(type)) {
+				return 1;
+			} else if (NotificationsFragment.NotificationsType.All.equals(type)) {
+				return 2;
+			} else
+				return -1;
+		} else
+			return -1;
+	}
 
 }

@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -13,65 +11,64 @@ import java.util.Date;
 
 public class CommitGitUser implements Parcelable {
 
-    private String name;
-    private String email;
-    private Date date;
+	public static final Parcelable.Creator<CommitGitUser> CREATOR = new Parcelable.Creator<CommitGitUser>() {
+		@Override
+		public CommitGitUser createFromParcel(Parcel source) {
+			return new CommitGitUser(source);
+		}
 
-    public String getName() {
-        return name;
-    }
+		@Override
+		public CommitGitUser[] newArray(int size) {
+			return new CommitGitUser[size];
+		}
+	};
+	private String name;
+	private String email;
+	private Date date;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public CommitGitUser() {
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	protected CommitGitUser(Parcel in) {
+		this.name = in.readString();
+		this.email = in.readString();
+		long tmpDate = in.readLong();
+		this.date = tmpDate == -1 ? null : new Date(tmpDate);
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.email);
-        dest.writeLong(this.date != null ? this.date.getTime() : -1);
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public CommitGitUser() {
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    protected CommitGitUser(Parcel in) {
-        this.name = in.readString();
-        this.email = in.readString();
-        long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<CommitGitUser> CREATOR = new Parcelable.Creator<CommitGitUser>() {
-        @Override
-        public CommitGitUser createFromParcel(Parcel source) {
-            return new CommitGitUser(source);
-        }
-
-        @Override
-        public CommitGitUser[] newArray(int size) {
-            return new CommitGitUser[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.name);
+		dest.writeString(this.email);
+		dest.writeLong(this.date != null ? this.date.getTime() : -1);
+	}
 }

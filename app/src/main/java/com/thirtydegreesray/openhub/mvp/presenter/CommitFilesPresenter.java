@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import com.thirtydegreesray.openhub.dao.DaoSession;
@@ -18,26 +16,26 @@ import javax.inject.Inject;
  */
 
 public class CommitFilesPresenter extends BasePresenter<ICommitFilesContract.View>
-        implements ICommitFilesContract.Presenter {
+		implements ICommitFilesContract.Presenter {
 
-    @Inject
-    public CommitFilesPresenter(DaoSession daoSession) {
-        super(daoSession);
-    }
+	@Inject
+	public CommitFilesPresenter(DaoSession daoSession) {
+		super(daoSession);
+	}
 
-    @Override
-    public ArrayList<DoubleTypesModel<CommitFilesPathModel, CommitFile>> getSortedList(
-            ArrayList<CommitFile> commitFiles) {
-        ArrayList<DoubleTypesModel<CommitFilesPathModel, CommitFile>>  list = new ArrayList<>();
-        String preBasePath = "";
-        for(CommitFile commitFile : commitFiles){
-            if(!preBasePath.equals(commitFile.getBasePath())){
-                list.add(new DoubleTypesModel<CommitFilesPathModel, CommitFile>(
-                        new CommitFilesPathModel().setPath(commitFile.getBasePath()), null));
-                preBasePath = commitFile.getBasePath();
-            }
-            list.add(new DoubleTypesModel<CommitFilesPathModel, CommitFile>(null, commitFile));
-        }
-        return list;
-    }
+	@Override
+	public ArrayList<DoubleTypesModel<CommitFilesPathModel, CommitFile>> getSortedList(
+			ArrayList<CommitFile> commitFiles) {
+		ArrayList<DoubleTypesModel<CommitFilesPathModel, CommitFile>> list = new ArrayList<>();
+		String preBasePath = "";
+		for (CommitFile commitFile : commitFiles) {
+			if (!preBasePath.equals(commitFile.getBasePath())) {
+				list.add(new DoubleTypesModel<CommitFilesPathModel, CommitFile>(
+						new CommitFilesPathModel().setPath(commitFile.getBasePath()), null));
+				preBasePath = commitFile.getBasePath();
+			}
+			list.add(new DoubleTypesModel<CommitFilesPathModel, CommitFile>(null, commitFile));
+		}
+		return list;
+	}
 }

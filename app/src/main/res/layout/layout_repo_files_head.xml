@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingStart="@dimen/spacing_large"
     android:paddingEnd="@dimen/spacing_large">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:srcCompat="@drawable/ic_branch"
             android:layout_marginStart="@dimen/spacing_mini"
-            android:background="?android:selectableItemBackgroundBorderless"/>
+            android:background="?android:selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/ic_branch" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="?android:textColorSecondary"
-            android:textSize="@dimen/text_normal"
             android:layout_marginStart="@dimen/spacing_x_large"
-            android:text="1.23"
-            android:drawableEnd="@drawable/ic_arrow_drop_down"
+            android:layout_weight="1"
             android:background="?android:selectableItemBackground"
+            android:drawableEnd="@drawable/ic_arrow_drop_down"
             android:paddingTop="@dimen/spacing_small"
-            android:paddingBottom="@dimen/spacing_small"/>
+            android:paddingBottom="@dimen/spacing_small"
+            android:text="1.23"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="@dimen/text_normal" />
     </LinearLayout>
 
     <LinearLayout

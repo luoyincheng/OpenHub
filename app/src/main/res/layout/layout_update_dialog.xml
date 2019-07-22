@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="@dimen/spacing_small"
-    android:paddingBottom="@dimen/spacing_small"
     android:paddingStart="@dimen/spacing_x_large"
-    android:paddingEnd="@dimen/spacing_x_large">
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingEnd="@dimen/spacing_x_large"
+    android:paddingBottom="@dimen/spacing_small">
 
     <TextView
         android:id="@+id/version_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_normal"
+        android:layout_marginBottom="@dimen/spacing_mini"
         android:text="@string/upgrade_version"
-        android:layout_marginBottom="@dimen/spacing_mini"/>
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/size_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_normal"
+        android:layout_marginBottom="@dimen/spacing_mini"
         android:text="@string/upgrade_apk_size"
-        android:layout_marginBottom="@dimen/spacing_mini"/>
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/time_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/publish_time"
         android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_normal"
-        android:text="@string/publish_time"/>
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_large"
+        android:layout_marginTop="@dimen/spacing_small"
         android:text="@string/upgrade_info"
-        android:layout_marginTop="@dimen/spacing_small"/>
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/text_large" />
 
     <TextView
         android:id="@+id/upgrade_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_mini"
         android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_normal"
-        android:layout_marginTop="@dimen/spacing_mini"/>
+        android:textSize="@dimen/text_normal" />
 
 </LinearLayout>

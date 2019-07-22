@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.contract.base;
 
 import android.app.ProgressDialog;
@@ -15,53 +13,54 @@ import android.support.annotation.Nullable;
 
 public interface IBaseContract {
 
-    interface View {
+	interface View {
 
-        void showProgressDialog(String content);
+		void showProgressDialog(String content);
 
-        void dismissProgressDialog();
+		void dismissProgressDialog();
 
-        ProgressDialog getProgressDialog(String content);
+		ProgressDialog getProgressDialog(String content);
 
-        void showTipDialog(String content);
+		void showTipDialog(String content);
 
-        void showConfirmDialog(String msn, String title, String confirmText
-                , DialogInterface.OnClickListener confirmListener);
+		void showConfirmDialog(String msn, String title, String confirmText
+				, DialogInterface.OnClickListener confirmListener);
 
-        void showToast(String message);
+		void showToast(String message);
 
-        void showInfoToast(String message);
+		void showInfoToast(String message);
 
-        void showSuccessToast(String message);
+		void showSuccessToast(String message);
 
-        void showErrorToast(String message);
+		void showErrorToast(String message);
 
-        void showWarningToast(String message);
+		void showWarningToast(String message);
 
-        void showLoading();
+		void showLoading();
 
-        void hideLoading();
+		void hideLoading();
 
-        void showLoginPage();
+		void showLoginPage();
 
-    }
+	}
 
-    interface Presenter<V extends IBaseContract.View>{
+	interface Presenter<V extends IBaseContract.View> {
 
-        void onSaveInstanceState(Bundle outState);
+		void onSaveInstanceState(Bundle outState);
 
-        void onRestoreInstanceState(Bundle outState);
+		void onRestoreInstanceState(Bundle outState);
 
-        void attachView(@NonNull V view);
+		void attachView(@NonNull V view);
 
-        void detachView();
+		void detachView();
 
-        /**
-         * view initialized, you can init view data
-         */
-        void onViewInitialized();
+		/**
+		 * view initialized, you can init view data
+		 */
+		void onViewInitialized();
 
-        @Nullable Context getContext();
-    }
+		@Nullable
+		Context getContext();
+	}
 
 }

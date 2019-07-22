@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import com.thirtydegreesray.openhub.AppData;
@@ -16,19 +14,19 @@ import javax.inject.Inject;
  */
 
 public class SettingsPresenter extends BasePresenter<ISettingsContract.View>
-        implements ISettingsContract.Presenter{
+		implements ISettingsContract.Presenter {
 
-    @Inject
-    public SettingsPresenter(DaoSession daoSession) {
-        super(daoSession);
-    }
+	@Inject
+	public SettingsPresenter(DaoSession daoSession) {
+		super(daoSession);
+	}
 
-    @Override
-    public void logout() {
-        daoSession.getAuthUserDao().delete(AppData.INSTANCE.getAuthUser());
-        AppData.INSTANCE.setAuthUser(null);
-        AppData.INSTANCE.setLoggedUser(null);
-        mView.showLoginPage();
-    }
+	@Override
+	public void logout() {
+		daoSession.getAuthUserDao().delete(AppData.INSTANCE.getAuthUser());
+		AppData.INSTANCE.setAuthUser(null);
+		AppData.INSTANCE.setLoggedUser(null);
+		mView.showLoginPage();
+	}
 
 }

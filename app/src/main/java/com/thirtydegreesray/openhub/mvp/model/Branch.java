@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -13,82 +11,82 @@ import com.google.gson.annotations.SerializedName;
 
 public class Branch implements Parcelable {
 
-    private String name;
-    @SerializedName("zipball_url") private String zipballUrl;
-    @SerializedName("tarball_url") private String tarballUrl;
+	public static final Parcelable.Creator<Branch> CREATOR = new Parcelable.Creator<Branch>() {
+		@Override
+		public Branch createFromParcel(Parcel source) {
+			return new Branch(source);
+		}
 
-    private boolean isBranch = true;
+		@Override
+		public Branch[] newArray(int size) {
+			return new Branch[size];
+		}
+	};
+	private String name;
+	@SerializedName("zipball_url")
+	private String zipballUrl;
+	@SerializedName("tarball_url")
+	private String tarballUrl;
+	private boolean isBranch = true;
 
-    public Branch() {
-    }
+	public Branch() {
+	}
 
-    public Branch(String name) {
-        this.name = name;
-    }
+	public Branch(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	protected Branch(Parcel in) {
+		this.name = in.readString();
+		this.zipballUrl = in.readString();
+		this.tarballUrl = in.readString();
+		this.isBranch = in.readByte() != 0;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getZipballUrl() {
-        return zipballUrl;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setZipballUrl(String zipballUrl) {
-        this.zipballUrl = zipballUrl;
-    }
+	public String getZipballUrl() {
+		return zipballUrl;
+	}
 
-    public String getTarballUrl() {
-        return tarballUrl;
-    }
+	public void setZipballUrl(String zipballUrl) {
+		this.zipballUrl = zipballUrl;
+	}
 
-    public void setTarballUrl(String tarballUrl) {
-        this.tarballUrl = tarballUrl;
-    }
+	public String getTarballUrl() {
+		return tarballUrl;
+	}
 
-    public boolean isBranch() {
-        return isBranch;
-    }
+	public void setTarballUrl(String tarballUrl) {
+		this.tarballUrl = tarballUrl;
+	}
 
-    public void setBranch(boolean branch) {
-        isBranch = branch;
-    }
+	public boolean isBranch() {
+		return isBranch;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public void setBranch(boolean branch) {
+		isBranch = branch;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.zipballUrl);
-        dest.writeString(this.tarballUrl);
-        dest.writeByte(this.isBranch ? (byte) 1 : (byte) 0);
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    protected Branch(Parcel in) {
-        this.name = in.readString();
-        this.zipballUrl = in.readString();
-        this.tarballUrl = in.readString();
-        this.isBranch = in.readByte() != 0;
-    }
-
-    public static final Parcelable.Creator<Branch> CREATOR = new Parcelable.Creator<Branch>() {
-        @Override
-        public Branch createFromParcel(Parcel source) {
-            return new Branch(source);
-        }
-
-        @Override
-        public Branch[] newArray(int size) {
-            return new Branch[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.name);
+		dest.writeString(this.zipballUrl);
+		dest.writeString(this.tarballUrl);
+		dest.writeByte(this.isBranch ? (byte) 1 : (byte) 0);
+	}
 }
 
 //{

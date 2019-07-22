@@ -9,80 +9,79 @@ import android.os.Parcelable;
 
 public class Topic implements Parcelable {
 
-    private String id;
-    private String name;
-    private String desc;
-    private String image;
+	public static final Parcelable.Creator<Topic> CREATOR = new Parcelable.Creator<Topic>() {
+		@Override
+		public Topic createFromParcel(Parcel source) {
+			return new Topic(source);
+		}
 
-    public String getId() {
-        return id;
-    }
+		@Override
+		public Topic[] newArray(int size) {
+			return new Topic[size];
+		}
+	};
+	private String id;
+	private String name;
+	private String desc;
+	private String image;
 
-    public Topic setId(String id) {
-        this.id = id;
-        return this;
-    }
+	public Topic() {
+	}
 
-    public String getName() {
-        return name;
-    }
+	protected Topic(Parcel in) {
+		this.id = in.readString();
+		this.name = in.readString();
+		this.desc = in.readString();
+		this.image = in.readString();
+	}
 
-    public Topic setName(String name) {
-        this.name = name;
-        return this;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public Topic setId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public Topic setDesc(String desc) {
-        this.desc = desc;
-        return this;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getImage() {
-        return image;
-    }
+	public Topic setName(String name) {
+		this.name = name;
+		return this;
+	}
 
-    public Topic setImage(String image) {
-        this.image = image;
-        return this;
-    }
+	public String getDesc() {
+		return desc;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public Topic setDesc(String desc) {
+		this.desc = desc;
+		return this;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.desc);
-        dest.writeString(this.image);
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public Topic() {
-    }
+	public Topic setImage(String image) {
+		this.image = image;
+		return this;
+	}
 
-    protected Topic(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.desc = in.readString();
-        this.image = in.readString();
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<Topic> CREATOR = new Parcelable.Creator<Topic>() {
-        @Override
-        public Topic createFromParcel(Parcel source) {
-            return new Topic(source);
-        }
-
-        @Override
-        public Topic[] newArray(int size) {
-            return new Topic[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.id);
+		dest.writeString(this.name);
+		dest.writeString(this.desc);
+		dest.writeString(this.image);
+	}
 
 }

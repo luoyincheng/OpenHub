@@ -1,5 +1,3 @@
-
-
 package com.thirtydegreesray.openhub.mvp.model;
 
 import android.os.Parcel;
@@ -13,65 +11,64 @@ import android.os.Parcelable;
 
 public class RepositoryPermissions implements Parcelable {
 
-    private boolean admin;
-    private boolean push;
-    private boolean pull;
+	public static final Parcelable.Creator<RepositoryPermissions> CREATOR = new Parcelable.Creator<RepositoryPermissions>() {
+		@Override
+		public RepositoryPermissions createFromParcel(Parcel source) {
+			return new RepositoryPermissions(source);
+		}
 
-    public RepositoryPermissions() {
+		@Override
+		public RepositoryPermissions[] newArray(int size) {
+			return new RepositoryPermissions[size];
+		}
+	};
+	private boolean admin;
+	private boolean push;
+	private boolean pull;
 
-    }
+	public RepositoryPermissions() {
 
-    public boolean isAdmin() {
-        return admin;
-    }
+	}
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
+	protected RepositoryPermissions(Parcel in) {
+		this.admin = in.readByte() != 0;
+		this.push = in.readByte() != 0;
+		this.pull = in.readByte() != 0;
+	}
 
-    public boolean isPush() {
-        return push;
-    }
+	public boolean isAdmin() {
+		return admin;
+	}
 
-    public void setPush(boolean push) {
-        this.push = push;
-    }
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 
-    public boolean isPull() {
-        return pull;
-    }
+	public boolean isPush() {
+		return push;
+	}
 
-    public void setPull(boolean pull) {
-        this.pull = pull;
-    }
+	public void setPush(boolean push) {
+		this.push = push;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	public boolean isPull() {
+		return pull;
+	}
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte(this.admin ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.push ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.pull ? (byte) 1 : (byte) 0);
-    }
+	public void setPull(boolean pull) {
+		this.pull = pull;
+	}
 
-    protected RepositoryPermissions(Parcel in) {
-        this.admin = in.readByte() != 0;
-        this.push = in.readByte() != 0;
-        this.pull = in.readByte() != 0;
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    public static final Parcelable.Creator<RepositoryPermissions> CREATOR = new Parcelable.Creator<RepositoryPermissions>() {
-        @Override
-        public RepositoryPermissions createFromParcel(Parcel source) {
-            return new RepositoryPermissions(source);
-        }
-
-        @Override
-        public RepositoryPermissions[] newArray(int size) {
-            return new RepositoryPermissions[size];
-        }
-    };
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeByte(this.admin ? (byte) 1 : (byte) 0);
+		dest.writeByte(this.push ? (byte) 1 : (byte) 0);
+		dest.writeByte(this.pull ? (byte) 1 : (byte) 0);
+	}
 }
