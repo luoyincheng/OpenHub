@@ -150,7 +150,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
 	public void onLoginClick() {
 		if (loginCheck()) {
 			loginBn.setEnabled(false);
-			Log.i("loginway", "1");
 			mPresenter.basicLogin(userName, password);
 		} else {
 			loginBn.reset();

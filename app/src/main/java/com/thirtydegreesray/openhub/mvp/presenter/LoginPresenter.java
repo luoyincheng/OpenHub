@@ -96,20 +96,20 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 			jsonObject.put("note", "com.thirtydegreesray.openhub");
 			jsonObject.put("noteUrl", "https://github.com/ThirtyDegreesRay/OpenHub/CallBack");
 			jsonObject.put("client_id", "8f7213694e115df205fb");
-			jsonObject.put("clientSecret", "82c57672382db5c7b528d79e283c398ad02e3c3f");
+			jsonObject.put("client_secret", "82c57672382db5c7b528d79e283c398ad02e3c3f");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		String token = Credentials.basic(userName, password);
-		Log.i("loginway", "token:" + token);
-		Log.i("loginway", "token:" + "---->" + jsonObject);
-		Log.i("loginway", "token:" + "---->" + authRequestModel);
-		Log.i("loginway", "jsonobject:" + jsonObject.toString());
-
 		Request request;
 		RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
 		Observable<Response<BasicToken>> observable =
 				getLoginService(token).authorizations(requestBody);
+
+
+
+
+
 //		HttpSubscriber<BasicToken> subscriber =
 //				new HttpSubscriber<>(
 //						new HttpObserver<BasicToken>() {
@@ -139,9 +139,9 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 					@Override
 					public void onNext(Response<BasicToken> basicTokenResponse) {
 						BasicToken token = basicTokenResponse.body();
-						Log.i("loginway", basicTokenResponse.toString());
+						Log.i("loginway", "---"+basicTokenResponse.toString());
 						if (token != null) {
-							Log.i("loginway", token.toString());
+							Log.i("loginway", "+++"+token.toString());
 							mView.onGetTokenSuccess(token);
 						} else {
 							mView.onGetTokenError(basicTokenResponse.message());
