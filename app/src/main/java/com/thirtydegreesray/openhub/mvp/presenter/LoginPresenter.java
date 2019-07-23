@@ -22,6 +22,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Credentials;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 
 /**
@@ -99,8 +102,14 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 		}
 		String token = Credentials.basic(userName, password);
 		Log.i("loginway", "token:" + token);
+		Log.i("loginway", "token:" + "---->" + jsonObject);
+		Log.i("loginway", "token:" + "---->" + authRequestModel);
+		Log.i("loginway", "jsonobject:" + jsonObject.toString());
+
+		Request request;
+		RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
 		Observable<Response<BasicToken>> observable =
-				getLoginService(token).authorizations(jsonObject);
+				getLoginService(token).authorizations(requestBody);
 //		HttpSubscriber<BasicToken> subscriber =
 //				new HttpSubscriber<>(
 //						new HttpObserver<BasicToken>() {

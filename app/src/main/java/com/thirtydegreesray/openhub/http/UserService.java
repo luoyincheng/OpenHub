@@ -25,9 +25,15 @@ import rx.Observable;
 
 public interface UserService {
 
+//	@NonNull
+//	@GET("user")
+//	Observable<Response<User>> getPersonInfo(
+//			@Header("forceNetWork") boolean forceNetWork
+//	);
+
 	@NonNull
 	@GET("user")
-	Observable<Response<User>> getPersonInfo(
+	io.reactivex.Observable<Response<User>> getPersonInfo(
 			@Header("forceNetWork") boolean forceNetWork
 	);
 

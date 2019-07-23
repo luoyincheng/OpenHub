@@ -1,6 +1,7 @@
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.thirtydegreesray.openhub.AppData;
 import com.thirtydegreesray.openhub.dao.AuthUser;
@@ -17,6 +18,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 import rx.Observable;
 
@@ -66,8 +71,10 @@ public class SplashPresenter extends BasePresenter<ISplashContract.View>
 		if (selectedUser != null) {
 			AppData.INSTANCE.setAuthUser(selectedUser);
 			getUserInfo(selectedUser.getAccessToken());
+			Log.i("fafadfaf", "1");
 		} else {
 			mView.showLoginPage();
+			Log.i("fafadfaf", "2");
 		}
 
 	}
@@ -85,36 +92,47 @@ public class SplashPresenter extends BasePresenter<ISplashContract.View>
 	}
 
 	private void getUserInfo(final String accessToken) {
+		Log.i("fafadfaf", "-->");
 
-		HttpObserver<User> httpObserver = new HttpObserver<User>() {
-			@Override
-			public void onError(@NonNull Throwable error) {
-				daoSession.getAuthUserDao().delete(AppData.INSTANCE.getAuthUser());
-				AppData.INSTANCE.setAuthUser(null);
-				mView.showErrorToast(getErrorTip(error));
-				mView.showLoginPage();
-			}
 
-			@Override
-			public void onSuccess(@NonNull HttpResponse<User> response) {
-				AppData.INSTANCE.setLoggedUser(response.body());
-				if (authUser != null) {
-					authUser.setLoginId(response.body().getLogin());
-					daoSession.getAuthUserDao().update(authUser);
-				}
-				if (!isMainPageShowwed) {
-					isMainPageShowwed = true;
-					mView.showMainPage();
-				}
-			}
-		};
+//		HttpObserver<User> httpObserver = new HttpObserver<User>() {
+//			@Override
+//			public void onError(@NonNull Throwable error) {
+//				daoSession.getAuthUserDao().delete(AppData.INSTANCE.getAuthUser());
+//				AppData.INSTANCE.setAuthUser(null);
+//				mView.showErrorToast(getErrorTip(error));
+//				mView.showLoginPage();
+//			}
+//
+//			@Override
+//			public void onSuccess(@NonNull HttpResponse<User> response) {
+//				AppData.INSTANCE.setLoggedUser(response.body());
+//				if (authUser != null) {
+//					authUser.setLoginId(response.body().getLogin());
+//					daoSession.getAuthUserDao().update(authUser);
+//				}
+//				if (!isMainPageShowwed) {
+//					isMainPageShowwed = true;
+//					mView.showMainPage();
+//				}
+//			}
+//		};
+//
+//		generalRxHttpExecute(new IObservableCreator<User>() {
+//			@Override
+//			public Observable<Response<User>> createObservable(boolean forceNetWork) {
+//				return getUserService().getPersonInfo(forceNetWork);
+//			}
+//		}, httpObserver, true);
 
-		generalRxHttpExecute(new IObservableCreator<User>() {
-			@Override
-			public Observable<Response<User>> createObservable(boolean forceNetWork) {
-				return getUserService().getPersonInfo(forceNetWork);
-			}
-		}, httpObserver, true);
+		Disposable disposable = getUserService().getPersonInfo(true).observeOn(AndroidSchedulers.mainThread())
+				.subscribeOn(Schedulers.io())
+				.subscribe(new Consumer<Response<User>>() {
+					@Override
+					public void accept(Response<User> userResponse) throws Exception {
+						Log.i("fafadfaf", userResponse.toString());
+					}
+				});
 
 	}
 
