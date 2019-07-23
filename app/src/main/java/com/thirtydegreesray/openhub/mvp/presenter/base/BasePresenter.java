@@ -49,6 +49,7 @@ import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

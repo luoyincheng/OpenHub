@@ -1,34 +1,28 @@
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.thirtydegreesray.openhub.AppConfig;
-import com.thirtydegreesray.openhub.AppData;
-import com.thirtydegreesray.openhub.dao.AuthUser;
-import com.thirtydegreesray.openhub.dao.AuthUserDao;
 import com.thirtydegreesray.openhub.dao.DaoSession;
-import com.thirtydegreesray.openhub.http.core.HttpObserver;
-import com.thirtydegreesray.openhub.http.core.HttpResponse;
-import com.thirtydegreesray.openhub.http.core.HttpSubscriber;
 import com.thirtydegreesray.openhub.http.model.AuthRequestModel;
 import com.thirtydegreesray.openhub.mvp.contract.ILoginContract;
 import com.thirtydegreesray.openhub.mvp.model.BasicToken;
-import com.thirtydegreesray.openhub.mvp.model.OauthToken;
-import com.thirtydegreesray.openhub.mvp.model.User;
 import com.thirtydegreesray.openhub.mvp.presenter.base.BasePresenter;
-import com.thirtydegreesray.openhub.util.StringUtils;
 
-import java.util.Date;
-import java.util.UUID;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Credentials;
 import retrofit2.Response;
-import rx.Observable;
 
 /**
  * Created on 2017/7/12.
@@ -88,98 +82,135 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 	@Override
 	public void basicLogin(String userName, String password) {
 		AuthRequestModel authRequestModel = AuthRequestModel.generate();
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.put("user");
+		jsonArray.put("repo");
+		jsonArray.put("gist");
+		jsonArray.put("notifications");
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("scopes", jsonArray);
+			jsonObject.put("note", "com.thirtydegreesray.openhub");
+			jsonObject.put("noteUrl", "https://github.com/ThirtyDegreesRay/OpenHub/CallBack");
+			jsonObject.put("client_id", "8f7213694e115df205fb");
+			jsonObject.put("clientSecret", "82c57672382db5c7b528d79e283c398ad02e3c3f");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		String token = Credentials.basic(userName, password);
 		Log.i("loginway", "token:" + token);
 		Observable<Response<BasicToken>> observable =
-				getLoginService(token).authorizations(authRequestModel);
-		HttpSubscriber<BasicToken> subscriber =
-				new HttpSubscriber<>(
-						new HttpObserver<BasicToken>() {
-							@Override
-							public void onError(@NonNull Throwable error) {
-//                                mView.dismissProgressDialog();
-								mView.onGetTokenError(getErrorTip(error));
-							}
+				getLoginService(token).authorizations(jsonObject);
+//		HttpSubscriber<BasicToken> subscriber =
+//				new HttpSubscriber<>(
+//						new HttpObserver<BasicToken>() {
+//							@Override
+//							public void onError(@NonNull Throwable error) {
+////                                mView.dismissProgressDialog();
+//								mView.onGetTokenError(getErrorTip(error));
+//							}
+//
+//							@Override
+//							public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
+//
+//
+//							}
+//						}
+//				);
+//		generalRxHttpExecute(observable, subscriber);
 
-							@Override
-							public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
-								BasicToken token = response.body();
-								Log.i("loginway",token.toString());
-								if (token != null) {
-									Log.i("loginway", token.toString());
-									mView.onGetTokenSuccess(token);
-								} else {
-									mView.onGetTokenError(response.getOriResponse().message());
-								}
+		observable.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Observer<Response<BasicToken>>() {
+					@Override
+					public void onSubscribe(Disposable d) {
 
-							}
+					}
+
+					@Override
+					public void onNext(Response<BasicToken> basicTokenResponse) {
+						BasicToken token = basicTokenResponse.body();
+						Log.i("loginway", basicTokenResponse.toString());
+						if (token != null) {
+							Log.i("loginway", token.toString());
+							mView.onGetTokenSuccess(token);
+						} else {
+							mView.onGetTokenError(basicTokenResponse.message());
 						}
-				);
-		generalRxHttpExecute(observable, subscriber);
+					}
+
+					@Override
+					public void onError(Throwable e) {
+
+					}
+
+					@Override
+					public void onComplete() {
+
+					}
+				});
 //        mView.showProgressDialog(getLoadTip());
 	}
 
 	@Override
 	public void handleOauth(Intent intent) {
-		Uri uri = intent.getData();
-		if (uri != null) {
-			String code = uri.getQueryParameter("code");
-			String state = uri.getQueryParameter("state");
-			getToken(code, state);
-		}
+//		Uri uri = intent.getData();
+//		if (uri != null) {
+//			String code = uri.getQueryParameter("code");
+//			String state = uri.getQueryParameter("state");
+//			getToken(code, state);
+//		}
 	}
 
 	@Override
 	public void getUserInfo(final BasicToken basicToken) {
-		HttpSubscriber<User> subscriber = new HttpSubscriber<>(
-				new HttpObserver<User>() {
-					@Override
-					public void onError(Throwable error) {
-						mView.dismissProgressDialog();
-						mView.showErrorToast(getErrorTip(error));
-					}
-
-					@Override
-					public void onSuccess(HttpResponse<User> response) {
-//                        mView.dismissProgressDialog();
-						saveAuthUser(basicToken, response.body());
-						mView.onLoginComplete();
-					}
-				}
-		);
-		Observable<Response<User>> observable = getUserService(basicToken.getToken()).
-				getPersonInfo(true);
-		generalRxHttpExecute(observable, subscriber);
-		mView.showProgressDialog(getLoadTip());
+//		HttpSubscriber<User> subscriber = new HttpSubscriber<>(
+//				new HttpObserver<User>() {
+//					@Override
+//					public void onError(Throwable error) {
+//						mView.dismissProgressDialog();
+//						mView.showErrorToast(getErrorTip(error));
+//					}
+//
+//					@Override
+//					public void onSuccess(HttpResponse<User> response) {
+////                        mView.dismissProgressDialog();
+//						saveAuthUser(basicToken, response.body());
+//						mView.onLoginComplete();
+//					}
+//				}
+//		);
+//		Observable<Response<User>> observable = getUserService(basicToken.getToken()).
+//				getPersonInfo(true);
+//		generalRxHttpExecute(observable, subscriber);
+//		mView.showProgressDialog(getLoadTip());
 
 	}
 
-	private void saveAuthUser(BasicToken basicToken, User userInfo) {
-		String updateSql = "UPDATE " + daoSession.getAuthUserDao().getTablename()
-				+ " SET " + AuthUserDao.Properties.Selected.columnName + " = 0";
-		daoSession.getAuthUserDao().getDatabase().execSQL(updateSql);
-
-		String deleteExistsSql = "DELETE FROM " + daoSession.getAuthUserDao().getTablename()
-				+ " WHERE " + AuthUserDao.Properties.LoginId.columnName
-				+ " = '" + userInfo.getLogin() + "'";
-		daoSession.getAuthUserDao().getDatabase().execSQL(deleteExistsSql);
-
-		AuthUser authUser = new AuthUser();
-		String scope = StringUtils.listToString(basicToken.getScopes(), ",");
-		Date date = new Date();
-		authUser.setAccessToken(basicToken.getToken());
-		authUser.setScope(scope);
-		authUser.setAuthTime(date);
-		authUser.setExpireIn(360 * 24 * 60 * 60);
-		authUser.setSelected(true);
-		authUser.setLoginId(userInfo.getLogin());
-		authUser.setName(userInfo.getName());
-		authUser.setAvatar(userInfo.getAvatarUrl());
-		daoSession.getAuthUserDao().insert(authUser);
-
-		AppData.INSTANCE.setAuthUser(authUser);
-		AppData.INSTANCE.setLoggedUser(userInfo);
-	}
-
-
+//	private void saveAuthUser(BasicToken basicToken, User userInfo) {
+//		String updateSql = "UPDATE " + daoSession.getAuthUserDao().getTablename()
+//				+ " SET " + AuthUserDao.Properties.Selected.columnName + " = 0";
+//		daoSession.getAuthUserDao().getDatabase().execSQL(updateSql);
+//
+//		String deleteExistsSql = "DELETE FROM " + daoSession.getAuthUserDao().getTablename()
+//				+ " WHERE " + AuthUserDao.Properties.LoginId.columnName
+//				+ " = '" + userInfo.getLogin() + "'";
+//		daoSession.getAuthUserDao().getDatabase().execSQL(deleteExistsSql);
+//
+//		AuthUser authUser = new AuthUser();
+//		String scope = StringUtils.listToString(basicToken.getScopes(), ",");
+//		Date date = new Date();
+//		authUser.setAccessToken(basicToken.getToken());
+//		authUser.setScope(scope);
+//		authUser.setAuthTime(date);
+//		authUser.setExpireIn(360 * 24 * 60 * 60);
+//		authUser.setSelected(true);
+//		authUser.setLoginId(userInfo.getLogin());
+//		authUser.setName(userInfo.getName());
+//		authUser.setAvatar(userInfo.getAvatarUrl());
+//		daoSession.getAuthUserDao().insert(authUser);
+//
+//		AppData.INSTANCE.setAuthUser(authUser);
+//		AppData.INSTANCE.setLoggedUser(userInfo);
+//	}
 }

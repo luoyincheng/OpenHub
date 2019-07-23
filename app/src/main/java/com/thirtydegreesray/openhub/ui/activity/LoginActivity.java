@@ -159,8 +159,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
 
 	private boolean loginCheck() {
 		boolean valid = true;
-		userName = userNameEt.getText().toString();
-		password = passwordEt.getText().toString();
+//		userName = userNameEt.getText().toString();
+//		password = passwordEt.getText().toString();
+		userName = "luoyincheng";
+		password = "LuO1XiO2Ng99";
 		if (StringUtils.isBlank(userName)) {
 			valid = false;
 			userNameLayout.setError(getString(R.string.user_name_warning));

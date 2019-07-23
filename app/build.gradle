@@ -105,6 +105,8 @@ dependencies {
 //    compile "com.android.support:support-annotations:${ANDROID_SUPPORT_VERSION}"
 
     implementation "com.android.support:support-v4:${ANDROID_SUPPORT_VERSION}"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
 //    compile "com.android.support:support-v13:${ANDROID_SUPPORT_VERSION}"
     implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
     implementation "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
@@ -133,6 +135,10 @@ dependencies {
     //RxJava
     implementation "io.reactivex:rxjava:${RXJAVA_VERSION}"
     implementation "io.reactivex:rxandroid:${RXJAVA_VERSION}"
+
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
     //Type-safe HTTP client for Android and Java by Square, Inc.
     implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
