@@ -39,12 +39,12 @@ public class BasicToken {
 				'}';
 	}
 
-	public static BasicToken generateFromOauthToken(OauthToken oauthToken) {
-		BasicToken basicToken = new BasicToken();
-		basicToken.setToken(oauthToken.getAccessToken());
-		basicToken.setScopes(Arrays.asList(oauthToken.getScope().split(",")));
-		return basicToken;
-	}
+//	public static BasicToken generateFromOauthToken(OauthToken oauthToken) {
+//		BasicToken basicToken = new BasicToken();
+//		basicToken.setToken(oauthToken.getAccessToken());
+//		basicToken.setScopes(Arrays.asList(oauthToken.getScope().split(",")));
+//		return basicToken;
+//	}
 
 	public int getId() {
 		return id;

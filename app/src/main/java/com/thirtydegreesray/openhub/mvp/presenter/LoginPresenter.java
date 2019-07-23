@@ -46,42 +46,43 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 
 	@Override
 	public void getToken(String code, String state) {
-		Observable<Response<OauthToken>> observable =
-				getLoginService().getAccessToken(AppConfig.OPENHUB_CLIENT_ID,
-						AppConfig.OPENHUB_CLIENT_SECRET, code, state);
-
-		HttpSubscriber<OauthToken> subscriber =
-				new HttpSubscriber<>(
-						new HttpObserver<OauthToken>() {
-							@Override
-							public void onError(@NonNull Throwable error) {
-								mView.dismissProgressDialog();
-								mView.showErrorToast(getErrorTip(error));
-							}
-
-							@Override
-							public void onSuccess(@NonNull HttpResponse<OauthToken> response) {
-								OauthToken token = response.body();
-								if (token != null) {
-									mView.onGetTokenSuccess(BasicToken.generateFromOauthToken(token));
-								} else {
-									mView.onGetTokenError(response.getOriResponse().message());
-								}
-							}
-						}
-				);
-		generalRxHttpExecute(observable, subscriber);
-		mView.showProgressDialog(getLoadTip());
+//		Observable<Response<OauthToken>> observable =
+//				getLoginService().getAccessToken(AppConfig.OPENHUB_CLIENT_ID,
+//						AppConfig.OPENHUB_CLIENT_SECRET, code, state);
+//
+//		HttpSubscriber<OauthToken> subscriber =
+//				new HttpSubscriber<>(
+//						new HttpObserver<OauthToken>() {
+//							@Override
+//							public void onError(@NonNull Throwable error) {
+//								mView.dismissProgressDialog();
+//								mView.showErrorToast(getErrorTip(error));
+//							}
+//
+//							@Override
+//							public void onSuccess(@NonNull HttpResponse<OauthToken> response) {
+//								OauthToken token = response.body();
+//								if (token != null) {
+//									mView.onGetTokenSuccess(BasicToken.generateFromOauthToken(token));
+//								} else {
+//									mView.onGetTokenError(response.getOriResponse().message());
+//								}
+//							}
+//						}
+//				);
+//		generalRxHttpExecute(observable, subscriber);
+//		mView.showProgressDialog(getLoadTip());
 	}
 
 	@NonNull
 	@Override
 	public String getOAuth2Url() {
-		String randomState = UUID.randomUUID().toString();
-		return AppConfig.OAUTH2_URL +
-				"?client_id=" + AppConfig.OPENHUB_CLIENT_ID +
-				"&scope=" + AppConfig.OAUTH2_SCOPE +
-				"&state=" + randomState;
+//		String randomState = UUID.randomUUID().toString();
+//		return AppConfig.OAUTH2_URL +
+//				"?client_id=" + AppConfig.OPENHUB_CLIENT_ID +
+//				"&scope=" + AppConfig.OAUTH2_SCOPE +
+//				"&state=" + randomState;
+		return "";
 	}
 
 	@Override
@@ -103,6 +104,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 							@Override
 							public void onSuccess(@NonNull HttpResponse<BasicToken> response) {
 								BasicToken token = response.body();
+								Log.i("loginway",token.toString());
 								if (token != null) {
 									Log.i("loginway", token.toString());
 									mView.onGetTokenSuccess(token);
