@@ -16,8 +16,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.android.schedulers.AndroidSchedulers;
-
 /**
  * Created by ThirtyDegreesRay on 2017/11/23 10:55:30
  */

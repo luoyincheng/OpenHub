@@ -18,9 +18,9 @@ import com.thirtydegreesray.openhub.util.StarWishesHelper;
 import com.thirtydegreesray.openhub.util.StringUtils;
 
 import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by ThirtyDegreesRay on 2018/2/2 13:57:48

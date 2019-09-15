@@ -17,8 +17,8 @@ import com.thirtydegreesray.openhub.util.StringUtils;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import retrofit2.Response;
-import rx.Observable;
 
 /**
  * Created by ThirtyDegreesRay on 2017/10/18 11:31:06

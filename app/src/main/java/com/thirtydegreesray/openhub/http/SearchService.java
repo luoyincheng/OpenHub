@@ -7,12 +7,12 @@ import com.thirtydegreesray.openhub.mvp.model.Repository;
 import com.thirtydegreesray.openhub.mvp.model.SearchResult;
 import com.thirtydegreesray.openhub.mvp.model.User;
 
+import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * Created by ThirtyDegreesRay on 2017/8/25 13:52:09

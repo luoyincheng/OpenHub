@@ -7,6 +7,7 @@ import com.thirtydegreesray.openhub.mvp.model.User;
 
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.DELETE;
@@ -15,7 +16,6 @@ import retrofit2.http.Header;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * Created on 2017/8/1.

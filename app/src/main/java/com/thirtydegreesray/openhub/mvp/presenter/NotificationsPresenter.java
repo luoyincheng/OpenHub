@@ -22,8 +22,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import retrofit2.Response;
-import rx.Observable;
 
 /**
  * Created by ThirtyDegreesRay on 2017/11/6 20:52:55
