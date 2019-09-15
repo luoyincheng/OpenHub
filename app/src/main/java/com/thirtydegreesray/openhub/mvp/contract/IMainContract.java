@@ -1,6 +1,6 @@
 package com.thirtydegreesray.openhub.mvp.contract;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.thirtydegreesray.openhub.dao.AuthUser;
 import com.thirtydegreesray.openhub.mvp.contract.base.IBaseContract;

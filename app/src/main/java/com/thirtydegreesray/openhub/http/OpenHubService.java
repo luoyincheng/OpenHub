@@ -1,6 +1,6 @@
 package com.thirtydegreesray.openhub.http;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.thirtydegreesray.openhub.mvp.model.Repository;
 import com.thirtydegreesray.openhub.mvp.model.TrendingLanguage;

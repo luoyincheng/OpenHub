@@ -1,6 +1,6 @@
 package com.thirtydegreesray.openhub.util;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;

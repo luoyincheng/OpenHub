@@ -1,9 +1,10 @@
 package com.thirtydegreesray.openhub.mvp.presenter;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
+import com.thirtydegreesray.openhub.AppConfig;
 import com.thirtydegreesray.openhub.dao.DaoSession;
 import com.thirtydegreesray.openhub.http.model.AuthRequestModel;
 import com.thirtydegreesray.openhub.mvp.contract.ILoginContract;
@@ -13,6 +14,8 @@ import com.thirtydegreesray.openhub.mvp.presenter.base.BasePresenter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -74,12 +77,11 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 	@NonNull
 	@Override
 	public String getOAuth2Url() {
-//		String randomState = UUID.randomUUID().toString();
-//		return AppConfig.OAUTH2_URL +
-//				"?client_id=" + AppConfig.OPENHUB_CLIENT_ID +
-//				"&scope=" + AppConfig.OAUTH2_SCOPE +
-//				"&state=" + randomState;
-		return "";
+		String randomState = UUID.randomUUID().toString();
+		return AppConfig.OAUTH2_URL +
+				"?client_id=" + AppConfig.OPENHUB_CLIENT_ID +
+				"&scope=" + AppConfig.OAUTH2_SCOPE +
+				"&state=" + randomState;
 	}
 
 	@Override

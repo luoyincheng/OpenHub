@@ -1,6 +1,6 @@
 package com.thirtydegreesray.openhub.http.error;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.thirtydegreesray.openhub.AppApplication;
 import com.thirtydegreesray.openhub.R;
