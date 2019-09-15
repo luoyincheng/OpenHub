@@ -2,19 +2,30 @@ package com.thirtydegreesray.openhub.mvp.presenter;
 
 import android.content.Intent;
 import androidx.annotation.NonNull;
+
+import android.net.Uri;
 import android.util.Log;
 
 import com.thirtydegreesray.openhub.AppConfig;
+import com.thirtydegreesray.openhub.AppData;
+import com.thirtydegreesray.openhub.dao.AuthUser;
+import com.thirtydegreesray.openhub.dao.AuthUserDao;
 import com.thirtydegreesray.openhub.dao.DaoSession;
+import com.thirtydegreesray.openhub.http.core.HttpObserver;
+import com.thirtydegreesray.openhub.http.core.HttpResponse;
+import com.thirtydegreesray.openhub.http.core.HttpSubscriber;
 import com.thirtydegreesray.openhub.http.model.AuthRequestModel;
 import com.thirtydegreesray.openhub.mvp.contract.ILoginContract;
 import com.thirtydegreesray.openhub.mvp.model.BasicToken;
+import com.thirtydegreesray.openhub.mvp.model.User;
 import com.thirtydegreesray.openhub.mvp.presenter.base.BasePresenter;
+import com.thirtydegreesray.openhub.util.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -165,63 +176,63 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
 
 	@Override
 	public void handleOauth(Intent intent) {
-//		Uri uri = intent.getData();
-//		if (uri != null) {
-//			String code = uri.getQueryParameter("code");
-//			String state = uri.getQueryParameter("state");
-//			getToken(code, state);
-//		}
+		Uri uri = intent.getData();
+		if (uri != null) {
+			String code = uri.getQueryParameter("code");
+			String state = uri.getQueryParameter("state");
+			getToken(code, state);
+		}
 	}
 
 	@Override
 	public void getUserInfo(final BasicToken basicToken) {
-//		HttpSubscriber<User> subscriber = new HttpSubscriber<>(
-//				new HttpObserver<User>() {
-//					@Override
-//					public void onError(Throwable error) {
-//						mView.dismissProgressDialog();
-//						mView.showErrorToast(getErrorTip(error));
-//					}
-//
-//					@Override
-//					public void onSuccess(HttpResponse<User> response) {
-////                        mView.dismissProgressDialog();
-//						saveAuthUser(basicToken, response.body());
-//						mView.onLoginComplete();
-//					}
-//				}
-//		);
-//		Observable<Response<User>> observable = getUserService(basicToken.getToken()).
-//				getPersonInfo(true);
-//		generalRxHttpExecute(observable, subscriber);
-//		mView.showProgressDialog(getLoadTip());
+		HttpSubscriber<User> subscriber = new HttpSubscriber<>(
+				new HttpObserver<User>() {
+					@Override
+					public void onError(Throwable error) {
+						mView.dismissProgressDialog();
+						mView.showErrorToast(getErrorTip(error));
+					}
+
+					@Override
+					public void onSuccess(HttpResponse<User> response) {
+//                        mView.dismissProgressDialog();
+						saveAuthUser(basicToken, response.body());
+						mView.onLoginComplete();
+					}
+				}
+		);
+		Observable<Response<User>> observable = getUserService(basicToken.getToken()).
+				getPersonInfo(true);
+		generalRxHttpExecute(observable, subscriber);
+		mView.showProgressDialog(getLoadTip());
 
 	}
 
-//	private void saveAuthUser(BasicToken basicToken, User userInfo) {
-//		String updateSql = "UPDATE " + daoSession.getAuthUserDao().getTablename()
-//				+ " SET " + AuthUserDao.Properties.Selected.columnName + " = 0";
-//		daoSession.getAuthUserDao().getDatabase().execSQL(updateSql);
-//
-//		String deleteExistsSql = "DELETE FROM " + daoSession.getAuthUserDao().getTablename()
-//				+ " WHERE " + AuthUserDao.Properties.LoginId.columnName
-//				+ " = '" + userInfo.getLogin() + "'";
-//		daoSession.getAuthUserDao().getDatabase().execSQL(deleteExistsSql);
-//
-//		AuthUser authUser = new AuthUser();
-//		String scope = StringUtils.listToString(basicToken.getScopes(), ",");
-//		Date date = new Date();
-//		authUser.setAccessToken(basicToken.getToken());
-//		authUser.setScope(scope);
-//		authUser.setAuthTime(date);
-//		authUser.setExpireIn(360 * 24 * 60 * 60);
-//		authUser.setSelected(true);
-//		authUser.setLoginId(userInfo.getLogin());
-//		authUser.setName(userInfo.getName());
-//		authUser.setAvatar(userInfo.getAvatarUrl());
-//		daoSession.getAuthUserDao().insert(authUser);
-//
-//		AppData.INSTANCE.setAuthUser(authUser);
-//		AppData.INSTANCE.setLoggedUser(userInfo);
-//	}
+	private void saveAuthUser(BasicToken basicToken, User userInfo) {
+		String updateSql = "UPDATE " + daoSession.getAuthUserDao().getTablename()
+				+ " SET " + AuthUserDao.Properties.Selected.columnName + " = 0";
+		daoSession.getAuthUserDao().getDatabase().execSQL(updateSql);
+
+		String deleteExistsSql = "DELETE FROM " + daoSession.getAuthUserDao().getTablename()
+				+ " WHERE " + AuthUserDao.Properties.LoginId.columnName
+				+ " = '" + userInfo.getLogin() + "'";
+		daoSession.getAuthUserDao().getDatabase().execSQL(deleteExistsSql);
+
+		AuthUser authUser = new AuthUser();
+		String scope = StringUtils.listToString(basicToken.getScopes(), ",");
+		Date date = new Date();
+		authUser.setAccessToken(basicToken.getToken());
+		authUser.setScope(scope);
+		authUser.setAuthTime(date);
+		authUser.setExpireIn(360 * 24 * 60 * 60);
+		authUser.setSelected(true);
+		authUser.setLoginId(userInfo.getLogin());
+		authUser.setName(userInfo.getName());
+		authUser.setAvatar(userInfo.getAvatarUrl());
+		daoSession.getAuthUserDao().insert(authUser);
+
+		AppData.INSTANCE.setAuthUser(authUser);
+		AppData.INSTANCE.setLoggedUser(userInfo);
+	}
 }

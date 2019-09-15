@@ -47,13 +47,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -69,7 +69,7 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
 	//db Dao
 	protected DaoSession daoSession;
 
-	private ArrayList<Subscriber<?>> subscribers;
+	private ArrayList<Disposable> disposables;
 	private boolean isEventSubscriber = false;
 	private boolean isViewInitialized = false;
 
@@ -79,7 +79,7 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
 
 	public BasePresenter(DaoSession daoSession) {
 		this.daoSession = daoSession;
-		subscribers = new ArrayList<>();
+		disposables = new ArrayList<>();
 	}
 
 	@Override
@@ -113,10 +113,10 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
 	public void detachView() {
 		mView = null;
 		//view 取消绑定时，把请求取消订阅
-		for (Subscriber subscriber : subscribers) {
-			if (subscriber != null && !subscriber.isUnsubscribed()) {
-				subscriber.unsubscribe();
-				Logger.d(TAG, "unsubscribe:" + subscriber.toString());
+		for (Disposable disposable : disposables) {
+			if (disposable != null && !disposable.isDisposed()) {
+				disposable.dispose();
+				Logger.d(TAG, "unsubscribe:" + disposable.toString());
 			}
 		}
 		if (isEventSubscriber) AppEventBus.INSTANCE.getEventBus().unregister(this);
@@ -233,7 +233,7 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
 			@NonNull Observable<Response<T>> observable, @Nullable HttpSubscriber<T> subscriber) {
 
 		if (subscriber != null) {
-			subscribers.add(subscriber);
+			disposables.add(subscriber);
 			observable.subscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(subscriber);
